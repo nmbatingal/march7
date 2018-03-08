@@ -15,46 +15,46 @@ class OfficesTableSeeder extends Seeder
         $offices = [
             [
                 'office_name' => 'Office of the Regional Director',
-                'acronym'  => 'ORD',
+                'acronym' 	  => 'ORD',
             ],
             [
                 'office_name' => 'Finance and Administrative Services',
-                'acronym'  => 'FAS',
+                'acronym'  	  => 'FAS',
             ],
             [
                 'office_name' => 'Field Operations Division',
-                'acronym'  => 'FOD',
+                'acronym'  	  => 'FOD',
             ],
             [
                 'office_name' => 'PSTC-Agusan del Norte',
-                'acronym'  => 'PSTC-ADN',
+                'acronym'  	  => 'PSTC-ADN',
             ],
             [
                 'office_name' => 'PSTC-Agusan del Sur',
-                'acronym'  => 'PSTC-ADS',
+                'acronym'  	  => 'PSTC-ADS',
             ],
             [
                 'office_name' => 'PSTC-Province of Dinagat Islands',
-                'acronym'  => 'PSTC-PDI',
+                'acronym'  	  => 'PSTC-PDI',
             ],
             [
                 'office_name' => 'PSTC-Surigao del Norte',
-                'acronym'  => 'PSTC-SDN',
+                'acronym'  	  => 'PSTC-SDN',
             ],
             [
                 'office_name' => 'PSTC-Surigao del Sur',
-                'acronym'  => 'PSTC-SDS',
+                'acronym' 	  => 'PSTC-SDS',
             ],
             [
                 'office_name' => 'Technical Service Provider',
-                'acronym'  => 'TSS',
+                'acronym'	  => 'TSS',
             ],
             [
                 'office_name' => 'Regional Science and Technology Laboratory',
-                'acronym'  => 'RSTL',
+                'acronym' 	  => 'RSTL',
             ],
         ];
 
-            DB::table('offices')->insert($offices);
+        DB::table('offices')->insert($offices);
     }
 }
