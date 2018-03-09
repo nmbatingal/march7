@@ -49,7 +49,7 @@ Seach listing Page
       margin: 0px;
       font-size: 18px; }
       .search-listing li h3 a {
-        color: #5475ed; }
+        color: #03a9f3; }
         .search-listing li h3 a:hover {
           text-decoration: underline; }
     .search-listing li a {
@@ -99,7 +99,7 @@ Date paginator page
 Notification page Jquery toaster
 ******************/
 .jq-icon-info {
-  background-color: #5475ed;
+  background-color: #03a9f3;
   color: #fff; }
 
 .jq-icon-success {
@@ -107,7 +107,7 @@ Notification page Jquery toaster
   color: #fff; }
 
 .jq-icon-error {
-  background-color: #ed4040;
+  background-color: #e46a76;
   color: #fff; }
 
 .jq-icon-warning {

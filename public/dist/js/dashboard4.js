@@ -36,7 +36,7 @@ $(function () {
 
 
                 ]
-        , lineColors: ['#3d3d3d']
+        , lineColors: ['#a5d9c7']
         , xkey: 'period'
         , ykeys: ['iphone']
         , labels: ['Site A']
@@ -107,7 +107,7 @@ $(function () {
 
 // Sky Icons
 var icons = new Skycons({
-        "color": "#ed4040"
+        "color": "#ff6849"
     })
     , list = [
         "clear-day", "clear-night", "partly-cloudy-day"

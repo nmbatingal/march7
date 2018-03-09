@@ -120,7 +120,7 @@ $(function () {
         , xaxis: {
             show: false
         }
-        , colors: ["#ed4040"]
+        , colors: ["#01c0c8"]
         , grid: {
             color: "#AFAFAF"
             , hoverable: true
@@ -154,11 +154,11 @@ var sparklineLogin = function () {
         type: 'line'
         , width: '100%'
         , height: '50'
-        , lineColor: '#3d3d3d'
-        , fillColor: '#3d3d3d'
-        , maxSpotColor: '#3d3d3d'
+        , lineColor: '#99d683'
+        , fillColor: '#99d683'
+        , maxSpotColor: '#99d683'
         , highlightLineColor: 'rgba(0, 0, 0, 0.2)'
-        , highlightSpotColor: '#3d3d3d'
+        , highlightSpotColor: '#99d683'
     });
     $("#sparkline9").sparkline([0, 2, 8, 6, 8, 5, 6, 4, 8, 6, 6, 2], {
         type: 'line'

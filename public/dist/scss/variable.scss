@@ -49,11 +49,11 @@ $gray-800: #343a40 !default;
 $gray-900: #212529 !default;
 $black:    #000 !default;
 
-$blue:    #5475ed !default; 
+$blue:    #03a9f3 !default;
 $indigo:  #6610f2 !default;
-$purple:  #7015bd !default; 
+$purple:  #ab8ce4 !default;
 $pink:    #e83e8c !default;
-$red:     #ed4040 !default;
+$red:     #e46a76 !default;
 $orange:  #fb9678 !default;
 $yellow:  #fec107 !default;
 $green:   #00c292 !default;
@@ -79,7 +79,7 @@ $colors: (
 );
 
 $theme-colors: (
-  primary:                        $red,
+  primary:                        $orange,
   secondary:                      $gray-100,
   success:                        $green,
   info:                           $blue,

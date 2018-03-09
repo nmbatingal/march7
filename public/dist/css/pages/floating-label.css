@@ -41,7 +41,7 @@ File: scss
   font-size: 14px; }
 
 .floating-labels .has-error .form-control {
-  border-bottom: 1px solid #ed4040; }
+  border-bottom: 1px solid #e46a76; }
 
 .floating-labels .has-warning .form-control {
   border-bottom: 1px solid #fec107; }
@@ -120,7 +120,7 @@ File: scss
 
 .has-error .bar:before,
 .has-error .bar:after {
-  background: #ed4040; }
+  background: #e46a76; }
 
 .has-warning .form-control:focus ~ label,
 .has-warning .form-control:valid ~ label {
@@ -132,20 +132,20 @@ File: scss
 
 .has-error .form-control:focus ~ label,
 .has-error .form-control:valid ~ label {
-  color: #ed4040; }
+  color: #e46a76; }
 
 .has-feedback label ~ .t-0 {
   top: 0; }
 
 .form-group.error input, .form-group.error select, .form-group.error textarea {
-  border: 1px solid #ed4040; }
+  border: 1px solid #e46a76; }
 
 .form-group.validate input, .form-group.validate select, .form-group.validate textarea {
   border: 1px solid #00c292; }
 
 .form-group.error .help-block ul {
   padding: 0px;
-  color: #ed4040; }
+  color: #e46a76; }
   .form-group.error .help-block ul li {
     list-style: none; }
 
