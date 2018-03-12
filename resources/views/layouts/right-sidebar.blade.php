@@ -1,8 +1,8 @@
 <div class="right-sidebar">
     <div class="slimscrollright">
-        <div class="rpanel-title"> Service Panel <span><i class="ti-close right-side-toggle"></i></span> </div>
+        <div class="rpanel-title"> Chat <span><i class="ti-close right-side-toggle"></i></span> </div>
         <div class="r-panel-body">
-            <ul id="themecolors" class="m-t-20">
+            <!-- <ul id="themecolors" class="m-t-20">
                 <li><b>With Light sidebar</b></li>
                 <li><a href="javascript:void(0)" data-skin="skin-default" class="default-theme">1</a></li>
                 <li><a href="javascript:void(0)" data-skin="skin-green" class="green-theme">2</a></li>
@@ -17,9 +17,9 @@
                 <li><a href="javascript:void(0)" data-skin="skin-blue-dark" class="blue-dark-theme">10</a></li>
                 <li><a href="javascript:void(0)" data-skin="skin-purple-dark" class="purple-dark-theme">11</a></li>
                 <li><a href="javascript:void(0)" data-skin="skin-megna-dark" class="megna-dark-theme ">12</a></li>
-            </ul>
+            </ul> -->
             <ul class="m-t-20 chatonline">
-                <li><b>Chat option</b></li>
+                <!-- <li><b>Chat option</b></li> -->
                 <li>
                     <a href="javascript:void(0)"><img src="{{ asset('assets/images/users/1.jpg') }}" alt="user-img" class="img-circle"> <span>Varun Dhavan <small class="text-success">online</small></span></a>
                 </li>
