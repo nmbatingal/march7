@@ -19,3 +19,5 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/profile', 'Profile\ProfileController');
+Route::resource('/hrmis', 'Hrmis\HrmisController');
+Route::resource('/hrmis/application', 'Hrmis\ApplicantsController');

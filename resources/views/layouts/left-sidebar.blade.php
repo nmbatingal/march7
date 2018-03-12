@@ -18,7 +18,16 @@
                 </li>
                 <li class="nav-small-cap">--- MENU</li>
                 <li> 
-                    <a class="has-arrow waves-effect waves-dark" href="{{ url('/home') }}" aria-expanded="false"><i class="icon-home"></i><span class="hide-menu">Home</a>
+                    <a class="waves-effect waves-dark" href="{{ url('/home') }}" aria-expanded="false"><i class="icon-home"></i>Home</a>
+                </li>
+                <li> 
+                    <a class="waves-effect waves-dark" href="{{ url('/hrmis') }}" aria-expanded="false">
+                        <i class="icon-people"></i>
+                        HRMIS <span class="badge badge-pill badge-cyan ml-auto">4</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="{{ url('/hrmis/application')}}">Application </a></li>
+                    </ul>
                 </li>
             </ul>
         </nav>
