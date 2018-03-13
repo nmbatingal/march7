@@ -22,4 +22,14 @@ class Offices extends Model
         'office_name', 
         'acronym',
     ];
+
+    public function staffs()
+    {
+        return $this->hasMany('App\User', 'office_id', 'id');
+    }
+
+    /*public function scopeStaffCount($query)
+    {
+        return $query->where
+    }*/
 }

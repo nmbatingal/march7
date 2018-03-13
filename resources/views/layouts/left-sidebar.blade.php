@@ -21,11 +21,11 @@
                     <a class="waves-effect waves-dark" href="{{ url('/home') }}" aria-expanded="false"><i class="icon-home"></i>Home</a>
                 </li>
                 <li> 
-                    <a class="waves-effect waves-dark" href="{{ url('/hrmis') }}" aria-expanded="false">
-                        <i class="icon-people"></i>HRMIS
+                    <a class="waves-effect waves-dark" href="{{ url('/accounts') }}" aria-expanded="false">
+                        <i class="icon-people"></i>Accounts
                     </a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{ url('/hrmis/application')}}">Applicants </a></li>
+                        <li><a href="{{ url('/accounts')}}">User Accounts </a></li>
                     </ul>
                 </li>
             </ul>
