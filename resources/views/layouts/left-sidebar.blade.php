@@ -22,11 +22,10 @@
                 </li>
                 <li> 
                     <a class="waves-effect waves-dark" href="{{ url('/hrmis') }}" aria-expanded="false">
-                        <i class="icon-people"></i>
-                        HRMIS <span class="badge badge-pill badge-cyan ml-auto">4</span>
+                        <i class="icon-people"></i>HRMIS
                     </a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{ url('/hrmis/application')}}">Application </a></li>
+                        <li><a href="{{ url('/hrmis/application')}}">Applicants </a></li>
                     </ul>
                 </li>
             </ul>
