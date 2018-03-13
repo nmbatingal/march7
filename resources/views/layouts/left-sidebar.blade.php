@@ -26,6 +26,7 @@
                     </a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="{{ url('/accounts')}}">User Accounts </a></li>
+                        <li><a href="{{ url('/accounts/rp')}}">Roles & Permissions </a></li>
                     </ul>
                 </li>
             </ul>

@@ -64,7 +64,7 @@
                         <div class="col-md-1">
                             <div class="card">
                                 <div class="el-card-item">
-                                    <div class="el-card-avatar el-overlay-1"> <img src="../assets/images/users/1.jpg" alt="user" />
+                                    <div class="el-card-avatar el-overlay-1"> <img src="{{ asset('assets/images/users/1.jpg') }}" alt="user" />
                                         <div class="el-overlay">
                                             <ul class="el-info">
                                                 <li><a class="btn default btn-outline" href="javascript:void(0);"><i class="icon-link"></i></a></li>
@@ -101,25 +101,25 @@
                             <div class="message-center">
                                 <!-- Message -->
                                 <a href="javascript:void(0)">
-                                    <div class="user-img"> <img src="../assets/images/users/1.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>
+                                    <div class="user-img"> <img src="{{ asset('assets/images/users/1.jpg') }}" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>
                                     <div class="mail-contnet">
                                         <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:30 AM</span> </div>
                                 </a>
                                 <!-- Message -->
                                 <a href="javascript:void(0)">
-                                    <div class="user-img"> <img src="../assets/images/users/2.jpg" alt="user" class="img-circle"> <span class="profile-status busy pull-right"></span> </div>
+                                    <div class="user-img"> <img src="{{ asset('assets/images/users/2.jpg') }}" alt="user" class="img-circle"> <span class="profile-status busy pull-right"></span> </div>
                                     <div class="mail-contnet">
                                         <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span> <span class="time">9:10 AM</span> </div>
                                 </a>
                                 <!-- Message -->
                                 <a href="javascript:void(0)">
-                                    <div class="user-img"> <img src="../assets/images/users/3.jpg" alt="user" class="img-circle"> <span class="profile-status away pull-right"></span> </div>
+                                    <div class="user-img"> <img src="{{ asset('assets/images/users/3.jpg') }}" alt="user" class="img-circle"> <span class="profile-status away pull-right"></span> </div>
                                     <div class="mail-contnet">
                                         <h5>Arijit Sinh</h5> <span class="mail-desc">I am a singer!</span> <span class="time">9:08 AM</span> </div>
                                 </a>
                                 <!-- Message -->
                                 <a href="javascript:void(0)">
-                                    <div class="user-img"> <img src="../assets/images/users/4.jpg" alt="user" class="img-circle"> <span class="profile-status offline pull-right"></span> </div>
+                                    <div class="user-img"> <img src="{{ asset('assets/images/users/4.jpg') }}" alt="user" class="img-circle"> <span class="profile-status offline pull-right"></span> </div>
                                     <div class="mail-contnet">
                                         <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
                                 </a>

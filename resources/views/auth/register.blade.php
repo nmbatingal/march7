@@ -41,7 +41,7 @@
     <!-- ============================================================== -->
     <section id="wrapper" class="login-register login-sidebar" style="background-image:url(../assets/images/background/login-register.jpg);">
         <div class="login-box card">
-            <div class="card-body">
+            <div id="register" class="card-body">
 
                 {!! Form::open(['url' => route('register'), 'class' => 'form-horizontal form-material' ]) !!}
                     <a href="javascript:void(0)" class="text-center db"><img src="../assets/images/logo-icon.png" alt="Home" /><br/><img src="../assets/images/logo-text.png" alt="Home" /></a>
@@ -126,7 +126,8 @@
     <!-- All Jquery -->
     <!-- ============================================================== -->
     <script src="{{ asset('assets/node_modules/jquery/jquery-3.2.1.min.js') }}"></script>
-    <!-- Bootstrap tether Core JavaScript -->
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="{{ asset('dist/js/perfect-scrollbar.jquery.min.js') }}"></script>
     <script src="{{ asset('assets/node_modules/popper/popper.min.js') }}"></script>
     <script src="{{ asset('assets/node_modules/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script type="text/javascript">
@@ -137,6 +138,8 @@
             $('[data-toggle="tooltip"]').tooltip()
         });
     </script>
+    <script type="text/javascript">
+        $('#register').perfectScrollbar();
+    </script>
 </body>
-
 </html>

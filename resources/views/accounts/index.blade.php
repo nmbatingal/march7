@@ -55,19 +55,25 @@
                 <div class="table-responsive m-t--50">
                     <table id="myTable" class="table table-hover table-striped no-wrap">
                         <colgroup>
-                            <col width="5px">
+                            <col width="5%">
+                            <col>
+                            <col width="5%">
                             <col>
                             <col>
                             <col>
-                            <col width="5px">
+                            <col>
+                            <col width="5%">
                         </colgroup>
                         <thead>
                             <tr>
                                 <th></th>
                                 <th>Name</th>
+                                <th>Status</th>
                                 <th>Position</th>
                                 <th>Office</th>
-                                <th>Status</th>
+                                <th>Birthdate</th>
+                                <th>Role</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -75,14 +81,35 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <a href="app-contact-detail.html">
-                                            <img src="{{ asset('assets/images/users/1.jpg') }}" alt="user" height="40" width="40" class="img-circle" />
+                                        <a href="{{ url( 'accounts/profile/'.$user->id )}}">
+                                            <img src="{{ asset('img/users/user-icon.png') }}" alt="user" height="40" width="40" class="img-circle" />
                                             &nbsp;&nbsp; {{ $user->firstname }} {{ $user->middlename ? $user->middlename[0].'.' : '' }} {{ $user->lastname }}
                                         </a>
                                     </td>
+                                    <td align="center">
+                                        @if( $user->_isActive )
+                                            <span class="badge badge-pill badge-success">active</span>
+                                        @else
+                                            <span class="badge badge-pill badge-danger">inactive</span>
+                                        @endif
+                                    </td>
                                     <td>{{ $user->position }}</td>
                                     <td>{{ $user->office['acronym'] }}</td>
-                                    <td></td>
+                                    <td>{{ $user->created_at }}</td>
+                                    <td>
+                                        <!-- <span class="label label-pill label-info">23%</span> -->
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-xs btn-secondary waves-effect waves-light" data-toggle="tooltip" title="reset password" type="button">
+                                            <span class="btn-label"><i class="fa fa-undo"></i></span>
+                                        </button>
+                                        <button class="btn btn-xs btn-info waves-effect" data-toggle="tooltip" title="update account" type="button">
+                                            <span class="btn-label"><i class="fa fa-pencil"></i></span>
+                                        </button>
+                                        <button class="btn btn-xs btn-danger waves-effect" data-toggle="tooltip" title="remove account" type="button">
+                                            <span class="btn-label"><i class="fa fa-remove"></i></span>
+                                        </button>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -111,10 +138,15 @@
        columnDefs: [
             {
                 targets: 0,
-                    checkboxes: {
+                checkboxes: {
                     selectRow: true
                 }
-            }],
+            },
+            {
+                orderable: false,
+                targets: 7
+            },
+        ],
         select: {
             style: 'multi'
         },
