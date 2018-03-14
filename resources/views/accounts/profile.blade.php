@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.home.app')
 
 @section('styles')
 <!-- page css -->
@@ -44,9 +44,9 @@
                 <small class="text-muted p-t-30 db">Phone</small>
                 <h6>{{ $profile->mobile_number ?: '-' }}</h6> 
                 <small class="text-muted p-t-30 db">Address</small>
-                <h6>-</h6>
+                <h6>{{ $profile->address ?: '-'}}</h6>
                 <small class="text-muted p-t-30 db">Birthday</small>
-                <h6>{{ date("F d, Y", strtotime( $profile->created_at )) }}</h6>
+                <h6>{{ date("F d, Y", strtotime( $profile->birthday )) }}</h6>
             </div>
         </div>
     </div>
@@ -96,11 +96,11 @@
                                 <label class="col-md-12" for="sex">Sex</label>
                                 <div class="col-md-12">
                                     <div class="custom-control custom-radio">
-                                        <input type="radio" id="sexMale" name="sex" class="custom-control-input">
+                                        {{ Form::radio('sex', 0, $profile->sex == 0 ? true : false, ['id' => 'sexMale', 'class' => 'custom-control-input']) }}
                                         <label class="custom-control-label" for="sexMale">Male</label>
                                     </div>
                                     <div class="custom-control custom-radio">
-                                        <input type="radio" id="sexFemale" name="sex" class="custom-control-input">
+                                        {{ Form::radio('sex', 0, $profile->sex == 1 ? true : false, ['id' => 'sexFemale', 'class' => 'custom-control-input']) }}
                                         <label class="custom-control-label" for="sexFemale">Female</label>
                                     </div>
                                 </div>
@@ -108,7 +108,13 @@
                             <div class="form-group col-md-6">
                                 <label class="col-md-12" for="birthdate">Birthday</label>
                                 <div class="col-md-12">
-                                    <input class="form-control" type="date" value="2011-08-19" id="example-date-input">
+                                    <input class="form-control" type="date" value="{{ date('Y-m-d', strtotime( $profile->birthday )) }}" id="example-date-input">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-12" for="address">Address</label>
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control form-control-line" name="address" value="{{ $profile->address }}" required>
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
@@ -120,7 +126,7 @@
                             <div class="form-group col-md-6">
                                 <label class="col-md-12" for="mobile_number">Phone No</label>
                                 <div class="col-md-12">
-                                    <input type="text" class="form-control form-control-line" name="mobile_number" placeholder="123 456 7890" value="{{ $profile->mobile_number }}">
+                                    <input type="text" class="form-control form-control-line" name="mobile_number" placeholder="ex. 123 456 7890" value="{{ $profile->mobile_number }}">
                                 </div>
                             </div>
                             <div class="form-group col-sm-12">

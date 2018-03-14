@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.home.app')
 
 @section('styles')
 <!-- Page CSS -->
@@ -100,15 +100,9 @@
                                         <!-- <span class="label label-pill label-info">23%</span> -->
                                     </td>
                                     <td>
-                                        <button class="btn btn-xs btn-secondary waves-effect waves-light" data-toggle="tooltip" title="reset password" type="button">
-                                            <span class="btn-label"><i class="fa fa-undo"></i></span>
-                                        </button>
-                                        <button class="btn btn-xs btn-info waves-effect" data-toggle="tooltip" title="update account" type="button">
-                                            <span class="btn-label"><i class="fa fa-pencil"></i></span>
-                                        </button>
-                                        <button class="btn btn-xs btn-danger waves-effect" data-toggle="tooltip" title="remove account" type="button">
-                                            <span class="btn-label"><i class="fa fa-remove"></i></span>
-                                        </button>
+                                        <a href="javascript:void(0)" data-toggle="tooltip" data-original-title="reset password"> <i class="fa fa-undo text-inverse"></i> </a>
+                                        <a href="javascript:void(0)" data-toggle="tooltip" data-original-title="update account"> <i class="fa fa-pencil text-info"></i> </a>
+                                        <a href="javascript:void(0)" data-toggle="tooltip" data-original-title="remove account"> <i class="fa fa-remove text-danger"></i> </a>
                                     </td>
                                 </tr>
                             @endforeach

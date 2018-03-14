@@ -2,11 +2,25 @@
 
 namespace App\Http\Controllers\Roles;
 
+use Session;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+//Importing laravel-permission models
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +28,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        $permissions = Permission::orderBy('name', 'ASC')->paginate(10);
+        $roles = Role::all();
+        return view('accounts.roles.roles', compact('permissions'));
     }
 
     /**

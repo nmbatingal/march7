@@ -19,8 +19,13 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('/accounts', 'Accounts\AccountsController');
+Route::resource('/accounts/permissions', 'Roles\PermissionController');
+Route::resource('/accounts/roles', 'Roles\RoleController');
 Route::resource('/accounts/profile', 'Accounts\ProfileController');
+Route::resource('/accounts', 'Accounts\AccountsController');
 
-Route::resource('/hrmis', 'Hrmis\HrmisController');
 Route::resource('/hrmis/application', 'Hrmis\ApplicantsController');
+Route::resource('/hrmis', 'Hrmis\HrmisController');
+
+Route::resource('/morss/survey', 'Morss\SurveyController');
+Route::resource('/morss', 'Morss\MoraleSurveyController');
