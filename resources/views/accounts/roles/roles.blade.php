@@ -26,32 +26,51 @@
 <!-- ============================================================== -->
 <!-- Start Page Content -->
 <!-- ============================================================== -->
-<br>
 <div class="row">
     <div class="col-4">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Add New Roles</h4>
-                {!! Form::open(['url' => route('roles.store'), 'class' => 'floating-labels m-t-40']) !!}
-                    <div class="form-group m-b-40">
-                        {{ Form::text('name', null, ['class' => 'form-control', 'required']) }}
-                        <span class="bar"></span>
-                        {{ Form::label('name', 'Role Name', ['class' => 'form-label']) }}
-                    </div>
+                <h4 class="card-title">Add New Roles<div class="pull-right"><a href="{{ url('/accounts/permissions') }}" class="btn btn-xs btn-info waves-effect waves-light text-white">Create Permission</a></div></h4>
 
-                    <h6 class="card-subtitle"> All bootstrap element classies </h6>
-                    <div class="form-group row">
-                        <div class="col-sm-12">
-                            <div class="custom-control custom-checkbox p-l-10">
-                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                <label class="custom-control-label p-l-30" for="customCheck1">Check this custom checkbox</label>
+                @if (count($errors) > 0)
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger alert-rounded"> 
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+                            <i class="fa fa-exclamation-triangle text-danger"></i> {{ $error }}
+                        </div>
+                    @endforeach
+                @endif
+
+                {!! Form::open(['url' => route('roles.store'), 'class' => 'floating-labels m-t-30']) !!}
+                    @if($permissions->isEmpty())
+                        <div class="alert alert-danger alert-rounded"> 
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+                            <i class="fa fa-exclamation-triangle text-danger"></i> Create permissions first before proceeding.
+                        </div>
+                    @else
+                        <div class="form-group m-b-40">
+                            {{ Form::text('name', null, ['class' => 'form-control', 'required']) }}
+                            <span class="bar"></span>
+                            {{ Form::label('name', 'Role Name', ['class' => 'form-label']) }}
+                        </div>
+
+                        <h6 class="card-subtitle"> Assign Permissions </h6>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                @foreach ($permissions as $permission)
+                                    <div class="custom-control custom-checkbox p-l-10">
+                                        {{ Form::checkbox( 'permissions[]', $permission->id, false, [ 'id' => $permission->name, 'class' => 'custom-control-input' ]) }}
+                                        {{ Form::label( $permission->name, ucfirst($permission->name), ['class' => 'custom-control-label p-l-30']) }}
+                                        <br>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
-                    </div>
 
-                    <div class="pull-right">
-                        {{ Form::button('Submit', ['class' => 'btn btn-success waves-effect waves-light', 'type' => 'submit']) }}
-                    </div>
+                        <div class="pull-right">
+                            {{ Form::button('Submit', ['class' => 'btn btn-success waves-effect waves-light', 'type' => 'submit']) }}
+                        </div>
+                    @endif
                 {!! Form::close() !!}
             </div>
         </div>
@@ -76,15 +95,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ( $permissions as $permission )
+                            @foreach ( $roles as $role )
                                 <tr>
                                     <td>
                                         <a href="javascript:void(0)">
-                                            {{ $permission->name }}
+                                            {{ $role->name }}
                                         </a>
                                     </td>
                                     <td>
-                                        <div class="label label-table label-success">Open</div>
+                                        @foreach ( $role->permissions()->pluck('name') as $permission)
+                                            {{ $permission }} <br>
+                                        @endforeach
                                     </td>
                                     <td>
                                         <div class="label label-table label-success">Open</div>
@@ -99,7 +120,7 @@
                     </table>
                 </div>
                 <div class="p-r-20">
-                    {{ $permissions->links() }}
+                    {{ $roles->links() }}
                 </div>
             </div>
         </div>
@@ -113,7 +134,6 @@
 
         var flash     = {!! json_encode(session('test')) !!};
         
-
         if ( flash )
         {   
             $(flash).each(function (i) {
@@ -128,6 +148,9 @@
                 });
             });
         }
+
+
+
     });
 
 </script>

@@ -28,9 +28,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $permissions = Permission::orderBy('name', 'ASC')->paginate(10);
-        $roles = Role::all();
-        return view('accounts.roles.roles', compact('permissions'));
+        $permissions = Permission::orderBy('name', 'ASC')->get();
+        $roles = Role::orderBy('name', 'ASC')->paginate(10);
+        return view('accounts.roles.roles', compact('permissions', 'roles'));
     }
 
     /**
@@ -51,7 +51,36 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+                'name'=>'required|unique:roles',
+                'permissions' =>'required',
+            ]
+        );
+
+        $name = $request['name'];
+        $role = new Role();
+        $role->name = $name;
+        $permissions = $request['permissions'];
+        $role->save();
+
+        //Looping thru selected permissions
+        foreach ($permissions as $permission) {
+            $p = Permission::where('id', '=', $permission)->firstOrFail(); 
+ 
+            //Fetch the newly created role and assign permission
+            $role = Role::where('name', '=', $name)->first(); 
+            $role->givePermissionTo($p);
+        }
+
+        /*$toastr = Session::flash('test', [ 
+            [
+                'heading' => 'Success',
+                'text'    => 'Role <u>'. $role->name.'</u> successfully added!', 
+                'icon'    => 'success', 
+            ],
+        ]);*/
+
+        return redirect()->route('roles.index');
     }
 
     /**

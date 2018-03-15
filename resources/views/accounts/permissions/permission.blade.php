@@ -26,13 +26,11 @@
 <!-- ============================================================== -->
 <!-- Start Page Content -->
 <!-- ============================================================== -->
-<br>
 <div class="row">
-    <div class="col-4">
+    <div class="col-md-4 col-sm-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Add New Permission</h4>
-                <h6 class="card-subtitle"> Create permission first before proceeding to Roles </h6>
+                <h4 class="card-title">Add New Permission<div class="pull-right"><a href="{{ url('/accounts/roles') }}" class="btn btn-xs btn-info waves-effect waves-light text-white">Create Role</a></div></h4>
                 {!! Form::open(['url' => route('permissions.store'), 'class' => 'floating-labels m-t-40']) !!}
                     <div class="form-group m-b-40">
                         {{ Form::text('name', null, ['class' => 'form-control', 'required']) }}
@@ -47,7 +45,7 @@
             </div>
         </div>
     </div>
-    <div class="col-8">
+    <div class="col-md-8 col-sm-12">
         <div class="card">
             <div class="card-body p-0">
                 <div class="table-responsive">
