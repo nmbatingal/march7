@@ -20,16 +20,18 @@
                 <li> 
                     <a class="waves-effect waves-dark" href="{{ url('/home') }}" aria-expanded="false"><i class="icon-home"></i>Home</a>
                 </li>
-                <li> 
-                    <a class="waves-effect waves-dark" href="{{ url('/accounts') }}" aria-expanded="false">
-                        <i class="icon-people"></i>Accounts
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{ url('/accounts')}}">User Accounts </a></li>
-                        <li><a href="{{ url('/accounts/permissions')}}">Permissions</a></li>
-                        <li><a href="{{ url('/accounts/roles')}}">Roles</a></li>
-                    </ul>
-                </li>
+                @role('System Administrator')
+                    <li> 
+                        <a class="waves-effect waves-dark" href="{{ url('/accounts') }}" aria-expanded="false">
+                            <i class="icon-people"></i>Accounts
+                        </a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="{{ url('/accounts')}}">User Accounts </a></li>
+                            <li><a href="{{ url('/accounts/permissions')}}">Permissions</a></li>
+                            <li><a href="{{ url('/accounts/roles')}}">Roles</a></li>
+                        </ul>
+                    </li>
+                @endrole
             </ul>
         </nav>
         <!-- End Sidebar navigation -->

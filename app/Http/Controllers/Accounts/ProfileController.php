@@ -2,14 +2,27 @@
 
 namespace App\Http\Controllers\Accounts;
 
+use Auth;
 use Session;
 use App\User;
 use App\Offices;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ProfileController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth', 'isAdmin'])->except(['show', 'update', 'updatePassword']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -49,8 +62,9 @@ class ProfileController extends Controller
      */
     public function show(User $profile)
     {
+        $roles   = Role::get();
         $offices = Offices::orderBy('office_name', 'ASC')->get();
-        return view('accounts.profile', compact('profile', 'offices'));
+        return view('accounts.profile', compact('profile', 'offices', 'roles'));
     }
 
     /**
@@ -97,6 +111,58 @@ class ProfileController extends Controller
 
         return redirect('accounts/profile/'.$profile->id);
         // return dd($request);
+    }
+
+    /**
+     * Update user account roles
+     *
+     *
+     */
+    public function updateUserRoles(Request $request, User $profile)
+    {
+        $roles = $request['roles'];
+        $profile->save();
+
+        if (isset($roles)) {        
+            $profile->roles()->sync($roles);  //If one or more role is selected associate user to roles          
+        }        
+        else {
+            $profile->roles()->detach(); //If no role is selected remove exisiting role associated to a user
+        }
+
+        $toastr = Session::flash('toastr', [ 
+            [
+                'heading' => 'Success',
+                'text'    => 'Roles successfully updated!', 
+                'icon'    => 'info', 
+            ],
+        ]);
+
+        return redirect('accounts/profile/'.$profile->id);
+    }
+
+    /**
+     * Update the username and password of the user
+     *
+     *
+     */
+    public function updatePassword(Request $request, User $profile)
+    {
+        $profile->username     = $request->username;
+        $profile->password     = bcrypt($request->password);
+
+        if ( $profile->save() )
+        {
+            $toastr = Session::flash('toastr', [ 
+                [
+                    'heading' => 'Success',
+                    'text'    => 'Login account successfully updated!', 
+                    'icon'    => 'info', 
+                ],
+            ]);
+        }
+
+        return redirect('accounts/profile/'.$profile->id);
     }
 
     /**

@@ -158,7 +158,7 @@
                                         <div class="row">
                                             <div class="form-group col-sm-12">
                                                 <div class="col-sm-12">
-                                                    <button class="btn btn-success">Update Profile</button>
+                                                    {!! Form::submit('Update Profile', ['class' => 'btn btn-success']) !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -170,7 +170,31 @@
                         <!-- ROLES TAB -->
                         <div class="tab-pane" id="roles" role="tabpanel">
                             <div class="card-body">
-                                {!! Form::open([ 'url' => '', 'class' => 'floating-labels m-t-20' ]) !!}
+                                {!! Form::model($profile, [ 'url' => url( '/accounts/profile/'.$profile->id.'/update-user-roles' ), 'method' => 'POST', 'id' => 'form_roles', 'class' => 'form-control-line']) !!}
+                                    <div class="form-body">
+                                        <h3 class="box-title">User Account Role</h3>
+                                        <hr class="m-t-0">
+                                        <div class="row m-l-15">
+                                            <div class="form-group col-md-6">
+                                                <label for="sex" class="form-control-label">Check to assign roles to a user account</label>
+                                                @foreach ($roles as $role)
+                                                    <div class="custom-control custom-checkbox">
+                                                        {{ Form::checkbox('roles[]',  $role->id, $profile->roles, ['id' => $role->name, 'class' => 'custom-control-input'] ) }}
+                                                        {{ Form::label($role->name, ucfirst($role->name), ['class' => 'custom-control-label']) }}
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="form-group col-sm-12">
+                                                <div class="col-sm-12">
+                                                    {!! Form::submit('Update user roles', ['class' => 'btn btn-success']) !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 {!! Form::close() !!}
                             </div>
                         </div>
@@ -178,7 +202,7 @@
                         <!-- SETTINGS TAB -->
                         <div class="tab-pane" id="settings" role="tabpanel">
                             <div class="card-body">
-                                <form class="form-control-line">
+                                {!! Form::model($profile, [ 'url' => url( '/accounts/profile/'.$profile->id.'/update-password' ), 'method' => 'POST', 'id' => 'form_settings', 'class' => 'form-control-line']) !!}
                                     <div class="form-body">
                                         <h3 class="box-title">Login Info</h3>
                                         <hr class="m-t-0">
@@ -188,7 +212,7 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label class="form-control-label" for="password">Password</label>
-                                            <input type="password" class="form-control" name="password" required>
+                                            <input type="password" class="form-control" id="password" name="password" required>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label class="form-control-label" for="confirm_password">Confirm Password</label>
@@ -204,7 +228,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                {!! Form::close() !!}
                             </div>
                         </div>
                         <!-- END SETTINGS TAB -->
