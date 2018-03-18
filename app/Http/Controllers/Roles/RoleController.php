@@ -72,13 +72,13 @@ class RoleController extends Controller
             $role->givePermissionTo($p);
         }
 
-        /*$toastr = Session::flash('test', [ 
+        $toastr = Session::flash('test', [ 
             [
                 'heading' => 'Success',
                 'text'    => 'Role <u>'. $role->name.'</u> successfully added!', 
                 'icon'    => 'success', 
             ],
-        ]);*/
+        ]);
 
         return redirect()->route('roles.index');
     }

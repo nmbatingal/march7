@@ -140,7 +140,8 @@
     <script src="{{ asset('assets/node_modules/Magnific-Popup-master/dist/jquery.magnific-popup-init.js') }}"></script>
     <!--Custom JavaScript -->
     <script src="{{ asset('assets/node_modules/toast-master/js/jquery.toast.js') }}"></script>
-    <script src="{{ asset('dist/js/pages/toastr.js') }}"></script>
+    <!-- Jquery Validation Plugin Css -->
+    <script src="{{ asset('plugins/jquery-validation/jquery.validate.js') }}"></script>
     <script src="{{ asset('dist/js/custom.min.js') }}"></script>
     @yield('scripts')
     <script type="text/javascript">

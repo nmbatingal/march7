@@ -29,7 +29,7 @@
 <div class="row">
     <!-- Column -->
     <div class="col-lg-4 col-xlg-3 col-md-5">
-        <div class="card">
+        <div class="card stickyside">
             <div class="card-body">
                 <center class="m-t-30"> <img src="{{ asset('img/users/user-icon.png') }}" class="img-circle" width="150" />
                     <h4 class="card-title m-t-10">{{ $profile->firstname }} {{ $profile->middlename ? $profile->middlename[0].'.' : '' }} {{ $profile->lastname }}</h4>
@@ -53,114 +53,161 @@
     <!-- Column -->
     <!-- Column -->
     <div class="col-lg-8 col-xlg-9 col-md-7">
-        <div class="card">
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs customtab" role="tablist">
-                <li class="nav-item"> 
-                    <a class="nav-link active" data-toggle="tab" href="#profile" role="tab">
-                        <span class="hidden-sm-up"><i class="ti-user"></i></span> 
-                        <span class="hidden-xs-down">Profile</span>
-                    </a> 
-                </li>
-                <li class="nav-item"> 
-                    <a class="nav-link" data-toggle="tab" href="#settings" role="tab">
-                        <span class="hidden-sm-up"><i class="ti-email"></i></span> 
-                        <span class="hidden-xs-down">Settings</span>
-                    </a> 
-                </li>
-            </ul>
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <div class="tab-pane active" id="profile" role="tabpanel">
-                    <div class="card-body">
-                        <form class="form-material row">
-                            <div class="form-group col-md-4">
-                                <label class="col-md-12" for="firstname">First Name</label>
-                                <div class="col-md-12">
-                                    <input type="text" class="form-control form-control-line" name="firstname" value="{{ $profile->firstname }}" required>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label class="col-md-12" for="middlename">Middle Name</label>
-                                <div class="col-md-12">
-                                    <input type="text" class="form-control form-control-line" name="middlename" value="{{ $profile->middlename }}">
-                                </div>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label class="col-md-12" for="lastname">Last Name</label>
-                                <div class="col-md-12">
-                                    <input type="text" class="form-control form-control-line" name="lastname" value="{{ $profile->lastname }}" required>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="col-md-12" for="sex">Sex</label>
-                                <div class="col-md-12">
-                                    <div class="custom-control custom-radio">
-                                        {{ Form::radio('sex', 0, $profile->sex == 0 ? true : false, ['id' => 'sexMale', 'class' => 'custom-control-input']) }}
-                                        <label class="custom-control-label" for="sexMale">Male</label>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs customtab" role="tablist">
+                        <li class="nav-item"> 
+                            <a class="nav-link active" data-toggle="tab" href="#profile" role="tab">
+                                <span class="hidden-sm-up"><i class="ti-user"></i></span> 
+                                <span class="hidden-xs-down">Profile</span>
+                            </a> 
+                        </li>
+                        <li class="nav-item"> 
+                            <a class="nav-link" data-toggle="tab" href="#roles" role="tab">
+                                <span class="hidden-sm-up"><i class="ti-email"></i></span> 
+                                <span class="hidden-xs-down">Roles</span>
+                            </a> 
+                        </li>
+                        <li class="nav-item"> 
+                            <a class="nav-link" data-toggle="tab" href="#settings" role="tab">
+                                <span class="hidden-sm-up"><i class="ti-email"></i></span> 
+                                <span class="hidden-xs-down">Settings</span>
+                            </a> 
+                        </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <!-- PROFILE TAB -->
+                        <div class="tab-pane active" id="profile" role="tabpanel">
+                            <div class="card-body">
+                                {{ Form::model($profile, [ 'url' => url( '/accounts/profile/'.$profile->id ), 'method' => 'PUT', 'id' => 'form_profile', 'class' => 'form-control-line']) }}
+                                    <div class="form-body">
+                                        <h3 class="box-title">Personal Info</h3>
+                                        <hr class="m-t-0">
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label class="form-control-label" for="firstname">First Name</label>
+                                                <input type="text" class="form-control" name="firstname" value="{{ $profile->firstname }}" required>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label class="form-control-label" for="middlename">Middle Name</label>
+                                                <input type="text" class="form-control" name="middlename" value="{{ $profile->middlename }}">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label class="form-control-label" for="lastname">Last Name</label>
+                                                <input type="text" class="form-control " name="lastname" value="{{ $profile->lastname }}" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="sex" class="form-control-label">Sex</label>
+                                                <div class="form-control-checkboxes">
+                                                    <div class="custom-control custom-radio">
+                                                        {{ Form::radio('sex', 0, false, ['id' => 'sexMale', 'class' => 'custom-control-input', 'required']) }}
+                                                        <label class="custom-control-label" for="sexMale">Male</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio">
+                                                        {{ Form::radio('sex', 1, false, ['id' => 'sexFemale', 'class' => 'custom-control-input']) }}
+                                                        <label class="custom-control-label" for="sexFemale">Female</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="form-control-label" for="birthdate">Birthday</label>
+                                                <input class="form-control" name="birthday" type="date" value="{{ date('Y-m-d', strtotime( $profile->birthday )) }}">
+                                            </div>
+                                        </div>
+                                        <h3 class="box-title">Contact Info</h3>
+                                        <hr class="m-t-0">
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <label class="form-control-label" for="address">Address</label>
+                                                <input type="text" class="form-control " name="address" value="{{ $profile->address }}" required>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="email" class="form-control-label">Email</label>
+                                                <input type="email" class="form-control " name="email" value="{{ $profile->email }}" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="form-control-label" for="mobile_number">Phone No</label>
+                                                <input type="text" class="form-control " name="mobile_number" placeholder="ex. 123 456 7890" value="{{ $profile->mobile_number }}">
+                                            </div>
+                                        </div>
+                                        <h3 class="box-title">Office Info</h3>
+                                        <hr class="m-t-0">
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label class="form-control-label" for="position">Position</label>
+                                                <input type="text" class="form-control " name="position" value="{{ $profile->position }}" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="form-control-label" for="address">Unit / Division / Section</label>
+                                                <select class="form-control" name="office" required>
+                                                    @foreach ( $offices as $office )
+                                                        <option value="{{ $office->id }}" {{ $profile->office_id == $office->id ? 'selected' : '' }}>{{ $office->office_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="custom-control custom-radio">
-                                        {{ Form::radio('sex', 0, $profile->sex == 1 ? true : false, ['id' => 'sexFemale', 'class' => 'custom-control-input']) }}
-                                        <label class="custom-control-label" for="sexFemale">Female</label>
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="form-group col-sm-12">
+                                                <div class="col-sm-12">
+                                                    <button class="btn btn-success">Update Profile</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                {{ Form::close() }}
                             </div>
-                            <div class="form-group col-md-6">
-                                <label class="col-md-12" for="birthdate">Birthday</label>
-                                <div class="col-md-12">
-                                    <input class="form-control" type="date" value="{{ date('Y-m-d', strtotime( $profile->birthday )) }}" id="example-date-input">
-                                </div>
+                        </div>
+                        <!-- END PROFILE TAB -->
+                        <!-- ROLES TAB -->
+                        <div class="tab-pane" id="roles" role="tabpanel">
+                            <div class="card-body">
+                                {!! Form::open([ 'url' => '', 'class' => 'floating-labels m-t-20' ]) !!}
+                                {!! Form::close() !!}
                             </div>
-                            <div class="form-group col-md-12">
-                                <label class="col-md-12" for="address">Address</label>
-                                <div class="col-md-12">
-                                    <input type="text" class="form-control form-control-line" name="address" value="{{ $profile->address }}" required>
-                                </div>
+                        </div>
+                        <!-- END ROLES TAB -->
+                        <!-- SETTINGS TAB -->
+                        <div class="tab-pane" id="settings" role="tabpanel">
+                            <div class="card-body">
+                                <form class="form-control-line">
+                                    <div class="form-body">
+                                        <h3 class="box-title">Login Info</h3>
+                                        <hr class="m-t-0">
+                                        <div class="form-group col-md-4">
+                                            <label class="form-control-label" for="username">Username</label>
+                                            <input type="text" class="form-control" name="username" value="{{ $profile->username }}" required>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label class="form-control-label" for="password">Password</label>
+                                            <input type="password" class="form-control" name="password" required>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label class="form-control-label" for="confirm_password">Confirm Password</label>
+                                            <input type="password" class="form-control" name="confirm_password" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="form-group col-sm-12">
+                                                <div class="col-sm-12">
+                                                    <button class="btn btn-danger">Update Account</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="email" class="col-md-12">Email</label>
-                                <div class="col-md-12">
-                                    <input type="email" class="form-control form-control-line" name="email" value="{{ $profile->email }}" required>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="col-md-12" for="mobile_number">Phone No</label>
-                                <div class="col-md-12">
-                                    <input type="text" class="form-control form-control-line" name="mobile_number" placeholder="ex. 123 456 7890" value="{{ $profile->mobile_number }}">
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-12">
-                                <div class="col-sm-12">
-                                    <button class="btn btn-success">Update Profile</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="tab-pane" id="settings" role="tabpanel">
-                    <div class="card-body">
-                        <form class="floating-labels m-t-20">
-                            <div class="form-group m-b-40">
-                                <input type="text" class="form-control" value="{{ $profile->username }}">
-                                <span class="bar"></span>
-                                <label for="input1">Username</label>
-                            </div>
-                            <div class="form-group m-b-40">
-                                <input type="password" class="form-control">
-                                <span class="bar"></span>
-                                <label for="input1">Password</label>
-                            </div>
-                            <div class="form-group m-b-40">
-                                <input type="password" class="form-control">
-                                <span class="bar"></span>
-                                <label for="input1">Confirm password</label>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <button class="btn btn-danger">Update Account</button>
-                                </div>
-                            </div>
-                        </form>
+                        </div>
+                        <!-- END SETTINGS TAB -->
                     </div>
                 </div>
             </div>
@@ -175,5 +222,36 @@
 
 @section('scripts') 
 <script src="{{ asset('dist/js/pages/jasny-bootstrap.js') }}"></script>
+<script src="{{ asset('js/pages/accounts/profile.js') }}"></script>
+<script>
+    // This is for the sticky sidebar    
+    $(".stickyside").stick_in_parent({
+        offset_top: 100
+    });
+</script>
+<script>
+    $(document).ready(function() {
+
+        var flash     = {!! json_encode(session('toastr')) !!};
+        
+        if ( flash )
+        {   
+            $(flash).each(function (i) {
+                $.toast({
+                    heading: flash[0]['heading'],
+                    text: flash[i]['text'],
+                    icon: flash[i]['icon'],
+                    position: 'bottom-left',
+                    hideAfter: 5500,
+                    //loader: false,
+                    stack: 5
+                });
+            });
+        }
+
+
+
+    });
+</script>
 @endsection
 

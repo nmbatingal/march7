@@ -58,6 +58,19 @@
                     </div>
                     <div class="form-group ">
                         <div class="col-xs-12">
+                            <select id="unit" class="form-control" name="sex" required>
+                                <option value="">Select sex...</option>
+                                <option value="0">Male</option>
+                                <option value="1">Female</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthdate">Birthday</label>
+                        <input class="form-control" type="date" name="birthdate">
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-xs-12">
                             <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Email" required>
                         </div>
                     </div>

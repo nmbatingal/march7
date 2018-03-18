@@ -95,9 +95,11 @@
                                     </td>
                                     <td>{{ $user->position }}</td>
                                     <td>{{ $user->office['acronym'] }}</td>
-                                    <td>{{ $user->created_at }}</td>
+                                    <td>{{ date("F d, Y", strtotime( $user->birthday )) }}</td>
                                     <td>
-                                        <!-- <span class="label label-pill label-info">23%</span> -->
+                                        @foreach ( $user->roles()->pluck('name') as $role )
+                                            <span class="label label-pill label-info">{{ $role }}</span><br>
+                                        @endforeach
                                     </td>
                                     <td>
                                         <a href="javascript:void(0)" data-toggle="tooltip" data-original-title="reset password"> <i class="fa fa-undo text-inverse"></i> </a>
