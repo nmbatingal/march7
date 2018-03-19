@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Morss;
 
 use Session;
 use App\TableMonth as Month;
+use App\Models\Morss\MorssSemester as Semester;
 use App\Models\Morss\MorssQuestion as Question;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -28,7 +29,8 @@ class SurveyController extends Controller
     public function index()
     {
         $months = Month::all();
-        return view('morss.survey', compact('months'));
+        $semesters = Semester::orderBy('id', 'DESC')->paginate(10);
+        return view('morss.survey', compact('months', 'semesters'));
     }
 
     /**
@@ -59,7 +61,7 @@ class SurveyController extends Controller
             $toastr = Session::flash('toastr', [ 
                 [
                     'heading' => 'Success',
-                    'text'    => 'Question successfully added!', 
+                    'text'    => 'New question added successfully!', 
                     'icon'    => 'success', 
                 ],
             ]);

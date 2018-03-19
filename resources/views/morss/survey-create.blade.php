@@ -9,14 +9,14 @@
 @section('content')
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
-        <h4 class="text-themecolor">Add Question</h4>
+        <h4 class="text-themecolor">Question</h4>
     </div>
     <div class="col-md-7 align-self-center text-right">
         <div class="d-flex justify-content-end align-items-center">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/morss') }}">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ url('/morss/survey') }}">Survey</a></li>
-                <li class="breadcrumb-item active">Add</li>
+                <li class="breadcrumb-item active">Question</li>
             </ol>
         </div>
     </div>
@@ -70,12 +70,12 @@
                                     </td>
                                     <td>
                                         <a href="javascript:void(0)">
-                                            {{ $question->question }}
+                                            {!! $question->question !!}
                                         </a>
                                     </td>
                                     <td class="text-nowrap" align="center">
                                         {!! Form::open(['url' => url( 'morss/survey/'.$question->id ), 'method' => 'DELETE']) !!}
-                                            {{ Form::button('<i class="fa fa-close"> </i>', ['class' => 'btn btn-xs btn-danger', 'type' => 'submit']) }}
+                                            {{ Form::button('<i class="fa fa-close"> </i>', ['class' => 'btn btn-xs btn-danger waves-effect waves-light', 'type' => 'submit']) }}
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>
