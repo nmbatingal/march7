@@ -9,14 +9,14 @@
 @section('content')
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
-        <h4 class="text-themecolor">Create Survey</h4>
+        <h4 class="text-themecolor">Add Question</h4>
     </div>
     <div class="col-md-7 align-self-center text-right">
         <div class="d-flex justify-content-end align-items-center">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/morss') }}">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ url('/morss/survey') }}">Survey</a></li>
-                <li class="breadcrumb-item active">Create</li>
+                <li class="breadcrumb-item active">Add</li>
             </ol>
         </div>
     </div>
@@ -29,51 +29,60 @@
 <!-- ============================================================== -->
 <br>
 <div class="row">
-    <div class="col-4">
-        <div class="card">
+    <div class="col-md-4">
+        <div class="card stickyside">
             <div class="card-body">
-                <h4 class="card-title">Daterange of the survey</h4>
-                {!! Form::open(['url' => url('morss/survey')]) !!}
-                    <div class="form-group m-t-40 row">
-                        <label for="example-text-input" class="col-md-3 col-form-label">From</label>
-                        <div class="col-md-9">
-                            <select class="select2 form-control custom-select" required>
-                                <option>Select</option>
-                                @foreach($months as $month)
-                                    <option value="{{ $month->id }}">{{ $month->month_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="example-text-input" class="col-md-3 col-form-label">To</label>
-                        <div class="col-md-9">
-                            <select class="select2 form-control custom-select" required>
-                                <option>Select</option>
-                                @foreach($months as $month)
-                                    <option value="{{ $month->id }}">{{ $month->month_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="example-text-input" class="col-md-3 col-form-label">Year</label>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control datetimepicker_year" name="year" placeholder="Select" required>
+                {!! Form::open(['url' => url('morss/survey '), 'id' => 'form_create_survey_question', 'class' => 'form-control-line']) !!}
+                    <div class="form-body">
+                        <h3 class="box-title">Question Form</h3>
+                        <hr class="m-t-0">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                {!! Form::label('question', 'Question', ['class' => 'form-control-label']) !!}
+                                {!! Form::textarea('question', null, ['id' => 'question', 'class' => 'form-control no-resize auto-growth', 'rows' => 1, 'required']) !!}
+                            </div>
                         </div>
                     </div>
                     <div class="pull-right">
                         <button type="submit" class="btn btn-success waves-effect waves-light">Submit</button>
                     </div>
-                {{ Form::close() }}
+                {!! Form::close() !!}
             </div>
         </div>
     </div>
-    <div class="col-8">
+    <div class="col-md-8">
         <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Questions</h4>
-                <h6 class="card-subtitle"> Lurem Ipsum Dolor </h6>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Question</th>
+                                <th class="text-nowrap text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ( $questions as $i => $question )
+                                <tr>
+                                    <td>
+                                        {{ ++$i }}
+                                    </td>
+                                    <td>
+                                        <a href="javascript:void(0)">
+                                            {{ $question->question }}
+                                        </a>
+                                    </td>
+                                    <td class="text-nowrap" align="center">
+                                        {!! Form::open(['url' => url( 'morss/survey/'.$question->id ), 'method' => 'DELETE']) !!}
+                                            {{ Form::button('<i class="fa fa-close"> </i>', ['class' => 'btn btn-xs btn-danger', 'type' => 'submit']) }}
+                                        {!! Form::close() !!}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -90,12 +99,31 @@
     jQuery(document).ready(function() {
         // For select 2
         $(".select2").select2();
-    });
-</script>
-<script>
-    $('.datetimepicker_year').datetimepicker({
-        viewMode: 'years',
-        format: 'YYYY'
+
+        // For auto resize text area
+        autosize($('textarea.auto-growth'));
+
+        // For sticky card
+        $(".stickyside").stick_in_parent({
+            offset_top: 100
+        });
+
+        var flash     = {!! json_encode(session('toastr')) !!};
+        if ( flash )
+        {   
+            $(flash).each(function (i) {
+                $.toast({
+                    heading: flash[0]['heading'],
+                    text: flash[i]['text'],
+                    icon: flash[i]['icon'],
+                    position: 'bottom-left',
+                    hideAfter: 5500,
+                    //loader: false,
+                    stack: 5
+                });
+            });
+        }
+
     });
 </script>
 @endsection

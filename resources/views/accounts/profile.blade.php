@@ -255,9 +255,7 @@
 </script>
 <script>
     $(document).ready(function() {
-
         var flash     = {!! json_encode(session('toastr')) !!};
-        
         if ( flash )
         {   
             $(flash).each(function (i) {
@@ -272,9 +270,6 @@
                 });
             });
         }
-
-
-
     });
 </script>
 @endsection

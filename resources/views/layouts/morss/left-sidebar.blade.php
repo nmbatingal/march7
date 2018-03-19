@@ -18,14 +18,14 @@
                 </li>
                 <li class="nav-small-cap">--- MENU</li>
                 <li> 
-                    <a class="waves-effect waves-dark" href="{{ url('/home') }}" aria-expanded="false"><i class="icon-grid"></i>Dashboard</a>
+                    <a class="waves-effect waves-dark" href="{{ url('/morss') }}" aria-expanded="false"><i class="icon-grid"></i>Dashboard</a>
                 </li>
                 <li> 
                     <a class="waves-effect waves-dark" href="{{ url('/morss/survey')}}" aria-expanded="false">
                         <i class="icon-chart"></i>Survey
                     </a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{ url('/morss/survey/create')}}">Create Survey </a></li>
+                        <li><a href="{{ url('/morss/survey/create')}}">Add Question </a></li>
                     </ul>
                 </li>
             </ul>

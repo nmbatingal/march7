@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Morss;
 
+use Session;
 use App\TableMonth as Month;
+use App\Models\Morss\MorssQuestion as Question;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -15,7 +17,7 @@ class SurveyController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'isAdmin']);
     }
 
     /**
@@ -36,8 +38,9 @@ class SurveyController extends Controller
      */
     public function create()
     {
-        $months = Month::all();
-        return view('morss.survey-create', compact('months'));
+        $months    = Month::all();
+        $questions = Question::all();
+        return view('morss.survey-create', compact('months', 'questions'));
     }
 
     /**
@@ -48,7 +51,21 @@ class SurveyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $question = new Question();
+        $question->question = nl2br($request['question']);
+
+        if ( $question->save() )
+        {
+            $toastr = Session::flash('toastr', [ 
+                [
+                    'heading' => 'Success',
+                    'text'    => 'Question successfully added!', 
+                    'icon'    => 'success', 
+                ],
+            ]);
+        }
+
+        return redirect('/morss/survey/create');
     }
 
     /**
@@ -91,8 +108,19 @@ class SurveyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Question $survey)
     {
-        //
+        if ( $survey->delete() )
+        {
+            $toastr = Session::flash('toastr', [ 
+                [
+                    'heading' => 'Success',
+                    'text'    => 'Question successfully removed!', 
+                    'icon'    => 'success', 
+                ],
+            ]);
+        }
+
+        return redirect('/morss/survey/create');
     }
 }

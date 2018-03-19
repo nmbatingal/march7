@@ -146,6 +146,29 @@ class ProfileController extends Controller
      *
      *
      */
+    public function resetPassword(Request $request, User $profile)
+    {
+        $profile->password     = bcrypt('dostcaraga');
+
+        if ( $profile->save() )
+        {
+            $toastr = Session::flash('toastr', [ 
+                [
+                    'heading' => 'Success',
+                    'text'    => 'Reset password successful!', 
+                    'icon'    => 'success', 
+                ],
+            ]);
+        }
+
+        return redirect('/accounts');
+    }
+
+    /**
+     * Update the username and password of the user
+     *
+     *
+     */
     public function updatePassword(Request $request, User $profile)
     {
         $profile->username     = $request->username;
