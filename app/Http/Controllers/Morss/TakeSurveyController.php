@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Morss;
 
-use Session;
 use App\TableMonth as Month;
 use App\Models\Morss\MorssSemester as Semester;
 use App\Models\Morss\MorssQuestion as Question;
+use App\Models\Morss\MorssSurvey as Survey;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class SurveyController extends Controller
+class TakeSurveyController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -30,7 +30,7 @@ class SurveyController extends Controller
     {
         $months = Month::all();
         $semesters = Semester::orderBy('id', 'DESC')->paginate(10);
-        return view('morss.survey', compact('months', 'semesters'));
+        return view('morss.take-survey', compact('months', 'semesters'));
     }
 
     /**
@@ -40,9 +40,9 @@ class SurveyController extends Controller
      */
     public function create()
     {
-        $months    = Month::all();
+        $semester  = Semester::all();
         $questions = Question::all();
-        return view('morss.question', compact('months', 'questions'));
+        return view('morss.take-survey', compact('semester', 'questions'));
     }
 
     /**
@@ -53,21 +53,18 @@ class SurveyController extends Controller
      */
     public function store(Request $request)
     {
-        $question = new Question();
-        $question->question = nl2br($request['question']);
+        foreach ($request->question_id as $id) {
 
-        if ( $question->save() )
-        {
-            $toastr = Session::flash('toastr', [ 
-                [
-                    'heading' => 'Success',
-                    'text'    => 'New question added successfully!', 
-                    'icon'    => 'success', 
-                ],
-            ]);
+            $survey = new Survey();
+
+            $survey->semester_id  = $request['semester_id'];
+            $survey->user_id      = $request['user_id'];
+            $survey->question_id  = $id;
+            $survey->rate         = $request['qn_'.$id];
+            $survey->save();
         }
 
-        return redirect('/morss/survey/create');
+        return redirect('/morss');
     }
 
     /**
@@ -78,7 +75,9 @@ class SurveyController extends Controller
      */
     public function show($id)
     {
-        //
+        $semester  = Semester::find($id);
+        $questions = Question::all();
+        return view('morss.take-survey-id', compact('semester', 'questions'));
     }
 
     /**
@@ -110,19 +109,8 @@ class SurveyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Question $survey)
+    public function destroy($id)
     {
-        if ( $survey->delete() )
-        {
-            $toastr = Session::flash('toastr', [ 
-                [
-                    'heading' => 'Success',
-                    'text'    => 'Question successfully removed!', 
-                    'icon'    => 'success', 
-                ],
-            ]);
-        }
-
-        return redirect('/morss/survey/create');
+        //
     }
 }

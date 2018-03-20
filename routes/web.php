@@ -31,8 +31,8 @@ Route::resource('/accounts', 'Accounts\AccountsController');
 Route::resource('/hrmis/application', 'Hrmis\ApplicantsController');
 Route::resource('/hrmis', 'Hrmis\HrmisController');
 
+Route::resource('/morss/survey/takesurvey', 'Morss\TakeSurveyController');
 Route::resource('/morss/survey', 'Morss\SurveyController');
-
 Route::post('/morss/{morss}/lock', 'Morss\MoraleSurveyController@lockSemester')->name('morss.lockSemester');
 Route::post('/morss/{morss}/unlock', 'Morss\MoraleSurveyController@unlockSemester')->name('morss.unlockSemester');
 Route::resource('/morss', 'Morss\MoraleSurveyController');

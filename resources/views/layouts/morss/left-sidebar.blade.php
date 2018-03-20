@@ -26,6 +26,7 @@
                     </a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="{{ url('/morss/survey/create')}}">Question </a></li>
+                        <li><a href="{{ url('/morss/survey/takesurvey')}}">Take Survey </a></li>
                     </ul>
                 </li>
             </ul>

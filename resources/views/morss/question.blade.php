@@ -30,16 +30,16 @@
 <br>
 <div class="row">
     <div class="col-md-4">
-        <div class="card stickyside">
+        <div class="card border-info stickyside">
+            <div class="card-header bg-info">
+                <h4 class="m-b-0 text-white">Question Form</h4>
+            </div>
             <div class="card-body">
                 {!! Form::open(['url' => url('morss/survey '), 'id' => 'form_create_survey_question', 'class' => 'form-control-line']) !!}
                     <div class="form-body">
-                        <h3 class="box-title">Question Form</h3>
-                        <hr class="m-t-0">
                         <div class="form-group row">
                             <div class="col-md-12">
-                                {!! Form::label('question', 'Question', ['class' => 'form-control-label']) !!}
-                                {!! Form::textarea('question', null, ['id' => 'question', 'class' => 'form-control no-resize auto-growth', 'rows' => 1, 'required']) !!}
+                                {!! Form::textarea('question', null, ['id' => 'question', 'class' => 'form-control no-resize auto-growth', 'rows' => 1, 'placeholder' => 'insert a question here...', 'required']) !!}
                             </div>
                         </div>
                     </div>

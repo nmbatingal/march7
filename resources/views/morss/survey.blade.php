@@ -29,18 +29,20 @@
 <br>
 <div class="row">
     <div class="col-md-4">
-        <div class="card stickyside">
+        <div class="card border-info stickyside">
+            <div class="card-header bg-info">
+                <h4 class="m-b-0 text-white">Survey Form</h4>
+            </div>
             <div class="card-body">
+                <p class="card-text">Select daterange of the survey to conduct.</p>
+                <hr class="p-b-25">
                 {!! Form::open([ 'url' => url('morss'), 'id' => 'form_create_semester' ]) !!}
                     <div class="form-body">
-                        <h3 class="box-title">Semester Form</h3>
-                        <h6 class="card-subtitle">Daterange of the survey to conduct </h6>
-                        <hr class="m-t-0">
                         <div class="form-group m-b-25 row">
                             <label for="month_from" class="col-md-3 col-form-label">From</label>
                             <div class="col-md-9">
                                 <select class="form-control form-control-line" name="month_from" required>
-                                    <option value="">Select</option>
+                                    <option value="">Select month...</option>
                                     @foreach ( $months as $month )
                                         <option value="{{ $month->id }}">{{ $month->month_name }}</option>
                                     @endforeach
@@ -51,7 +53,7 @@
                             <label for="month_to" class="col-md-3 col-form-label">To</label>
                             <div class="col-md-9">
                                 <select class="form-control" name="month_to" required>
-                                    <option value="">Select</option>
+                                    <option value="">Select month...</option>
                                     @foreach ( $months as $month )
                                         <option value="{{ $month->id }}">{{ $month->month_name }}</option>
                                     @endforeach
@@ -61,7 +63,7 @@
                         <div class="form-group row">
                             <label for="example-text-input" class="col-md-3 col-form-label">Year</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control datetimepicker_year" name="year" placeholder="Select" required>
+                                <input type="text" class="form-control datetimepicker_year" name="year" placeholder="Select year..." required>
                             </div>
                         </div>
                     </div>
