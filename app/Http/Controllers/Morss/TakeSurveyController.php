@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Morss;
 
+use Auth;
 use App\TableMonth as Month;
 use App\Models\Morss\MorssSemester as Semester;
 use App\Models\Morss\MorssQuestion as Question;
@@ -18,7 +19,7 @@ class TakeSurveyController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'isAdmin']);
+        $this->middleware(['auth']);
     }
 
     /**
@@ -28,8 +29,10 @@ class TakeSurveyController extends Controller
      */
     public function index()
     {
-        $months = Month::all();
-        $semesters = Semester::orderBy('id', 'DESC')->paginate(10);
+        $months      = Month::all();
+        // $semesters   = Semester::orderBy('id', 'DESC')->get();//->paginate(10);
+        // $survey   = Survey::userHasSurveyed( Auth::user()->id )->orderBy('id', 'DESC')->get();
+        $semesters   = Semester::userHasSurveyed( Auth::user()->id )->get();
         return view('morss.take-survey', compact('months', 'semesters'));
     }
 
@@ -76,8 +79,9 @@ class TakeSurveyController extends Controller
     public function show($id)
     {
         $semester  = Semester::find($id);
+        $surveys   = Survey::userHasSurveyed( Auth::user()->id )->where('semester_id', $id)->get();
         $questions = Question::all();
-        return view('morss.take-survey-id', compact('semester', 'questions'));
+        return view('morss.take-survey-id', compact('semester', 'surveys', 'questions'));
     }
 
     /**

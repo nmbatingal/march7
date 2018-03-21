@@ -19,7 +19,7 @@ $(function () {
         errorPlacement: function(error, element) {
 
             error.addClass('badge-danger');
-            $(element).closest('tr').children('td:nth-child(2)').append(error);
+            $(element).closest('tr').children('td:nth-child(2)').prepend(error);
         },
         success: function ( label, element ) {
 

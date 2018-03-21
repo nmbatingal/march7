@@ -39,8 +39,7 @@
                         <thead>
                             <tr>
                                 <th>Survey Range</th>
-                                <th>Date Created</th>
-                                <th>Status</th>
+                                <th>Date Surveyed</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,13 +49,15 @@
                                         <a href="{{ url('/morss/survey/takesurvey/'. $semester->id ) }}">
                                             {{ $semester->monthFrom->month_name }} - {{ $semester->monthTo->month_name }}, {{ $semester->year }}
                                         </a>
+                                        @if ( $semester->surveys->count() > 0 )
+                                            <div class="label label-table label-success">Done</div>
+                                        @endif
                                     </td>
-                                    <td>{{ date("F d, Y", strtotime($semester->created_at)) }}</td>
                                     <td>
-                                        @if ( $semester->status == 1 )
-                                            <div class="label label-table label-success">Open</div>
+                                        @if ( $semester->surveys->count() > 0 )
+                                            {{ date('F d, Y', strtotime( $semester->surveys[0]->created_at )) }}
                                         @else
-                                            <div class="label label-table label-danger">Closed</div>
+                                            -
                                         @endif
                                     </td>
                                 </tr>
@@ -68,6 +69,7 @@
         </div>
     </div>
 </div>
+
 @endsection
 
 @section('scripts')

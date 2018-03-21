@@ -33,4 +33,18 @@ class MorssSemester extends Model
     {
         return $this->belongsTo('App\TableMonth', 'month_to', 'id');
     }
+
+    public function surveys()
+    {
+        return $this->hasMany('App\Models\Morss\MorssSurvey', 'semester_id', 'id');
+    }
+
+    public function scopeUserHasSurveyed($query, $user = 0)
+    {
+        return $query->with([
+            'surveys' => function ($query) use ($user) {
+                $query->with('user')->userHasSurveyed($user);
+            }
+        ]);
+    }
 }

@@ -17,7 +17,7 @@
         <div class="d-flex justify-content-end align-items-center">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/morss') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ url('/morss/survey') }}">Survey</a></li>
+                <li class="breadcrumb-item"><a href="{{ url('/morss/survey/takesurvey') }}">Survey</a></li>
                 <li class="breadcrumb-item active">Take Survey</li>
             </ol>
         </div>
@@ -30,6 +30,7 @@
 <!-- Start Page Content -->
 <!-- ============================================================== -->
 <br>
+
 <div class="row">
     <div class="col-md-3">
         <div class="card border-info stickyside">
@@ -73,18 +74,16 @@
             <div class="card-header bg-info">
                 <h4 class="m-b-0 text-white">Morale Survey Form</h4>
             </div>
-            <div class="card-body p-0">
+            @if ( $surveys->count() > 0 )
+                <div class="card-body p-0">
 
-                <div class="form-group row p-20 m-b-0">
-                    <label for="" class="col-md-3 col-form-label font-bold">Daterange of the survey</label>
-                    <div class="col-md-3">
-                        <input class="form-control disabled" type="text" value="{{ $semester->monthFrom->month_name }} - {{ $semester->monthTo->month_name }}, {{ $semester->year }}" readonly>
-                        {{ Form::hidden( 'semester_id', $semester->id, ['id' => 'semester_id'] ) }}
-                        {{ Form::hidden( 'user_id', Auth::user()->id, ['id' => 'user_id'] ) }}
+                    <div class="form-group row p-20 m-b-0">
+                        <label for="" class="col-md-3 col-form-label font-bold">Daterange of the survey</label>
+                        <div class="col-md-3">
+                            <input class="form-control disabled" type="text" value="{{ $semester->monthFrom->month_name }} - {{ $semester->monthTo->month_name }}, {{ $semester->year }}" readonly>
+                        </div>
                     </div>
-                </div>
 
-                {!! Form::open(['url' => url('/morss/survey/takesurvey'), 'id' => 'form_take_survey']) !!}
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
@@ -99,59 +98,127 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ( $questions as $i => $question )
+                                @foreach ( $surveys as $i => $survey )
                                     <tr>
                                         <td>
                                             {{ ++$i }}
-                                            {{ Form::hidden( 'question_id[]', $question->id ) }}
                                         </td>
                                         <td>
-                                            <a href="javascript:void(0)" class="text-muted">
-                                                {!! $question->question !!}
-                                            </a>
+                                            <div id="qn_1-error" class="badge badge-table badge-success"><i class="fa fa-check"></i></div> {!! $survey->question['question'] !!}
                                         </td>
                                         <td class="text-nowrap" align="center">
                                             <div class="custom-control custom-radio">
-                                                {!! Form::radio('qn_'.$question->id, 1, false, ['id' => 'qn_1'.$question->id, 'class' => 'custom-control-input', 'required']) !!}
-                                                {!! Form::label('qn_1'.$question->id, ' ', ['class' => 'custom-control-label']) !!}
+                                                {!! Form::radio($survey->id, 1, $survey->rate == 1 ? true : false, ['class' => 'custom-control-input', 'disabled']) !!}
+                                                {!! Form::label($survey->id, ' ', ['class' => 'custom-control-label']) !!}
                                             </div>
                                         </td>
                                         <td class="text-nowrap" align="center">
                                             <div class="custom-control custom-radio">
-                                                {!! Form::radio('qn_'.$question->id, 2, false, ['id' => 'qn_2'.$question->id, 'class' => 'custom-control-input', 'required']) !!}
-                                                {!! Form::label('qn_2'.$question->id, ' ', ['class' => 'custom-control-label']) !!}
+                                                {!! Form::radio($survey->id, 2, $survey->rate == 2 ? true : false, ['class' => 'custom-control-input', 'disabled']) !!}
+                                                {!! Form::label($survey->id, ' ', ['class' => 'custom-control-label']) !!}
                                             </div>
                                         </td>
                                         <td class="text-nowrap" align="center">
                                             <div class="custom-control custom-radio">
-                                                {!! Form::radio('qn_'.$question->id, 3, false, ['id' => 'qn_3'.$question->id, 'class' => 'custom-control-input', 'required']) !!}
-                                                {!! Form::label('qn_3'.$question->id, ' ', ['class' => 'custom-control-label']) !!}
+                                                {!! Form::radio($survey->id, 3, $survey->rate == 3 ? true : false, ['class' => 'custom-control-input', 'disabled']) !!}
+                                                {!! Form::label($survey->id, ' ', ['class' => 'custom-control-label']) !!}
                                             </div>
                                         </td>
                                         <td class="text-nowrap" align="center">
                                             <div class="custom-control custom-radio">
-                                                {!! Form::radio('qn_'.$question->id, 4, false, ['id' => 'qn_4'.$question->id, 'class' => 'custom-control-input', 'required']) !!}
-                                                {!! Form::label('qn_4'.$question->id, ' ', ['class' => 'custom-control-label']) !!}
+                                                {!! Form::radio($survey->id, 4, $survey->rate == 4 ? true : false, ['class' => 'custom-control-input', 'disabled']) !!}
+                                                {!! Form::label($survey->id, ' ', ['class' => 'custom-control-label']) !!}
                                             </div>
                                         </td>
                                         <td class="text-nowrap" align="center">
                                             <div class="custom-control custom-radio">
-                                                {!! Form::radio('qn_'.$question->id, 5, false, ['id' => 'qn_5'.$question->id, 'class' => 'custom-control-input', 'required']) !!}
-                                                {!! Form::label('qn_5'.$question->id, ' ', ['class' => 'custom-control-label']) !!}
+                                                {!! Form::radio($survey->id, 5, $survey->rate == 5 ? true : false, ['class' => 'custom-control-input', 'disabled']) !!}
+                                                {!! Form::label($survey->id, ' ', ['class' => 'custom-control-label']) !!}
                                             </div>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+                    </div>    
+                </div>
+            @else
+                <div class="card-body p-0">
+
+                    <div class="form-group row p-20 m-b-0">
+                        <label for="" class="col-md-3 col-form-label font-bold">Daterange of the survey</label>
+                        <div class="col-md-3">
+                            <input class="form-control disabled" type="text" value="{{ $semester->monthFrom->month_name }} - {{ $semester->monthTo->month_name }}, {{ $semester->year }}" readonly>
+                            {{ Form::hidden( 'semester_id', $semester->id, ['id' => 'semester_id'] ) }}
+                            {{ Form::hidden( 'user_id', Auth::user()->id, ['id' => 'user_id'] ) }}
+                        </div>
                     </div>
 
-                    <div class="pull-right p-15">
-                        <button type="submit" class="btn btn-success waves-effect waves-light">Submit</button>
-                    </div>
-                                           
-                {!! Form::close() !!}
-            </div>
+                    {!! Form::open(['url' => url('/morss/survey/takesurvey'), 'id' => 'form_take_survey']) !!}
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Question</th>
+                                        <th class="text-nowrap text-center">DN</th>
+                                        <th class="text-nowrap text-center">N</th>
+                                        <th class="text-nowrap text-center">NS</th>
+                                        <th class="text-nowrap text-center">Y</th>
+                                        <th class="text-nowrap text-center">DY</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ( $questions as $i => $question )
+                                        <tr>
+                                            <td>
+                                                {{ ++$i }}
+                                                {{ Form::hidden( 'question_id[]', $question->id ) }}
+                                            </td>
+                                            <td>
+                                                {!! $question->question !!}
+                                            </td>
+                                            <td class="text-nowrap" align="center">
+                                                <div class="custom-control custom-radio">
+                                                    {!! Form::radio('qn_'.$question->id, 1, false, ['id' => 'qn_1'.$question->id, 'class' => 'custom-control-input', 'required']) !!}
+                                                    {!! Form::label('qn_1'.$question->id, ' ', ['class' => 'custom-control-label']) !!}
+                                                </div>
+                                            </td>
+                                            <td class="text-nowrap" align="center">
+                                                <div class="custom-control custom-radio">
+                                                    {!! Form::radio('qn_'.$question->id, 2, false, ['id' => 'qn_2'.$question->id, 'class' => 'custom-control-input', 'required']) !!}
+                                                    {!! Form::label('qn_2'.$question->id, ' ', ['class' => 'custom-control-label']) !!}
+                                                </div>
+                                            </td>
+                                            <td class="text-nowrap" align="center">
+                                                <div class="custom-control custom-radio">
+                                                    {!! Form::radio('qn_'.$question->id, 3, false, ['id' => 'qn_3'.$question->id, 'class' => 'custom-control-input', 'required']) !!}
+                                                    {!! Form::label('qn_3'.$question->id, ' ', ['class' => 'custom-control-label']) !!}
+                                                </div>
+                                            </td>
+                                            <td class="text-nowrap" align="center">
+                                                <div class="custom-control custom-radio">
+                                                    {!! Form::radio('qn_'.$question->id, 4, false, ['id' => 'qn_4'.$question->id, 'class' => 'custom-control-input', 'required']) !!}
+                                                    {!! Form::label('qn_4'.$question->id, ' ', ['class' => 'custom-control-label']) !!}
+                                                </div>
+                                            </td>
+                                            <td class="text-nowrap" align="center">
+                                                <div class="custom-control custom-radio">
+                                                    {!! Form::radio('qn_'.$question->id, 5, false, ['id' => 'qn_5'.$question->id, 'class' => 'custom-control-input', 'required']) !!}
+                                                    {!! Form::label('qn_5'.$question->id, ' ', ['class' => 'custom-control-label']) !!}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pull-right p-15">
+                            <button type="submit" class="btn btn-success waves-effect waves-light">Submit</button>
+                        </div>              
+                    {!! Form::close() !!}
+                </div>
+            @endif
         </div>
     </div>
 </div>
@@ -164,7 +231,7 @@
 <!-- bootstrap-datetimepicker -->    
 <script src="{{ asset('gentelella/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
 <!-- CUSTOM PAGE JS -->
-<script src="{{ asset('js/pages/morss/take-survey.js') }}"></script>
+<script src="{{ asset('js/pages/morss/take-survey-id.js') }}"></script>
 <script>
     jQuery(document).ready(function() {
 

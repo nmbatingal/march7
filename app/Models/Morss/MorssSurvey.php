@@ -39,4 +39,10 @@ class MorssSurvey extends Model
     {
         return $this->belongsTo('App\User', 'user_id', 'id');
     }
+    
+    public function scopeUserHasSurveyed($query, $user = 0)
+    {
+        // return $query->where('semester_id', $semester)->where('user_id', $user)->count();
+        return $query->where('user_id', $user);
+    }
 }
