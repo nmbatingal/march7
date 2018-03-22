@@ -44,7 +44,7 @@
             <div id="register" class="card-body">
 
                 {!! Form::open(['url' => route('register'), 'class' => 'form-horizontal form-material' ]) !!}
-                    <a href="javascript:void(0)" class="text-center db"><img src="../assets/images/logo-icon.png" alt="Home" /><br/><img src="../assets/images/logo-text.png" alt="Home" /></a>
+                    <a href="javascript:void(0)" class="text-center db"><img src="{{ asset('assets/images/logo-icon.png') }}" alt="Home" /><br/><img src="{{ asset('assets/images/logo-text.png') }}" alt="Home" /></a>
                     <h3 class="box-title m-t-40 m-b-0">Register Now</h3><small>Create your account and enjoy</small>
                     <div class="form-group m-t-20">
                         <div class="col-xs-12">
