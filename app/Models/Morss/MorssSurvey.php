@@ -47,6 +47,6 @@ class MorssSurvey extends Model
 
     public function scopeOverAllIndex($query)
     {
-        return $query->user();
+        return "abcde";
     }
 }

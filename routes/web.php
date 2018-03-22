@@ -39,22 +39,8 @@ Route::resource('/morss', 'Morss\MoraleSurveyController');
 
 // Sample Query
 Route::get('/sample', function () {
-    
-    /*$users = App\User::find(6)->with(['surveys' => function ($query) {
-                $query->where('semester_id', '=', 1);
-            }])->get();
 
-    $user  = App\User::where('id', 6)->with(['surveys'])->first();
+    $semesters = App\Models\Morss\MorssSemester::semesterOverallIndex()->get();
 
-    $semester  = App\Models\Morss\MorssSemester::with(['surveys' => function ($query) {
-                $query->where('semester_id', '=', 1)->first();
-            }])->first();*/
-
-    // $semester  = App\Models\Morss\MorssSemester::userHasSurveyed(1)->get();
-    $semester  = App\Models\Morss\MorssSemester::userHasSurveyed(6)->paginate(10);
-
-    $semesters = App\Models\Morss\MorssSemester::userSurveyed()->get();
-
-    // return $user->surveys;
-    return dd($semesters);
+    return $semesters;
 });
