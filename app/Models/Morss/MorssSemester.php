@@ -47,4 +47,13 @@ class MorssSemester extends Model
             }
         ]);
     }
+
+    public function scopeSemesterOverallIndex($query)
+    {
+        return $query->with([
+            'surveys' => function ($query) {
+                $query->overAllIndex();
+            }
+        ]);
+    }
 }

@@ -42,7 +42,11 @@ class MorssSurvey extends Model
     
     public function scopeUserHasSurveyed($query, $user = 0)
     {
-        // return $query->where('semester_id', $semester)->where('user_id', $user)->count();
         return $query->where('user_id', $user);
+    }
+
+    public function scopeOverAllIndex($query)
+    {
+        return $query->user();
     }
 }
