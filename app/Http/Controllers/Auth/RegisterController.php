@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use App\Offices;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
 use App\Http\Controllers\Controller;
@@ -107,7 +108,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $roles  = Role::where('name', 'Staff')->firstOrFail();
+        $u = User::create([
             'firstname'      => $data['firstname'],
             'lastname'       => $data['lastname'],
             'sex'            => $data['sex'],
@@ -118,6 +120,9 @@ class RegisterController extends Controller
             'username'       => $data['username'],
             'password'       => bcrypt($data['password']),
         ]);
+
+        $u->roles()->sync($roles);
+        return $u;
     }
 
     /**

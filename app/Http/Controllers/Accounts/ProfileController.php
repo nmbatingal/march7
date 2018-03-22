@@ -110,7 +110,6 @@ class ProfileController extends Controller
         }
 
         return redirect('accounts/profile/'.$profile->id);
-        // return dd($request);
     }
 
     /**
@@ -120,14 +119,19 @@ class ProfileController extends Controller
      */
     public function updateUserRoles(Request $request, User $profile)
     {
-        $roles = $request['roles'];
+        $active = $request['isactive'];
+        $roles  = $request['roles'];
+
+        $profile->_isActive = isset($request['is_active']) ? 1 : 0;
+        $profile->_isAdmin = isset($request['is_admin']) ? 1 : 0;
         $profile->save();
 
-        if (isset($roles)) {        
-            $profile->roles()->sync($roles);  //If one or more role is selected associate user to roles          
+        // assign user roles
+        if (isset($roles)) {
+            $profile->roles()->sync($roles);  // If one or more role is selected associate user to roles    
         }        
         else {
-            $profile->roles()->detach(); //If no role is selected remove exisiting role associated to a user
+            $profile->roles()->detach(); // If no role is selected remove exisiting role associated to a user
         }
 
         $toastr = Session::flash('toastr', [ 
@@ -138,7 +142,8 @@ class ProfileController extends Controller
             ],
         ]);
 
-        return redirect('accounts/profile/'.$profile->id);
+        // return dd($request);
+        return redirect('accounts/profile/'. $profile->id );
     }
 
     /**

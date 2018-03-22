@@ -1,5 +1,12 @@
 $(function () {
-    
+
+    var chk1 = $("input[id='System Administrator']");
+    var chk2 = $("input[id='is_admin']");
+
+    chk1.on('change', function(){
+      chk2.prop('checked',this.checked);
+    });
+
     // Profile Tab
     $('#form_profile').validate({
         rules: {

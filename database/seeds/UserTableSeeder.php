@@ -1,6 +1,8 @@
 <?php
 
+use App\User;
 use App\Offices;
+use Spatie\Permission\Models\Role;
 use Illuminate\Database\Seeder;
 
 class UserTableSeeder extends Seeder
@@ -13,6 +15,8 @@ class UserTableSeeder extends Seeder
     public function run()
     {
     	$office = Offices::where('acronym', '=', 'TSS')->firstOrFail();
+        $roles  = Role::where('name', 'System Administrator')->firstOrFail();
+
         $users = [
             [
                 'username'   => 'admin',
@@ -29,6 +33,10 @@ class UserTableSeeder extends Seeder
             ],
         ];
 
-        DB::table('users')->insert($users);
+        foreach ($users as $user) {
+            $u = User::create($user);
+            $u->roles()->sync($roles);
+        }
+
     }
 }

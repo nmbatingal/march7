@@ -3,6 +3,11 @@
 @section('styles')
 <!-- page css -->
 <link href="{{ asset('dist/css/pages/floating-label.css') }}" rel="stylesheet">
+<style type="text/css">
+    .hidden {
+        display: none;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -67,13 +72,13 @@
                         <li class="nav-item"> 
                             <a class="nav-link" data-toggle="tab" href="#roles" role="tab">
                                 <span class="hidden-sm-up"><i class="ti-email"></i></span> 
-                                <span class="hidden-xs-down">Roles</span>
+                                <span class="hidden-xs-down">User Settings</span>
                             </a> 
                         </li>
                         <li class="nav-item"> 
                             <a class="nav-link" data-toggle="tab" href="#settings" role="tab">
                                 <span class="hidden-sm-up"><i class="ti-email"></i></span> 
-                                <span class="hidden-xs-down">Settings</span>
+                                <span class="hidden-xs-down">Login Settings</span>
                             </a> 
                         </li>
                     </ul>
@@ -174,6 +179,15 @@
                                     <div class="form-body">
                                         <h3 class="box-title">User Account Role</h3>
                                         <hr class="m-t-0">
+                                        <div class="row m-l-15">
+                                            <div class="form-group col-md-6">
+                                                <div class="custom-control custom-checkbox">
+                                                    {{ Form::checkbox('is_active', 1, $profile->_isActive == 1 ? true : false, ['id' => 'is_active', 'class' => 'custom-control-input'] ) }}
+                                                    {{ Form::label('is_active', 'set account to active', ['class' => 'custom-control-label']) }}
+                                                </div>
+                                                {{ Form::checkbox('is_admin', 1, $profile->_isAdmin == 1 ? true : false, ['id' => 'is_admin', 'class' => 'hidden']) }}
+                                            </div>
+                                        </div>
                                         <div class="row m-l-15">
                                             <div class="form-group col-md-6">
                                                 <label for="sex" class="form-control-label">Check to assign roles to a user account</label>

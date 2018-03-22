@@ -1,0 +1,58 @@
+{
+  "name": "myapplication",
+  "description": "dost caraga application staff portal",
+  "main": "",
+  "authors": [
+    "Narciso Batingal <batingalnarz11@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/nmbatingal/march7",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/vendor/bower",
+    "test",
+    "tests",
+    "resources/assets/vendor"
+  ],
+  "dependencies": {
+    "jquery-slimscroll": "slimscroll#^1.3.8",
+    "jquery-validation": "^1.17.0",
+    "datatables": "DataTables#^1.10.16",
+    "jquery.nicescroll": "nicescroll#^3.7.6",
+    "bootstrap-material-design-icons": "^2.2.0",
+    "materialize": "^0.100.2",
+    "material-design-icons": "^3.0.1",
+    "jquery": "^3.2.1",
+    "jquery.steps": "^1.1.0",
+    "readmore-js": "^2.2.0",
+    "pnotify": "^3.0.0",
+    "bootstrap-progressbar": "^0.9.0",
+    "iCheck": "icheck#^1.0.2",
+    "nprogress": "^0.2.0",
+    "font-awesome": "fontawesome#^4.6.1",
+    "bootstrap": "^3.3.7",
+    "malihu-custom-scrollbar-plugin": "^3.1.3",
+    "datatables.net": "^1.10.11",
+    "datatables.net-bs": "^1.10.11",
+    "datatables.net-buttons": "^1.1.2",
+    "datatables.net-buttons-bs": "^1.1.2",
+    "datatables.net-fixedheader": "^3.1.1",
+    "datatables.net-fixedheader-bs": "^3.1.1",
+    "datatables.net-keytable": "^2.1.1",
+    "datatables.net-responsive": "^2.0.2",
+    "datatables.net-responsive-bs": "^2.0.2",
+    "datatables.net-scroller": "^1.4.1",
+    "datatables.net-scroller-bs": "^1.4.1",
+    "bootstrap-daterangepicker": "^2.1.27",
+    "chart.js": "^2.7.2",
+    "sweetalert": "^2.1.0",
+    "chartjs-plugin-datalabels": "^0.2.0",
+    "chartjs-plugin-annotation": "^0.5.7"
+  },
+  "keywords": [
+    "myapplication"
+  ],
+  "private": true
+}
