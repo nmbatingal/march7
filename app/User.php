@@ -30,6 +30,10 @@ class User extends Authenticatable
         'password',
         'lastname',
         'firstname',
+        'middlename',
+        'sex',
+        'birthday',
+        'address',
         'email', 
         'mobile_number', 
         'office_id', 
@@ -67,5 +71,10 @@ class User extends Authenticatable
     public function surveys()
     {
         return $this->hasMany('App\Models\Morss\MorssSurvey', 'user_id', 'id');
+    }
+
+    public function scopeStaff($query)
+    {
+        return $query->where('_isActive', 1)->role('Staff');
     }
 }

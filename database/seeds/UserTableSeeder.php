@@ -14,7 +14,7 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-    	$office = Offices::where('acronym', '=', 'TSS')->firstOrFail();
+    	// $office = Offices::where('acronym', '=', 'TSS')->firstOrFail();
         $roles  = Role::where('name', 'System Administrator')->firstOrFail();
 
         $users = [
@@ -26,7 +26,7 @@ class UserTableSeeder extends Seeder
                 'sex'	     => 0,
                 'birthday'   => date("Y-m-d"),
                 'email'	     => 'admindost@caraga.com',
-                'office_id'  => $office->id,
+                // 'office_id'  => $office->id,
                 'position'   => 'System Administrator',
                 '_isActive'  => 1,
                 '_isAdmin'   => 1,

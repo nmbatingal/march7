@@ -30,7 +30,27 @@ class MoraleSurveyController extends Controller
     {
         $userSurvey   = Semester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with('surveys')->get();
 
-        return view('morss.index', compact('userSurvey'));
+        $semesters = Semester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with([
+
+            'surveys' => function ($query) {
+                $query->join('users', 'morss_surveys.user_id', '=', 'users.id')
+                      ->where('users._isActive', 1)
+                      ->with([
+                            'user' => function ($query) {
+                                $query->staff();
+                            }
+                        ]);
+            }
+
+        ])->get();
+
+        $overallIndex = Survey::overallIndex( $semesters->first() );
+
+        return view('morss.index', [
+                    'userSurvey' => $userSurvey,
+                    'semesters'  => $semesters,
+                    'overallIndex'  => $overallIndex,
+                ]);
     }
 
     /**

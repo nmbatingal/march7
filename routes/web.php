@@ -40,14 +40,35 @@ Route::resource('/morss', 'Morss\MoraleSurveyController');
 // Sample Query
 Route::get('/sample', function () {
 
-    //$semesters = App\Models\Morss\MorssSemester::surveyAvailable(true)->with('surveys')->get();
+    // $semesters = App\Models\Morss\MorssSemester::surveyAvailable(true)->with('surveys')->get();
 
     // $semesters = App\Models\Morss\MorssSemester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with('surveys')->get();
-    $semesters = App\Models\Morss\MorssSemester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with('surveys')->get();
-    $surveys   = $semesters;
 
-    $overallIndex = App\Models\Morss\MorssSurvey::overallIndex( $surveys->first(), Auth::user() );
+    // $semesters = App\Models\Morss\MorssSemester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with('surveys')->get(); 
 
+    $semesters = App\Models\Morss\MorssSemester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with([
+            /*'surveys.user.roles' => function ($query) {
+                $query->select('morss_surveys.rate');
+            }*/
+
+            'surveys' => function ($query) {
+                $query->join('users', 'morss_surveys.user_id', '=', 'users.id')
+                      ->where('users._isActive', 1)
+                      ->with([
+                            'user' => function ($query) {
+                                $query->staff();
+                            }
+                        ]);
+                      // ->with('user.roles'); //->staff();
+            }
+
+        ])->get();
+
+    $overallIndex = App\Models\Morss\MorssSurvey::overallIndex( $semesters->first() );
+
+    // $overallIndex = App\Models\Morss\MorssSurvey::overallIndex( $surveys->first(), Auth::user() );
+
+    $users   = App\User::staff()->get();
     // return dd($semesters->first());
-    return dd($surveys, $overallIndex);
+    return dd($semesters, $overallIndex, $users);
 });

@@ -113,7 +113,7 @@ class RegisterController extends Controller
             'firstname'      => $data['firstname'],
             'lastname'       => $data['lastname'],
             'sex'            => $data['sex'],
-            'birthday'       => $data['birthday'],
+            'birthday'       => $data['birthdate'],
             'email'          => $data['email'],
             'office_id'      => $data['unit'],
             'position'       => $data['position'],

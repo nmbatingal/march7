@@ -46,6 +46,11 @@ class MorssSurvey extends Model
         return $query->where('user_id', $user);
     }
 
+    public function scopeStaff($query)
+    {
+        return $query->with('user');
+    }
+
     public static function overallIndex($semester = [], $user = [])
     {
         $overallIndex   = 0;
@@ -59,16 +64,19 @@ class MorssSurvey extends Model
                             COUNT(case rate when 4 then 1 else null end) AS \'y\',
                             COUNT(case rate when 5 then 1 else null end) AS \'dy\''
                     ))
-                    ->where('semester_id', $semester->id )
+                    // ->where('semester_id', $semester->id )
+                    ->join('users', 'morss_surveys.user_id', '=', 'users.id')
+                    ->where('morss_surveys.semester_id', $semester->id )
+                    ->where('users._isActive', 1)
                     ->first();
 
-        if ( $query ) 
+        if ( $query && ( $query->response > 0 ) ) 
         {
             // formula
             // (( Nt + 2NSt + 3Yt + 4DYt ) / (( Qt x Rt ) * 4)) * 100
             $overallIndex = ( ( $query->no + ( $query->ns * 2 ) + ( $query->y * 3 ) + ( $query->dy * 4 ) ) / ( ( $query->question * $query->response ) * 4 ) ) * 100;
         }
 
-        return [$overallIndex, $query->toArray()];
+        return [ $overallIndex, $query->toArray() ];
     }
 }

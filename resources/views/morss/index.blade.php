@@ -51,7 +51,7 @@
     <!-- column -->
 </div>
 
-{{ $userSurvey[0]->surveys }}
+{{ print_r($overallIndex) }}
 
 @endsection
 
