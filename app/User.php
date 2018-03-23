@@ -45,6 +45,20 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function getFullNameLastAttribute()
+    {
+        $middlename = !empty($this->attributes['middlename']) ? $this->attributes['middlename'][0].'. ' : '';
+
+        return $this->attributes['lastname'] . ', ' . $this->attributes['firstname'] . ' ' . $middlename;
+    }
+
+    public function getFullNameFirstAttribute()
+    {
+        $middlename = !empty($this->attributes['middlename']) ? $this->attributes['middlename'][0].'. ' : '';
+
+        return $this->attributes['firstname'] . ' ' . $middlename . $this->attributes['lastname'];
+    }
+
     public function office()
     {
         return $this->belongsTo('App\Offices', 'office_id', 'id');

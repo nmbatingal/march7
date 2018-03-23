@@ -50,6 +50,9 @@
     </div>
     <!-- column -->
 </div>
+
+{{ $userSurvey[0]->surveys }}
+
 @endsection
 
 @section('scripts')

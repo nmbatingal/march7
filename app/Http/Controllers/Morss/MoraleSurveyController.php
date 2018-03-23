@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Morss;
 
+use Auth;
 use Session;
 use App\Models\Morss\MorssSemester as Semester;
+use App\Models\Morss\MorssSurvey as Survey;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -26,7 +28,9 @@ class MoraleSurveyController extends Controller
      */
     public function index()
     {
-        return view('morss.index');
+        $userSurvey   = Semester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with('surveys')->get();
+
+        return view('morss.index', compact('userSurvey'));
     }
 
     /**

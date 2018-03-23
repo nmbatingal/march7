@@ -30,9 +30,7 @@ class TakeSurveyController extends Controller
     public function index()
     {
         $months      = Month::all();
-        // $semesters   = Semester::orderBy('id', 'DESC')->get();//->paginate(10);
-        // $survey   = Survey::userHasSurveyed( Auth::user()->id )->orderBy('id', 'DESC')->get();
-        $semesters   = Semester::userHasSurveyed( Auth::user()->id )->get();
+        $semesters   = Semester::surveyAvailable(true)->userHasSurveyed( Auth::user()->id )->get();
         return view('morss.take-survey', compact('months', 'semesters'));
     }
 

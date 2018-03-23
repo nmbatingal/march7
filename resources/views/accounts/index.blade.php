@@ -83,7 +83,7 @@
                                     <td>
                                         <a href="{{ url( 'accounts/profile/'.$user->id )}}">
                                             <img src="{{ asset('img/users/user-icon.png') }}" alt="user" height="40" width="40" class="img-circle" />
-                                            &nbsp;&nbsp; {{ $user->firstname }} {{ $user->middlename ? $user->middlename[0].'.' : '' }} {{ $user->lastname }}
+                                            &nbsp;&nbsp; {{ $user->fullNameLast }}
                                         </a>
                                     </td>
                                     <td align="center">

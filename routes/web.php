@@ -40,7 +40,14 @@ Route::resource('/morss', 'Morss\MoraleSurveyController');
 // Sample Query
 Route::get('/sample', function () {
 
-    $semesters = App\Models\Morss\MorssSemester::semesterOverallIndex()->get();
+    //$semesters = App\Models\Morss\MorssSemester::surveyAvailable(true)->with('surveys')->get();
 
-    return $semesters;
+    // $semesters = App\Models\Morss\MorssSemester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with('surveys')->get();
+    $semesters = App\Models\Morss\MorssSemester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with('surveys')->get();
+    $surveys   = $semesters;
+
+    $overallIndex = App\Models\Morss\MorssSurvey::overallIndex( $surveys->first(), Auth::user() );
+
+    // return dd($semesters->first());
+    return dd($surveys, $overallIndex);
 });

@@ -37,7 +37,7 @@
         <div class="card stickyside">
             <div class="card-body">
                 <center class="m-t-30"> <img src="{{ asset('img/users/user-icon.png') }}" class="img-circle" width="150" />
-                    <h4 class="card-title m-t-10">{{ $profile->firstname }} {{ $profile->middlename ? $profile->middlename[0].'.' : '' }} {{ $profile->lastname }}</h4>
+                    <h4 class="card-title m-t-10">{{ $profile->fullNameFirst }}</h4>
                     <h6 class="card-subtitle">{{ $profile->position }}, {{ $profile->office['acronym'] }}</h6>
                 </center>
             </div>

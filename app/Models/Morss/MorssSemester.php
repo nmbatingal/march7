@@ -39,20 +39,16 @@ class MorssSemester extends Model
         return $this->hasMany('App\Models\Morss\MorssSurvey', 'semester_id', 'id');
     }
 
+    public function scopeSurveyAvailable($query, $value)
+    {
+        return $query->where('status', $value);
+    }
+
     public function scopeUserHasSurveyed($query, $user = 0)
     {
         return $query->with([
             'surveys' => function ($query) use ($user) {
                 $query->with('user')->userHasSurveyed($user);
-            }
-        ]);
-    }
-
-    public function scopeSemesterOverallIndex($query)
-    {
-        return $query->with([
-            'surveys' => function ($query) {
-                $query->overAllIndex();
             }
         ]);
     }
