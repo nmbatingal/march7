@@ -73,10 +73,15 @@
                     'rgba(75, 192, 192, 1)', 
                     'rgba(153, 102, 255, 1)',
                 ],
-                borderWidth: 1
-            }]
+                borderWidth: 1,
+                datalabels: {
+                    anchor: 'start',
+                    align: 'end'
+                }
+            }],
         },
         options: {
+            legend: { display: false },
             scales: {
                 yAxes: [{
                     ticks: {

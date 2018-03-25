@@ -64,8 +64,7 @@ Route::get('/sample', function () {
         ])->get();
 
     $overallIndex = App\Models\Morss\MorssSurvey::overallIndex( $semesters->first() );
-
-    // $overallIndex = App\Models\Morss\MorssSurvey::overallIndex( $surveys->first(), Auth::user() );
+    // $overallIndex = App\Models\Morss\MorssSurvey::overallIndex( $semesters->first(), Auth::user() );
 
     $users   = App\User::staff()->get();
     // return dd($semesters->first());
