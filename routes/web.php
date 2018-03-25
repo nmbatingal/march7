@@ -58,8 +58,7 @@ Route::get('/sample', function () {
                             'user' => function ($query) {
                                 $query->staff();
                             }
-                        ]);
-                      // ->with('user.roles'); //->staff();
+                        ]); //->with('user.roles'); //->staff();
             }
 
         ])->get();
@@ -70,5 +69,5 @@ Route::get('/sample', function () {
 
     $users   = App\User::staff()->get();
     // return dd($semesters->first());
-    return dd($semesters, $overallIndex, $users);
+    return dd( $semesters, $overallIndex, $users );
 });

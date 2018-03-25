@@ -29,9 +29,7 @@ class MoraleSurveyController extends Controller
     public function index()
     {
         $userSurvey   = Semester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with('surveys')->get();
-
         $semesters = Semester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with([
-
             'surveys' => function ($query) {
                 $query->join('users', 'morss_surveys.user_id', '=', 'users.id')
                       ->where('users._isActive', 1)
@@ -41,9 +39,7 @@ class MoraleSurveyController extends Controller
                             }
                         ]);
             }
-
         ])->get();
-
         $overallIndex = Survey::overallIndex( $semesters->first() );
 
         return view('morss.index', [

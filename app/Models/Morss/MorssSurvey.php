@@ -63,12 +63,10 @@ class MorssSurvey extends Model
                             COUNT(case rate when 3 then 1 else null end) AS \'ns\',
                             COUNT(case rate when 4 then 1 else null end) AS \'y\',
                             COUNT(case rate when 5 then 1 else null end) AS \'dy\''
-                    ))
-                    // ->where('semester_id', $semester->id )
-                    ->join('users', 'morss_surveys.user_id', '=', 'users.id')
-                    ->where('morss_surveys.semester_id', $semester->id )
-                    ->where('users._isActive', 1)
-                    ->first();
+                    ))->join('users', 'morss_surveys.user_id', '=', 'users.id')
+                      ->where('morss_surveys.semester_id', $semester->id )
+                      ->where('users._isActive', 1)
+                      ->first();
 
         if ( $query && ( $query->response > 0 ) ) 
         {
@@ -77,6 +75,8 @@ class MorssSurvey extends Model
             $overallIndex = ( ( $query->no + ( $query->ns * 2 ) + ( $query->y * 3 ) + ( $query->dy * 4 ) ) / ( ( $query->question * $query->response ) * 4 ) ) * 100;
         }
 
-        return [ $overallIndex, $query->toArray() ];
+        // return [ $overallIndex, $query->toArray() ];
+        $data = number_format( $overallIndex, 2, '.', '');
+        return $data;
     }
 }

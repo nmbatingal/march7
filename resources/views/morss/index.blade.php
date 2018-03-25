@@ -26,22 +26,10 @@
 <!-- ============================================================== -->
 <div class="row">
     <!-- column -->
-    <div class="col-lg-6">
+    <div class="col-lg-8">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Bar Chart</h4>
-                <div>
-                    <canvas id="barChart" height="150"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- column -->
-    <!-- column -->
-    <div class="col-lg-6">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Bar Chart</h4>
+                <h4 class="card-title">Morale Survey Index</h4>
                 <div>
                     <canvas id="barChart" height="150"></canvas>
                 </div>
@@ -50,8 +38,6 @@
     </div>
     <!-- column -->
 </div>
-
-{{ print_r($overallIndex) }}
 
 @endsection
 
@@ -62,29 +48,30 @@
 <script src="{{ asset('vendor/bower/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js') }}"></script>
 <script src="{{ asset('vendor/bower/chartjs-plugin-annotation/chartjs-plugin-annotation.min.js') }}"></script>
 <script type="text/javascript">
-    var ctx = document.getElementById("barChart");
-    var myChart = new Chart(ctx, {
+    var overallIndex = {!! json_encode($overallIndex) !!};
+    console.log(overallIndex);
+
+    var moraleChart = document.getElementById("barChart");
+    var myChart = new Chart(moraleChart, {
         type: 'bar',
         data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            labels: ["OI", "Blue", "Yellow", "Green", "Purple"],
             datasets: [{
                 label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                data: [ overallIndex , 19, 3, 5, 2],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
                     'rgba(255, 206, 86, 0.2)',
                     'rgba(75, 192, 192, 0.2)',
                     'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
                 ],
                 borderColor: [
                     'rgba(255,99,132,1)',
                     'rgba(54, 162, 235, 1)',
                     'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
+                    'rgba(75, 192, 192, 1)', 
                     'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
                 ],
                 borderWidth: 1
             }]
