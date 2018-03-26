@@ -24,6 +24,12 @@ class MorssSemester extends Model
         'year',
     ];
 
+    public function getSemesterRangeFormalAttribute()
+    {
+        $range = $this->monthFrom->attributes['month_name'] . '-' . $this->monthTo->attributes['month_name'] . ', ' . $this->year;
+        return $range;
+    }
+
     public function monthFrom()
     {
         return $this->belongsTo('App\TableMonth', 'month_from', 'id');

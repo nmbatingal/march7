@@ -21,6 +21,7 @@ class Offices extends Model
     protected $fillable = [
         'office_name', 
         'acronym',
+        'head_office_id',
     ];
 
     public function staffs()

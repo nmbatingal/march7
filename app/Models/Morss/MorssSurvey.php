@@ -2,6 +2,7 @@
 
 namespace App\Models\Morss;
 
+use App\Offices;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Morss\MorssQuestion;
 
@@ -46,30 +47,17 @@ class MorssSurvey extends Model
         return $query->where('user_id', $user);
     }
 
-    public function scopeStaff($query)
+    public function scopeStaffUsers($query)
     {
         return $query->with('user');
     }
 
-    public static function overallIndex($semester = [], $user = [])
+    public static function overallIndex($semester = [], $division = null, $user = null)
     {
         $overallIndex   = 0;
-        if ( !$user )
+
+        if ( isset($user) )
         {
-            $query = MorssSurvey::select(
-                            \DB::raw(
-                                'COUNT(DISTINCT user_id) AS \'response\',
-                                COUNT(DISTINCT question_id) AS \'question\',
-                                COUNT(case rate when 2 then 1 else null end) AS \'no\',
-                                COUNT(case rate when 2 then 1 else null end) AS \'no\',
-                                COUNT(case rate when 3 then 1 else null end) AS \'ns\',
-                                COUNT(case rate when 4 then 1 else null end) AS \'y\',
-                                COUNT(case rate when 5 then 1 else null end) AS \'dy\''
-                        ))->join('users', 'morss_surveys.user_id', '=', 'users.id')
-                          ->where('morss_surveys.semester_id', $semester->id )
-                          ->where('users._isActive', 1)
-                          ->first();
-        } else {
             $query = MorssSurvey::select(
                             \DB::raw(
                                 'COUNT(DISTINCT user_id) AS \'response\',
@@ -84,17 +72,54 @@ class MorssSurvey extends Model
                           ->where('users._isActive', 1)
                           ->where('users.id', $user->id)
                           ->first();
+
+        } elseif ( isset($division) ) {
+
+            $query = MorssSurvey::select(
+                            \DB::raw(
+                                'COUNT(DISTINCT user_id) AS \'response\',
+                                COUNT(DISTINCT question_id) AS \'question\',
+                                COUNT(case rate when 2 then 1 else null end) AS \'no\',
+                                COUNT(case rate when 2 then 1 else null end) AS \'no\',
+                                COUNT(case rate when 3 then 1 else null end) AS \'ns\',
+                                COUNT(case rate when 4 then 1 else null end) AS \'y\',
+                                COUNT(case rate when 5 then 1 else null end) AS \'dy\''
+                        ))->join('users', 'morss_surveys.user_id', '=', 'users.id')
+                          ->join('offices', 'users.office_id', '=', 'offices.id')
+                          ->where('morss_surveys.semester_id', $semester->id )
+                          ->where('users._isActive', 1)
+                          ->where('users.office_id', '=', $division->id)
+                          ->orWhere('offices.head_office_id', '=', $division->id)
+                          ->first();
+
+        } else {
+
+            $query = MorssSurvey::select(
+                            \DB::raw(
+                                'COUNT(DISTINCT user_id) AS \'response\',
+                                COUNT(DISTINCT question_id) AS \'question\',
+                                COUNT(case rate when 2 then 1 else null end) AS \'no\',
+                                COUNT(case rate when 2 then 1 else null end) AS \'no\',
+                                COUNT(case rate when 3 then 1 else null end) AS \'ns\',
+                                COUNT(case rate when 4 then 1 else null end) AS \'y\',
+                                COUNT(case rate when 5 then 1 else null end) AS \'dy\''
+                        ))->join('users', 'morss_surveys.user_id', '=', 'users.id')
+                          ->where('morss_surveys.semester_id', $semester->id )
+                          ->where('users._isActive', 1)
+                          ->first();
         }
 
         if ( $query && ( $query->response > 0 ) ) 
         {
             // formula
             // (( Nt + 2NSt + 3Yt + 4DYt ) / (( Qt x Rt ) * 4)) * 100
+            
             $overallIndex = ( ( $query->no + ( $query->ns * 2 ) + ( $query->y * 3 ) + ( $query->dy * 4 ) ) / ( ( $query->question * $query->response ) * 4 ) ) * 100;
         }
 
-        // return [ $overallIndex, $query->toArray() ];
         $data = number_format($overallIndex, 2, '.', '');
+        
         return $data;
+        // return [ $data, $user, $query->toArray() ];
     }
 }

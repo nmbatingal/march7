@@ -73,7 +73,7 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Morss\MorssSurvey', 'user_id', 'id');
     }
 
-    public function scopeStaff($query)
+    public function scopeStaffUsers($query)
     {
         return $query->where('_isActive', 1)->role('Staff');
     }

@@ -41,32 +41,46 @@ Route::resource('/morss', 'Morss\MoraleSurveyController');
 Route::get('/sample', function () {
 
     // $semesters = App\Models\Morss\MorssSemester::surveyAvailable(true)->with('surveys')->get();
-
     // $semesters = App\Models\Morss\MorssSemester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with('surveys')->get();
-
     // $semesters = App\Models\Morss\MorssSemester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with('surveys')->get(); 
-
     $semesters = App\Models\Morss\MorssSemester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with([
-            /*'surveys.user.roles' => function ($query) {
-                $query->select('morss_surveys.rate');
-            }*/
-
-            'surveys' => function ($query) {
-                $query->join('users', 'morss_surveys.user_id', '=', 'users.id')
-                      ->where('users._isActive', 1)
-                      ->with([
-                            'user' => function ($query) {
-                                $query->staff();
-                            }
-                        ]); //->with('user.roles'); //->staff();
-            }
-
-        ])->get();
-
-    $overallIndex = App\Models\Morss\MorssSurvey::overallIndex( $semesters->first() );
+        'surveys' => function ($query) {
+            $query->join('users', 'morss_surveys.user_id', '=', 'users.id')
+                  ->where('users._isActive', 1);
+        }
+    ])->get();
+    // $overallIndex = App\Models\Morss\MorssSurvey::overallIndex( $semesters->first() );
     // $overallIndex = App\Models\Morss\MorssSurvey::overallIndex( $semesters->first(), Auth::user() );
+    // $overallIndex = App\Models\Morss\MorssSurvey::overallIndex( $semesters->first(), Auth::user(), 1 );
+    $users   = App\User::staffUsers()->get();
 
-    $users   = App\User::staff()->get();
+    //$division_data[] = [ 'name' => 'OI', 'oi' => $overallIndex];
+    /* $divisions     = ['ORD', 'FAS', 'FOD', 'TSS'];
+    foreach ( $divisions as $division ) {
+
+        $office       = App\Offices::where('acronym', '=', $division)->first();
+        $overallIndex = App\Models\Morss\MorssSurvey::overallIndex( $semesters->first(), $office->id, Auth::user() );
+        $division_data[] = [ 'name' => $division, 'oi' => $overallIndex ];
+    } */
+
+    ////////
+    $overallIndex = App\Models\Morss\MorssSurvey::overallIndex( $semesters->first() );
+
+    $division_data[] = [ 'name' => 'Overall Index', 'oi_value' => $overallIndex];
+    $divisions       = ['ORD', 'FAS', 'FOD', 'TSS'];
+
+    foreach ( $divisions as $division ) {
+
+        $office       = App\Offices::where('acronym', '=', $division)->first();
+        $division_oi  = App\Models\Morss\MorssSurvey::overallIndex( $semesters->first(), $office );
+        $division_data[] = [ 'name' => $division, 'oi_value' => $division_oi ];
+    }
+
+    $newstring = 'PSTC-ADN';
+    $pos = strpos($newstring, 'PSTC', 0); // $pos = 7, not 0
+
     // return dd($semesters->first());
-    return dd( $semesters, $overallIndex, $users );
+    return dd( $semesters, $overallIndex, $division_data, $users );
+    // return dd($division_data);
+    // return $pos;
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Morss;
 
 use Auth;
 use Session;
+use App\Offices;
 use App\Models\Morss\MorssSemester as Semester;
 use App\Models\Morss\MorssSurvey as Survey;
 use Illuminate\Http\Request;
@@ -28,24 +29,30 @@ class MoraleSurveyController extends Controller
      */
     public function index()
     {
-        $userSurvey   = Semester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with('surveys')->get();
+        // $userSurvey   = Semester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with('surveys')->get();
         $semesters = Semester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with([
             'surveys' => function ($query) {
                 $query->join('users', 'morss_surveys.user_id', '=', 'users.id')
-                      ->where('users._isActive', 1)
-                      ->with([
-                            'user' => function ($query) {
-                                $query->staff();
-                            }
-                        ]);
+                      ->where('users._isActive', 1);
             }
         ])->get();
         $overallIndex = Survey::overallIndex( $semesters->first() );
 
+        $division_data[] = [ 'name' => 'Overall Index', 'oi_value' => $overallIndex];
+        $divisions       = ['ORD', 'FAS', 'FOD', 'TSS'];
+
+        foreach ( $divisions as $division ) {
+
+            $office       = Offices::where('acronym', '=', $division)->first();
+            $division_oi  = Survey::overallIndex( $semesters->first(), $office );
+            $division_data[] = [ 'name' => $division, 'oi_value' => $division_oi ];
+        }
+
         return view('morss.index', [
-                    'userSurvey' => $userSurvey,
+                    // 'userSurvey' => $userSurvey,
                     'semesters'  => $semesters,
                     'overallIndex'  => $overallIndex,
+                    'division_data'  => $division_data,
                 ]);
     }
 
