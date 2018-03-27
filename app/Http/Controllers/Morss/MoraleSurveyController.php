@@ -6,6 +6,7 @@ use Auth;
 use Session;
 use App\Offices;
 use App\Models\Morss\MorssSemester as Semester;
+use App\Models\Morss\MorssQuestion as Question;
 use App\Models\Morss\MorssSurvey as Survey;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -36,23 +37,24 @@ class MoraleSurveyController extends Controller
                       ->where('users._isActive', 1);
             }
         ])->get();
-        $overallIndex = Survey::overallIndex( $semesters->first() );
 
+        $overallIndex = Survey::overallIndex( $semesters->first() );
         $division_data[] = [ 'name' => 'Overall Index', 'oi_value' => $overallIndex];
         $divisions       = ['ORD', 'FAS', 'FOD', 'TSS'];
 
         foreach ( $divisions as $division ) {
-
             $office       = Offices::where('acronym', '=', $division)->first();
             $division_oi  = Survey::overallIndex( $semesters->first(), $office );
             $division_data[] = [ 'name' => $division, 'oi_value' => $division_oi ];
         }
 
+        $questions = Survey::questionMoraleIndex( $semesters->first() );
+
         return view('morss.index', [
                     // 'userSurvey' => $userSurvey,
                     'semesters'  => $semesters,
-                    'overallIndex'  => $overallIndex,
                     'division_data'  => $division_data,
+                    'questions' => $questions,
                 ]);
     }
 

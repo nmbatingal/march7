@@ -1,5 +1,6 @@
 <?php
 
+use App\Offices;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -55,6 +56,10 @@ class OfficesTableSeeder extends Seeder
             ],
         ];
 
-        DB::table('offices')->insert($offices);
+        foreach ($offices as $office) {
+            
+            $division = Offices::create($office);
+            
+        }
     }
 }

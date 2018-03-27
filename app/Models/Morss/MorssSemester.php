@@ -54,7 +54,7 @@ class MorssSemester extends Model
     {
         return $query->with([
             'surveys' => function ($query) use ($user) {
-                $query->with('user')->userHasSurveyed($user);
+                $query->userHasSurveyed($user);
             }
         ]);
     }

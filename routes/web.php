@@ -45,7 +45,8 @@ Route::get('/sample', function () {
     // $semesters = App\Models\Morss\MorssSemester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with('surveys')->get(); 
     $semesters = App\Models\Morss\MorssSemester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with([
         'surveys' => function ($query) {
-            $query->join('users', 'morss_surveys.user_id', '=', 'users.id')
+            $query->with('user')
+                  ->join('users', 'morss_surveys.user_id', '=', 'users.id')
                   ->where('users._isActive', 1);
         }
     ])->get();
@@ -79,8 +80,15 @@ Route::get('/sample', function () {
     $newstring = 'PSTC-ADN';
     $pos = strpos($newstring, 'PSTC', 0); // $pos = 7, not 0
 
+    $staffs    = App\User::staffUsers()->count();
+    $questions = App\Models\Morss\MorssSurvey::questionMoraleIndex( $semesters->first() );
+
+
     // return dd($semesters->first());
-    return dd( $semesters, $overallIndex, $division_data, $users );
+    return dd( $semesters, $overallIndex, $questions, $division_data, $users );
     // return dd($division_data);
     // return $pos;
+    // return dd($staffs, $semesters);
+
+
 });

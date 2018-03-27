@@ -23,4 +23,9 @@ class MorssQuestion extends Model
     protected $fillable = [
         'question',
     ];
+
+    public function surveys()
+    {
+        return $this->belongsTo('App\Models\Morss\MorssSurvey', 'question_id', 'id');
+    }
 }
