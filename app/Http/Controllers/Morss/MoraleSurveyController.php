@@ -38,7 +38,7 @@ class MoraleSurveyController extends Controller
             }
         ])->get();
 
-        $overallIndex = Survey::overallIndex( $semesters->first() );
+        $overallIndex    = Survey::overallIndex( $semesters->first() );
         $division_data[] = [ 'name' => 'Overall Index', 'oi_value' => $overallIndex];
         $divisions       = ['ORD', 'FAS', 'FOD', 'TSS'];
 

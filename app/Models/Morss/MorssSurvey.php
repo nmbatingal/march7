@@ -119,8 +119,8 @@ class MorssSurvey extends Model
 
         $data = number_format($overallIndex, 2, '.', '');
         
-        return $data;
-        // return [ $data, $user, $query->toArray() ];
+        // return $data;
+        return [ 'data' => $data, 'response' => $query->response ];
     }
 
     public static function questionMoraleIndex($semester = [], $division = null, $user = null) 

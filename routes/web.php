@@ -74,7 +74,7 @@ Route::get('/sample', function () {
 
         $office       = App\Offices::where('acronym', '=', $division)->first();
         $division_oi  = App\Models\Morss\MorssSurvey::overallIndex( $semesters->first(), $office );
-        $division_data[] = [ 'name' => $division, 'oi_value' => $division_oi ];
+        $division_data[] = [ 'name' => $division, 'oi_value' => $division_oi[0] ];
     }
 
     $newstring = 'PSTC-ADN';
@@ -85,7 +85,7 @@ Route::get('/sample', function () {
 
 
     // return dd($semesters->first());
-    return dd( $semesters, $overallIndex, $questions, $division_data, $users );
+    return dd( $semesters, $overallIndex[0], $questions, $division_data, $users );
     // return dd($division_data);
     // return $pos;
     // return dd($staffs, $semesters);

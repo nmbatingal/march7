@@ -1,6 +1,8 @@
 @extends('layouts.morss.app')
 
 @section('styles')
+<!--c3 CSS -->
+<link href="{{ asset('dist/css/pages/easy-pie-chart.css') }}" rel="stylesheet">
 <style type="text/css">
     .card-body.b-all {
         border: 1px solid #03a9f3;
@@ -31,6 +33,7 @@
 <!-- ============================================================== -->
 <br>
 <div class="row">
+
     <!-- column -->
     <div class="col-lg-12">
         <div class="row">
@@ -42,6 +45,15 @@
                     <div class="card-body">
                         <div>
                             <canvas id="barChart" height="150"></canvas>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 col-sm-4 col-xs-12 text-center">
+                                <div class="chart easy-pie-chart-2" data-percent="75"> <span class="percent">75</span>
+                                    <br>
+                                    <h4>Users Surveyed</h4>
+                                    <canvas height="100" width="100"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -63,10 +75,8 @@
                                         <tr>
                                             <td>{{ ++$i }}</td>
                                             <td>{{ $question['question'] }}</td>
-                                            <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ $question['value'] }}%;height:15px;" role="progressbar""> {{ $question['value'] }}% </div>
-                                                </div>
+                                            <td align="center">
+                                                <span class="text-primary font-bold">{{ $question['value'] }}%</span>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -86,28 +96,8 @@
                             <div class="carousel-inner">
                                 <div class="carousel-item active flex-column">
                                     <h4 class="card-title"><i class="mdi mdi-calendar"></i> {{ Carbon\Carbon::now()->format('d M') }}</h4>
-                                    <div class="text-right"> <span class="text-muted">Todays Date</span>
-                                        <h1 class="font-light"><sup><i class="ti-arrow-up text-info"></i></sup> 5,000</h1>
-                                    </div>
-                                    <span class="text-info">30%</span>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 30%; height: 6px;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item flex-column">
-                                    <h4 class="card-title"><i class="mdi mdi-calendar"></i> {{ Carbon\Carbon::now()->format('d M') }}</h4>
-                                    <div class="text-right"> <span class="text-muted">Todays Date</span>
-                                        <h1 class="font-light"><sup><i class="ti-arrow-up text-info"></i></sup> 5,000</h1>
-                                    </div>
-                                    <span class="text-info">30%</span>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 30%; height: 6px;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item flex-column">
-                                    <h4 class="card-title"><i class="mdi mdi-calendar"></i> {{ Carbon\Carbon::now()->format('d M') }}</h4>
-                                    <div class="text-right"> <span class="text-muted">Todays Date</span>
-                                        <h1 class="font-light"><sup><i class="ti-arrow-up text-info"></i></sup> 5,000</h1>
+                                    <div class="text-right"> <span class="text-muted">Users Surveyed</span>
+                                        <h1 class="font-light"><span class="text-info"></span>/<sub>1</sub></h1>
                                     </div>
                                     <span class="text-info">30%</span>
                                     <div class="progress">
@@ -145,6 +135,9 @@
 <!-- Chart.js plugin -->
 <script src="{{ asset('vendor/bower/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js') }}"></script>
 <script src="{{ asset('vendor/bower/chartjs-plugin-annotation/chartjs-plugin-annotation.min.js') }}"></script>
+<!-- EASY PIE CHART JS -->
+<script src="{{ asset('assets/node_modules/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js') }}"></script>
+<script src="{{ asset('assets/node_modules/jquery.easy-pie-chart/easy-pie-chart.init.js') }}"></script>
 <script type="text/javascript">
     // This is for the sticky sidebar    
     $(".stickyside").stick_in_parent({
@@ -158,7 +151,7 @@
 
     $.each( divisionOverallIndex, function (index, value) {
         dataLabels.push(value.name);
-        dataValue.push(value.oi_value);
+        dataValue.push(value.oi_value['data']);
     });
 
     var randomColorPlugin = {
