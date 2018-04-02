@@ -40,7 +40,7 @@
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="">OI% of DOST Caraga for <a href="javascript:void(0)">{{ $semesters->first()->semesterRangeFormal }}</a></h4>
+                        <h4 class="">OI% of DOST Caraga for <a href="javascript:void(0)">{!! !$semesters->isEmpty() ? $semesters->first()->semesterRangeFormal : '<a href="#">n/a</a>' !!}</a></h4>
                     </div>
                     <div class="card-body">
                         <div>

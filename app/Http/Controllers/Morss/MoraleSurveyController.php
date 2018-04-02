@@ -43,9 +43,11 @@ class MoraleSurveyController extends Controller
         $divisions       = ['ORD', 'FAS', 'FOD', 'TSS'];
 
         foreach ( $divisions as $division ) {
+
             $office       = Offices::where('acronym', '=', $division)->first();
             $division_oi  = Survey::overallIndex( $semesters->first(), $office );
             $division_data[] = [ 'name' => $division, 'oi_value' => $division_oi ];
+            
         }
 
         $questions = Survey::questionMoraleIndex( $semesters->first() );
