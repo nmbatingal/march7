@@ -78,23 +78,20 @@ class MorssSurvey extends Model
 
             } elseif ( isset($division) ) {
 
-                $query = MorssSurvey::select(
-                                \DB::raw(
-                                    'COUNT(DISTINCT user_id) AS \'response\',
-                                    COUNT(DISTINCT question_id) AS \'question\',
-                                    COUNT(case rate when 2 then 1 else null end) AS \'no\',
-                                    COUNT(case rate when 2 then 1 else null end) AS \'no\',
-                                    COUNT(case rate when 3 then 1 else null end) AS \'ns\',
-                                    COUNT(case rate when 4 then 1 else null end) AS \'y\',
-                                    COUNT(case rate when 5 then 1 else null end) AS \'dy\''
-                            ))->join('users', 'morss_surveys.user_id', '=', 'users.id')
+                $query = MorssSurvey::selectRaw(
+                                'COUNT(DISTINCT user_id) AS \'response\',
+                                COUNT(DISTINCT question_id) AS \'question\',
+                                COUNT(case rate when 2 then 1 else null end) AS \'no\',
+                                COUNT(case rate when 2 then 1 else null end) AS \'no\',
+                                COUNT(case rate when 3 then 1 else null end) AS \'ns\',
+                                COUNT(case rate when 4 then 1 else null end) AS \'y\',
+                                COUNT(case rate when 5 then 1 else null end) AS \'dy\''
+                            )->join('users', 'morss_surveys.user_id', '=', 'users.id')
                               ->join('offices', 'users.office_id', '=', 'offices.id')
-                              ->where('morss_surveys.semester_id', $semester->id )
                               ->where('users._isActive', 1)
-                              ->where('users.office_id', '=', $division->id)
-                              ->orWhere('offices.head_office_id', '=', $division->id)
+                              ->where('morss_surveys.semester_id', '=', $semester->id )
+                              ->whereRaw('(users.office_id = ? OR offices.head_office_id = ?)', [ $division->id, $division->id ])
                               ->first();
-
             } else {
 
                 $query = MorssSurvey::select(

@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-3">
         <div class="card">
             <div class="el-card-item">
                 <div class="el-card-avatar el-overlay-1"> <img src="{{ asset('assets/images/users/1.jpg') }}" alt="user" />

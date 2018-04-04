@@ -88,24 +88,32 @@ Route::get('/sample', function () {
     $questions = App\Models\Morss\MorssSurvey::questionMoraleIndex( $semesters->first() );
 
     // $office    = App\Offices::where('acronym', '=', 'TSS')->first();
-    $semesters = Semester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with([
+
+
+
+
+
+
+    $semesters = App\Models\Morss\MorssSemester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with([
         'surveys' => function ($query) {
             $query->join('users', 'morss_surveys.user_id', '=', 'users.id')
                   ->where('users._isActive', 1);
         }
     ])->get();
 
-    $overallIndex    = Survey::overallIndex( $semesters->first() );
+    $overallIndex    = App\Models\Morss\MorssSurvey::overallIndex( $semesters->first() );
     $division_data[] = [ 'name' => 'Overall Index', 'oi_value' => $overallIndex];
     $divisions       = ['ORD', 'FAS', 'FOD', 'TSS'];
 
     foreach ( $divisions as $division ) {
 
-        $office       = Offices::where('acronym', '=', $division)->first();
-        $division_oi  = Survey::overallIndex( $semesters->first(), $office );
+        $office       = App\Offices::where('acronym', '=', $division)->first();
+        $division_oi  = App\Models\Morss\MorssSurvey::overallIndex( $semesters->first(), $office );
         $division_data[] = [ 'name' => $division, 'oi_value' => $division_oi ];
         
     }
+
+    return dd($division_data);
 
     // return dd($semesters->first());
     // return dd( $semesters, $overallIndex, $questions, $division_data, $users );
