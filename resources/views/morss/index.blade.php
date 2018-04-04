@@ -32,6 +32,8 @@
 <!-- Start Page Content -->
 <!-- ============================================================== -->
 <br>
+
+@hasanyrole(['System Administrator', 'Unit Head'])
 <div class="row">
     <!-- column -->
     <div class="col-lg-12">
@@ -96,7 +98,7 @@
                                 <div class="carousel-item active flex-column">
                                     <h4 class="card-title"><i class="mdi mdi-calendar"></i> {{ Carbon\Carbon::now()->format('d M') }}</h4>
                                     <div class="text-right"> <span class="text-muted">Users Surveyed</span>
-                                        <h1 class="font-light"><span class="text-info"></span>{!! $totalSurveyed->total !!}/<sub>{!! $totalUsers !!}</sub></h1>
+                                        <h1 class="font-light"><span class="text-info"></span>{!! $totalSurveyed->total !!}<sub>/{!! $totalUsers !!}</sub></h1>
                                     </div>
                                     <span class="text-info">{{ $percentSurveyed }}%</span>
                                     <div class="progress">
@@ -126,6 +128,20 @@
     </div>
     <!-- column -->
 </div>
+@else
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                This is the <strong>Morale Survey System</strong>!
+                <p> Take the <a href="{{ url('/morss/survey/takesurvey') }}">survey</a> to proceed.</p>
+
+            </div>
+        </div>
+    </div>
+</div>
+@endhasanyrole
+
 @endsection
 
 @section('scripts')

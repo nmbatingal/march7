@@ -1,8 +1,8 @@
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="card">
             <div class="el-card-item">
-                <div class="el-card-avatar el-overlay-1"> <img src="{{ asset('assets/images/users/1.jpg') }}" alt="user" />
+                <div class="el-card-avatar el-overlay-1"> <img src="{{ asset('img/dost-logo.png') }}" alt="user" />
                     <div class="el-overlay">
                         <ul class="el-info">
                             <li><a class="btn default btn-outline" href="{{ url('/morss') }}"><i class="icon-link"></i></a></li>
