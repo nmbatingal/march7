@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Morss;
 
 use Auth;
 use Session;
+use App\User;
 use App\Offices;
 use App\Models\Morss\MorssSemester as Semester;
 use App\Models\Morss\MorssQuestion as Question;
@@ -47,16 +48,22 @@ class MoraleSurveyController extends Controller
             $office       = Offices::where('acronym', '=', $division)->first();
             $division_oi  = Survey::overallIndex( $semesters->first(), $office );
             $division_data[] = [ 'name' => $division, 'oi_value' => $division_oi ];
-            
+
         }
 
-        $questions = Survey::questionMoraleIndex( $semesters->first() );
+        $questions     = Survey::questionMoraleIndex( $semesters->first() );
+        $totalSurveyed = Survey::totalUserSurveyed( $semesters->first() );
+        $totalUsers    = User::staffUsers()->count();
+        $percentSurveyed = ( $totalSurveyed->total / $totalUsers ) * 100;
 
         return view('morss.index', [
                     // 'userSurvey' => $userSurvey,
-                    'semesters'  => $semesters,
+                    'semesters'      => $semesters,
                     'division_data'  => $division_data,
-                    'questions' => $questions,
+                    'questions'      => $questions,
+                    'totalSurveyed'  => $totalSurveyed,
+                    'totalUsers'     => $totalUsers,
+                    'percentSurveyed'     => $percentSurveyed,
                 ]);
     }
 

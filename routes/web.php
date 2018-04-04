@@ -113,7 +113,8 @@ Route::get('/sample', function () {
         
     }
 
-    return dd($division_data);
+    $totalSurveyed = App\Models\Morss\MorssSurvey::totalUserSurveyed( $semesters->first() );
+    return dd($semesters, $totalSurveyed, $division_data);
 
     // return dd($semesters->first());
     // return dd( $semesters, $overallIndex, $questions, $division_data, $users );

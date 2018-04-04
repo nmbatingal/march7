@@ -52,6 +52,18 @@ class MorssSurvey extends Model
         return $query->with('user');
     }
 
+    public static function totalUserSurveyed($semester = [], $user = true)
+    {
+        $query = MorssSurvey::selectRaw('
+                                COUNT(DISTINCT user_id) AS \'total\'
+                            ')->join('users', 'morss_surveys.user_id', 'users.id')
+                              ->where('semester_id', $semester ? $semester->id : 0)
+                              ->where('users._isActive', $user)
+                              ->first();
+        
+        return $query;
+    }
+
     public static function overallIndex($semester = [], $division = null, $user = null)
     {
         $overallIndex   = 0;
@@ -61,16 +73,15 @@ class MorssSurvey extends Model
         {
             if ( isset($user) )
             {
-                $query = MorssSurvey::select(
-                                \DB::raw(
-                                    'COUNT(DISTINCT user_id) AS \'response\',
+                $query = MorssSurvey::selectRaw('
+                                    COUNT(DISTINCT user_id) AS \'response\',
                                     COUNT(DISTINCT question_id) AS \'question\',
                                     COUNT(case rate when 2 then 1 else null end) AS \'no\',
                                     COUNT(case rate when 2 then 1 else null end) AS \'no\',
                                     COUNT(case rate when 3 then 1 else null end) AS \'ns\',
                                     COUNT(case rate when 4 then 1 else null end) AS \'y\',
                                     COUNT(case rate when 5 then 1 else null end) AS \'dy\''
-                            ))->join('users', 'morss_surveys.user_id', '=', 'users.id')
+                            )->join('users', 'morss_surveys.user_id', '=', 'users.id')
                               ->where('morss_surveys.semester_id', $semester->id )
                               ->where('users._isActive', 1)
                               ->where('users.id', $user->id)
@@ -94,8 +105,7 @@ class MorssSurvey extends Model
                               ->first();
             } else {
 
-                $query = MorssSurvey::select(
-                                \DB::raw(
+                $query = MorssSurvey::selectRaw(
                                     'COUNT(DISTINCT user_id) AS \'response\',
                                     COUNT(DISTINCT question_id) AS \'question\',
                                     COUNT(case rate when 2 then 1 else null end) AS \'no\',
@@ -103,7 +113,7 @@ class MorssSurvey extends Model
                                     COUNT(case rate when 3 then 1 else null end) AS \'ns\',
                                     COUNT(case rate when 4 then 1 else null end) AS \'y\',
                                     COUNT(case rate when 5 then 1 else null end) AS \'dy\''
-                            ))->join('users', 'morss_surveys.user_id', '=', 'users.id')
+                            )->join('users', 'morss_surveys.user_id', '=', 'users.id')
                               ->where('morss_surveys.semester_id', $semester->id )
                               ->where('users._isActive', 1)
                               ->first();
@@ -137,8 +147,7 @@ class MorssSurvey extends Model
             foreach ($questions as $i => $question) {
 
                 if ( isset($division) ) {
-                    $query = MorssSurvey::select(
-                            \DB::raw(
+                    $query = MorssSurvey::selectRaw(
                                 'morss_questions.question AS \'question\',
                                 COUNT(DISTINCT user_id) AS \'response\',
                                 COUNT(case rate when 2 then 1 else null end) AS \'no\',
@@ -146,7 +155,7 @@ class MorssSurvey extends Model
                                 COUNT(case rate when 3 then 1 else null end) AS \'ns\',
                                 COUNT(case rate when 4 then 1 else null end) AS \'y\',
                                 COUNT(case rate when 5 then 1 else null end) AS \'dy\''
-                        ))->join('morss_questions', 'morss_surveys.question_id', '=', 'morss_questions.id')
+                        )->join('morss_questions', 'morss_surveys.question_id', '=', 'morss_questions.id')
                           ->join('users', 'morss_surveys.user_id', '=', 'users.id')
                           ->join('offices', 'users.office_id', '=', 'offices.id')
                           ->where('morss_surveys.question_id', $question->id )
@@ -157,8 +166,7 @@ class MorssSurvey extends Model
                           ->groupBy('question')
                           ->first();
                 } elseif ( isset($user) ) {
-                    $query = MorssSurvey::select(
-                                    \DB::raw(
+                    $query = MorssSurvey::selectRaw(
                                         'morss_questions.question AS \'question\',
                                         COUNT(DISTINCT user_id) AS \'response\',
                                         COUNT(case rate when 2 then 1 else null end) AS \'no\',
@@ -166,7 +174,7 @@ class MorssSurvey extends Model
                                         COUNT(case rate when 3 then 1 else null end) AS \'ns\',
                                         COUNT(case rate when 4 then 1 else null end) AS \'y\',
                                         COUNT(case rate when 5 then 1 else null end) AS \'dy\''
-                                ))->join('morss_questions', 'morss_surveys.question_id', '=', 'morss_questions.id')
+                                )->join('morss_questions', 'morss_surveys.question_id', '=', 'morss_questions.id')
                                   ->join('users', 'morss_surveys.user_id', '=', 'users.id')
                                   ->where('morss_surveys.question_id', $question->id )
                                   ->where('morss_surveys.semester_id', $semester->id )
@@ -174,8 +182,7 @@ class MorssSurvey extends Model
                                   ->groupBy('question')
                                   ->first();
                 } else {
-                    $query = MorssSurvey::select(
-                                    \DB::raw(
+                    $query = MorssSurvey::selectRaw(
                                         'morss_questions.question AS \'question\',
                                         COUNT(DISTINCT user_id) AS \'response\',
                                         COUNT(case rate when 2 then 1 else null end) AS \'no\',
@@ -183,7 +190,7 @@ class MorssSurvey extends Model
                                         COUNT(case rate when 3 then 1 else null end) AS \'ns\',
                                         COUNT(case rate when 4 then 1 else null end) AS \'y\',
                                         COUNT(case rate when 5 then 1 else null end) AS \'dy\''
-                                ))->join('morss_questions', 'morss_surveys.question_id', '=', 'morss_questions.id')
+                                )->join('morss_questions', 'morss_surveys.question_id', '=', 'morss_questions.id')
                                   ->join('users', 'morss_surveys.user_id', '=', 'users.id')
                                   ->where('morss_surveys.question_id', $question->id )
                                   ->where('morss_surveys.semester_id', $semester->id )

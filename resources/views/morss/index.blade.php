@@ -33,7 +33,6 @@
 <!-- ============================================================== -->
 <br>
 <div class="row">
-
     <!-- column -->
     <div class="col-lg-12">
         <div class="row">
@@ -48,7 +47,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-2 col-sm-4 col-xs-12 text-center">
-                                <div class="chart easy-pie-chart-2" data-percent="75"> <span class="percent">75</span>
+                                <div class="chart easy-pie-chart-2" data-percent="{{ $percentSurveyed }}"> <span class="percent"></span>
                                     <br>
                                     <h4>Users Surveyed</h4>
                                     <canvas height="100" width="100"></canvas>
@@ -97,11 +96,11 @@
                                 <div class="carousel-item active flex-column">
                                     <h4 class="card-title"><i class="mdi mdi-calendar"></i> {{ Carbon\Carbon::now()->format('d M') }}</h4>
                                     <div class="text-right"> <span class="text-muted">Users Surveyed</span>
-                                        <h1 class="font-light"><span class="text-info"></span>/<sub>1</sub></h1>
+                                        <h1 class="font-light"><span class="text-info"></span>{!! $totalSurveyed->total !!}/<sub>{!! $totalUsers !!}</sub></h1>
                                     </div>
-                                    <span class="text-info">30%</span>
+                                    <span class="text-info">{{ $percentSurveyed }}%</span>
                                     <div class="progress">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 30%; height: 6px;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: {{ $percentSurveyed }}%; height: 6px;" aria-valuenow="{{ $percentSurveyed }}" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                             </div>
