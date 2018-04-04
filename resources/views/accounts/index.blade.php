@@ -83,7 +83,7 @@
                                     <td>
                                         <a href="{{ url( 'accounts/profile/'.$user->id )}}">
                                             <img src="{{ asset('img/users/user-icon.png') }}" alt="user" height="40" width="40" class="img-circle" />
-                                            &nbsp;&nbsp; {{ $user->firstname }} {{ $user->middlename ? $user->middlename[0].'.' : '' }} {{ $user->lastname }}
+                                            &nbsp;&nbsp; {{ $user->fullNameLast }}
                                         </a>
                                     </td>
                                     <td align="center">
@@ -102,8 +102,12 @@
                                         @endforeach
                                     </td>
                                     <td>
-                                        <a href="javascript:void(0)" data-toggle="tooltip" data-original-title="reset password"> <i class="fa fa-undo text-inverse"></i> </a>
-                                        <a href="javascript:void(0)" data-toggle="tooltip" data-original-title="update account"> <i class="fa fa-pencil text-info"></i> </a>
+                                        <a href="javascript:void(0)" onclick="event.preventDefault();document.getElementById('form_reset_password').submit();" data-toggle="tooltip" data-original-title="reset password"> <i class="fa fa-undo text-inverse"></i> </a>
+
+                                        {!! Form::open(['url' => url('/accounts/profile/'.$user->id.'/reset'), 'id' => 'form_reset_password', 'style' => 'display: none']) !!}
+                                        {!! Form::close() !!}
+
+                                        <a href="{{ url( 'accounts/profile/'.$user->id )}}" data-toggle="tooltip" data-original-title="update account"> <i class="fa fa-pencil text-info"></i> </a>
                                         <a href="javascript:void(0)" data-toggle="tooltip" data-original-title="remove account"> <i class="fa fa-remove text-danger"></i> </a>
                                     </td>
                                 </tr>
@@ -148,6 +152,29 @@
         },
         order: [[1, 'asc']]
     });
-</script>   
+</script>
+<script>
+    $(document).ready(function() {
+        var flash     = {!! json_encode(session('toastr')) !!};
+        if ( flash )
+        {   
+            $(flash).each(function (i) {
+                $.toast({
+                    heading: flash[0]['heading'],
+                    text: flash[i]['text'],
+                    icon: flash[i]['icon'],
+                    position: 'bottom-left',
+                    hideAfter: 5500,
+                    //loader: false,
+
+
+
+                    
+                    stack: 5
+                });
+            });
+        }
+    });
+</script>
 @endsection
 

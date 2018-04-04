@@ -30,6 +30,10 @@ class User extends Authenticatable
         'password',
         'lastname',
         'firstname',
+        'middlename',
+        'sex',
+        'birthday',
+        'address',
         'email', 
         'mobile_number', 
         'office_id', 
@@ -45,8 +49,32 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function getFullNameLastAttribute()
+    {
+        $middlename = !empty($this->attributes['middlename']) ? $this->attributes['middlename'][0].'. ' : '';
+
+        return $this->attributes['lastname'] . ', ' . $this->attributes['firstname'] . ' ' . $middlename;
+    }
+
+    public function getFullNameFirstAttribute()
+    {
+        $middlename = !empty($this->attributes['middlename']) ? $this->attributes['middlename'][0].'. ' : '';
+
+        return $this->attributes['firstname'] . ' ' . $middlename . $this->attributes['lastname'];
+    }
+
     public function office()
     {
         return $this->belongsTo('App\Offices', 'office_id', 'id');
+    }
+
+    public function surveys()
+    {
+        return $this->hasMany('App\Models\Morss\MorssSurvey', 'user_id', 'id');
+    }
+
+    public function scopeStaffUsers($query)
+    {
+        return $query->where('_isActive', 1)->role('Staff');
     }
 }

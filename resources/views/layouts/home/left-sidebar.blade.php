@@ -18,12 +18,11 @@
                 </li>
                 <li class="nav-small-cap">--- MENU</li>
                 <li> 
-                    <a class="waves-effect waves-dark" href="{{ url('/home') }}" aria-expanded="false"><i class="icon-home"></i>Home</a>
+                    <a class="waves-effect waves-dark" href="{{ url('/home') }}" aria-expanded="false"><i class="icon-home"></i><span class="hide-menu">Home </span></a>
                 </li>
                 @role('System Administrator')
                     <li> 
-                        <a class="waves-effect waves-dark" href="{{ url('/accounts') }}" aria-expanded="false">
-                            <i class="icon-people"></i>Accounts
+                        <a class="waves-effect waves-dark" href="javascript:void(0);" aria-expanded="false"><i class="icon-people"></i><span class="hide-menu">Accounts </span>
                         </a>
                         <ul aria-expanded="false" class="collapse">
                             <li><a href="{{ url('/accounts')}}">User Accounts </a></li>
