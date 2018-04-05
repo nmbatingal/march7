@@ -13,7 +13,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon.png') }}">
-    <title>{{ config('app.name', 'Laravel') }} | MorSS</title>
+    <title>{{ config('app.name', 'Laravel') }} | EmPRES</title>
     <!-- Popup CSS -->
     <link href="{{ asset('assets/node_modules/Magnific-Popup-master/dist/magnific-popup.css') }}" rel="stylesheet">
     <!-- toast CSS -->
@@ -62,7 +62,7 @@
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
         <header class="topbar">
-            @include('layouts.morss.topbar')
+            @include('layouts.empres.topbar')
         </header>
         <!-- ============================================================== -->
         <!-- End Topbar header -->
@@ -70,7 +70,7 @@
         <!-- ============================================================== -->
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
-        @include('layouts.morss.left-sidebar')
+        @include('layouts.empres.left-sidebar')
         <!-- ============================================================== -->
         <!-- End Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->

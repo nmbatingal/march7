@@ -28,8 +28,10 @@ Route::post('/accounts/profile/{profile}/update-user-roles', 'Accounts\ProfileCo
 Route::resource('/accounts/profile', 'Accounts\ProfileController');
 Route::resource('/accounts', 'Accounts\AccountsController');
 
-Route::resource('/hrmis/application', 'Hrmis\ApplicantsController');
+Route::resource('/hrmis/applicants', 'Hrmis\ApplicantsController');
 Route::resource('/hrmis', 'Hrmis\HrmisController');
+
+Route::resource('/empres', 'Empres\EmpresController');
 
 Route::resource('/morss/survey/takesurvey', 'Morss\TakeSurveyController');
 Route::resource('/morss/survey', 'Morss\SurveyController');
@@ -121,6 +123,4 @@ Route::get('/sample', function () {
     // return dd($division_data);
     // return $pos;
     // return dd($staffs, $semesters);
-
-
 });

@@ -3,7 +3,7 @@
     <!-- Logo -->
     <!-- ============================================================== -->
     <div class="navbar-header custom-hide">
-        <a class="navbar-brand" href="{{ url('/morss') }}">
+        <a class="navbar-brand" href="{{ url('/hrmis') }}">
             <!-- Logo icon -->
             <b>
                 <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -16,7 +16,7 @@
             <!-- Logo text -->
             <span>
                 <img src="{{ asset('img/logo-dost.png') }}" class="light-logo" alt="homepage" />
-                DOST13 <strong>MorSS</strong>
+                DOST13 <strong>HRMIS</strong>
                 <!-- dark Logo text -->
                 <!-- <img src="{{ asset('assets/images/logo-text.png') }}" alt="homepage" class="dark-logo" /> -->
                 <!-- Light Logo text -->    

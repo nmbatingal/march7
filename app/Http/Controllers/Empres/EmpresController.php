@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Hrmis;
+namespace App\Http\Controllers\Empres;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class HrmisController extends Controller
+class EmpresController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -24,7 +24,7 @@ class HrmisController extends Controller
      */
     public function index()
     {
-        return view('hrmis.index');
+        return view('empres.index');
     }
 
     /**
