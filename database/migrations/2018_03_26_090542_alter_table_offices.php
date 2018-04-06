@@ -14,9 +14,9 @@ class AlterTableOffices extends Migration
     public function up()
     {
         Schema::table('offices', function (Blueprint $table) {
-            $table->integer('head_office_id')->unsigned()->nullable()->after('acronym');
+            $table->integer('parent_office_id')->unsigned()->nullable()->after('acronym');
 
-            $table->foreign('head_office_id')->references('id')->on('offices')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('parent_office_id')->references('id')->on('offices')->onUpdate('cascade')->onDelete('set null');
         });
     }
 
@@ -28,7 +28,7 @@ class AlterTableOffices extends Migration
     public function down()
     {
         Schema::table('offices', function (Blueprint $table) {
-            $table->dropForeign(['head_office_id']);
+            $table->dropForeign(['parent_office_id']);
         });
     }
 }
