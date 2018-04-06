@@ -54,15 +54,20 @@ class MoraleSurveyController extends Controller
         $questions     = Survey::questionMoraleIndex( $semesters->first() );
         $totalSurveyed = Survey::totalUserSurveyed( $semesters->first() );
         $totalUsers    = User::staffUsers()->count();
-        $percentSurveyed = ( $totalSurveyed->total / $totalUsers ) * 100;
+
+        if ( $totalSurveyed->total != 0 && $totalUsers != 0) {
+            $percentSurveyed = ( $totalSurveyed->total / $totalUsers ) * 100;
+        } else {
+            $percentSurveyed = 0;
+        }
 
         return view('morss.index', [
                     // 'userSurvey' => $userSurvey,
-                    'semesters'      => $semesters,
-                    'division_data'  => $division_data,
-                    'questions'      => $questions,
-                    'totalSurveyed'  => $totalSurveyed,
-                    'totalUsers'     => $totalUsers,
+                    'semesters'           => $semesters,
+                    'division_data'       => $division_data,
+                    'questions'           => $questions,
+                    'totalSurveyed'       => $totalSurveyed,
+                    'totalUsers'          => $totalUsers,
                     'percentSurveyed'     => $percentSurveyed,
                 ]);
     }
