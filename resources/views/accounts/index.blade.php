@@ -78,7 +78,7 @@
                         </thead>
                         <tbody>
                             @foreach($users as $user)
-                                <tr>
+                                <tr class="{{ $user->trashed() ? 'table-danger' : '' }}">
                                     <td></td>
                                     <td>
                                         <a href="{{ url( 'accounts/profile/'.$user->id )}}">
@@ -102,13 +102,19 @@
                                         @endforeach
                                     </td>
                                     <td>
-                                        <a href="javascript:void(0)" onclick="event.preventDefault();document.getElementById('form_reset_password').submit();" data-toggle="tooltip" data-original-title="reset password"> <i class="fa fa-undo text-inverse"></i> </a>
+                                        @if ( $user->trashed() )
+                                            {!! Form::open(['url' => url('/accounts/'.$user->id.'/restore')]) !!}
+                                                {{ Form::button('<i class="fa fa-plus text-inverse"> </i>', ['class' => 'btn btn-xs btn-success waves-effect waves-light', 'type' => 'submit', 'data-toggle' => 'tooltip', 'data-original-title' => 'restore user account']) }}
+                                            {!! Form::close() !!}
+                                        @else
+                                            {!! Form::open(['url' => url('/accounts/profile/'.$user->id.'/reset')]) !!}
+                                                {{ Form::button('<i class="fa fa-undo text-inverse"> </i>', ['class' => 'btn btn-xs btn-info waves-effect waves-light', 'type' => 'submit', 'data-toggle' => 'tooltip','data-original-title' => 'reset password']) }}
+                                            {!! Form::close() !!}
 
-                                        {!! Form::open(['url' => url('/accounts/profile/'.$user->id.'/reset'), 'id' => 'form_reset_password', 'style' => 'display: none']) !!}
-                                        {!! Form::close() !!}
-
-                                        <a href="{{ url( 'accounts/profile/'.$user->id )}}" data-toggle="tooltip" data-original-title="update account"> <i class="fa fa-pencil text-info"></i> </a>
-                                        <a href="javascript:void(0)" data-toggle="tooltip" data-original-title="remove account"> <i class="fa fa-remove text-danger"></i> </a>
+                                            {!! Form::open(['url' => url( 'accounts/'.$user->id ), 'method' => 'DELETE']) !!}
+                                                {{ Form::button('<i class="fa fa-remove text-inverse"> </i>', ['class' => 'btn btn-xs btn-danger waves-effect waves-light', 'type' => 'submit', 'data-toggle' => 'tooltip', 'data-original-title' => 'remove user account']) }}
+                                            {!! Form::close() !!}
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -128,6 +134,7 @@
 <!-- This is data table -->
 <script src="{{ asset('assets/node_modules/datatables/jquery.dataTables.min.js') }}"></script>
 <script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.10/js/dataTables.checkboxes.min.js"></script>
+<!-- Custom JS Function -->
 <script>
     // This is for the sticky sidebar    
     $(".stickyside").stick_in_parent({

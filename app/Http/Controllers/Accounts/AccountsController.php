@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Accounts;
 
+use Session;
 use App\User;
 use App\Offices;
 use Illuminate\Http\Request;
@@ -26,7 +27,7 @@ class AccountsController extends Controller
      */
     public function index()
     {
-        $users   = User::all();
+        $users   = User::withTrashed()->get();
         $offices = Offices::orderBy('office_name', 'ASC')->get();
         return view('accounts.index', compact('users', 'offices'));
     }
@@ -92,8 +93,43 @@ class AccountsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $account)
     {
-        //
+        if ( $account->delete() )
+        {
+            $toastr = Session::flash('toastr', [ 
+                [
+                    'heading' => 'Success',
+                    'text'    => 'Account successfully removed!', 
+                    'icon'    => 'success', 
+                ],
+            ]);
+        }
+
+        return redirect('accounts/');
+    }
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        $user = User::withTrashed()->where('id', $id); 
+
+        if ( $user->restore() )
+        {
+            $toastr = Session::flash('toastr', [ 
+                [
+                    'heading' => 'Success',
+                    'text'    => 'Account successfully restored!', 
+                    'icon'    => 'success', 
+                ],
+            ]);
+        }
+
+        return redirect('accounts/');
     }
 }

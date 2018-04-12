@@ -13,6 +13,10 @@ class User extends Authenticatable
     use SoftDeletes;
     use HasRoles;
 
+    // protected $connection = 'mysql_trace';
+    
+    // protected $table = 't_users';
+
     /**
      * The attributes that should be mutated to dates.
      *

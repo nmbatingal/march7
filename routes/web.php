@@ -25,6 +25,7 @@ Route::resource('/accounts/roles', 'Roles\RoleController');
 Route::post('/accounts/profile/{profile}/reset', 'Accounts\ProfileController@resetPassword')->name('profile.resetPassword');
 Route::post('/accounts/profile/{profile}/update-password', 'Accounts\ProfileController@updatePassword')->name('profile.updatePassword');
 Route::post('/accounts/profile/{profile}/update-user-roles', 'Accounts\ProfileController@updateUserRoles')->name('profile.updateUserRoles');
+Route::post('/accounts/{account}/restore', 'Accounts\AccountsController@restore')->name('accounts.restore');
 Route::resource('/accounts/profile', 'Accounts\ProfileController');
 Route::resource('/accounts', 'Accounts\AccountsController');
 

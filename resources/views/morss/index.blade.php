@@ -47,15 +47,15 @@
                         <div>
                             <canvas id="barChart" height="150"></canvas>
                         </div>
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-md-2 col-sm-4 col-xs-12 text-center">
                                 <div class="chart easy-pie-chart-2" data-percent="{{ $percentSurveyed }}"> <span class="percent"></span>
                                     <br>
-                                    <h4>Users Surveyed</h4>
+                                    <h4>Accounts Surveyed</h4>
                                     <canvas height="100" width="100"></canvas>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
@@ -97,7 +97,7 @@
                             <div class="carousel-inner">
                                 <div class="carousel-item active flex-column">
                                     <h4 class="card-title"><i class="mdi mdi-calendar"></i> {{ Carbon\Carbon::now()->format('d M') }}</h4>
-                                    <div class="text-right"> <span class="text-muted">Users Surveyed</span>
+                                    <div class="text-right"> <span class="text-muted">Accounts Surveyed</span>
                                         <h1 class="font-light"><span class="text-info"></span>{!! $totalSurveyed->total !!}<sub>/{!! $totalUsers !!}</sub></h1>
                                     </div>
                                     <span class="text-info">{{ $percentSurveyed }}%</span>
