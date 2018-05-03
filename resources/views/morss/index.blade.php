@@ -39,7 +39,7 @@
     <div class="col-lg-12">
         <div class="row">
             <div class="col-lg-8">
-                <div class="card">
+                <div class="card" id="embed-morss">
                     <div class="card-header">
                         <h4 class="">OI% of DOST Caraga for <a href="javascript:void(0)">{!! !$semesters->isEmpty() ? $semesters->first()->semesterRangeFormal : '<a href="#">n/a</a>' !!}</a></h4>
                     </div>

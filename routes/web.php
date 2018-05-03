@@ -18,6 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('/logs', 'UserLogsController');
 
 Route::resource('/accounts/permissions', 'Roles\PermissionController');
 Route::resource('/accounts/roles', 'Roles\RoleController');
@@ -28,6 +29,7 @@ Route::post('/accounts/profile/{profile}/update-user-roles', 'Accounts\ProfileCo
 Route::post('/accounts/{account}/restore', 'Accounts\AccountsController@restore')->name('accounts.restore');
 Route::resource('/accounts/profile', 'Accounts\ProfileController');
 Route::resource('/accounts', 'Accounts\AccountsController');
+
 
 Route::resource('/hrmis/applicants', 'Hrmis\ApplicantsController');
 Route::resource('/hrmis', 'Hrmis\HrmisController');

@@ -72,6 +72,11 @@ class User extends Authenticatable
         return $this->belongsTo('App\Offices', 'office_id', 'id');
     }
 
+    public function userLogs()
+    {
+        return $this->hasMany('App\UserLogs', 'user_id', 'id');
+    }
+
     public function surveys()
     {
         return $this->hasMany('App\Models\Morss\MorssSurvey', 'user_id', 'id');

@@ -118,7 +118,7 @@ class MoraleSurveyController extends Controller
             ]);
         }
 
-        return redirect('/morss/survey');;
+        return redirect('/morss/survey');
     }
 
     /**

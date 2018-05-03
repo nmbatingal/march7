@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Auth;
+use Session;
 use App\User;
+use App\UserLogs;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -37,6 +40,24 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function authenticated(Request $request, \App\User $user ) {
+
+        $logs = new UserLogs();
+        $logs->user_id = Auth::user()->id;
+        $logs->action  = "login";
+        $logs->save();
+
+        $toastr = Session::flash('toastr', [ 
+                [
+                    'heading' => 'Success',
+                    'text'    => 'You are successfully logged-in!', 
+                    'icon'    => 'success', 
+                ],
+            ]);
+
+        return redirect()->intended($this->redirectPath());
     }
 
     /**

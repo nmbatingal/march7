@@ -44,6 +44,18 @@
                 </ul>
             </div>
         </div>
+
+        <div class="card">
+            <div class="card-body">
+                <ul class="list-style-none">
+                    <li class="box-label"><a href="javascript:void(0)">Legend</a></li>
+                    <li class="divider"></li>
+                    @foreach($offices as $office)
+                        <li><a href="javascript:void(0)">{{ $office->acronym }} <span> {{ $office->staffs->count() }}</span></a></li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
     </div>
     <div class="col-lg-10 col-xlg-10 col-md-8">
         <div class="card">

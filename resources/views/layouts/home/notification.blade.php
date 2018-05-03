@@ -150,7 +150,7 @@
                 <!-- text-->
                 <div class="dropdown-divider"></div>
                 <!-- text-->
-                <a href="javascript:void(0)" class="dropdown-item"><i class="ti-settings"></i> Account Setting</a>
+                <a href="{{ url( '/logs/'.Auth::user()->id ) }}" class="dropdown-item"><i class="ti-list"></i> Activity Log</a>
                 <!-- text-->
                 <div class="dropdown-divider"></div>
                 <!-- text-->
