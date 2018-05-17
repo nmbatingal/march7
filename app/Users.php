@@ -13,19 +13,23 @@ class User extends Authenticatable
     use SoftDeletes;
     use HasRoles;
 
+    protected $connection = 'mysql2';
+    protected $table = 't_users';
+    protected $primaryKey = 'u_id';
+
     /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    // protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
+    /*protected $fillable = [
         'username', 
         'password',
         'lastname',
@@ -38,6 +42,21 @@ class User extends Authenticatable
         'mobile_number', 
         'office_id', 
         'position', 
+    ];*/
+
+    protected $fillable = [
+        'u_username', 
+        'u_email',
+        'u_fname',
+        'u_mname',
+        'u_lname',
+        'u_mobile',
+        'ug_id',
+        'group_id',
+        'u_position',
+        'u_picture',
+        'u_active',
+        'u_administrator',
     ];
 
     /**
@@ -46,21 +65,21 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'u_password', 'remember_token',
     ];
 
     public function getFullNameLastAttribute()
     {
-        $middlename = !empty($this->attributes['middlename']) ? $this->attributes['middlename'][0].'. ' : '';
+        $middlename = !empty($this->attributes['u_mname']) ? $this->attributes['u_mname'][0].'. ' : '';
 
-        return $this->attributes['lastname'] . ', ' . $this->attributes['firstname'] . ' ' . $middlename;
+        return $this->attributes['u_lname'] . ', ' . $this->attributes['u_fname'] . ' ' . $middlename;
     }
 
     public function getFullNameFirstAttribute()
     {
-        $middlename = !empty($this->attributes['middlename']) ? $this->attributes['middlename'][0].'. ' : '';
+        $middlename = !empty($this->attributes['u_m']) ? $this->attributes['u_m'][0].'. ' : '';
 
-        return $this->attributes['firstname'] . ' ' . $middlename . $this->attributes['lastname'];
+        return $this->attributes['u_fname'] . ' ' . $middlename . $this->attributes['u_lname'];
     }
 
     public function office()
@@ -70,16 +89,17 @@ class User extends Authenticatable
 
     public function userLogs()
     {
-        return $this->hasMany('App\UserLogs', 'user_id', 'id');
+        return $this->hasMany('App\UserLogs', 'user_id', 'u_id');
     }
 
     public function surveys()
     {
-        return $this->hasMany('App\Models\Morss\MorssSurvey', 'user_id', 'id');
+        return $this->hasMany('App\Models\Morss\MorssSurvey', 'user_id', 'u_id');
     }
 
     public function scopeStaffUsers($query)
     {
-        return $query->where('_isActive', 1)->role('Staff');
+        // return $query->where('_isActive', 1)->role('Staff');
+        return $query->where('u_active', 1)->role('Staff');
     }
 }

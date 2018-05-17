@@ -59,9 +59,15 @@
                     </div>
                 </div>
 
-                <div class="card m-t-40">
-                    <div class="card-body">
-                        <h6 class="card-title">Morale Index percentage per questions asked.</h6>
+                <div class="card border-info">
+                    <div class="card-header bg-info text-white">
+                        Morale Index percentage per questions asked
+                        <div class="card-actions">
+                            <a class="" data-action="collapse"><i class="ti-minus"></i></a>
+                            <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
+                        </div>
+                    </div>
+                    <div class="card-body p-0 collapse show">
                         <div class="table-responsive">
                             <table class="table table-bordered">
                                 <thead>
@@ -87,6 +93,36 @@
                     </div>
                 </div>
 
+                <div class="card border-info">
+                    <div class="card-header bg-info text-white">
+                        Remarks
+                        <div class="card-actions">
+                            <a class="" data-action="collapse"><i class="ti-minus"></i></a>
+                            <a class="btn-minimize" data-action="expand"><i class="mdi mdi-arrow-expand"></i></a>
+                        </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- Comment widgets -->
+                    <!-- ============================================================== -->
+                    <div class="card-body p-0 collapse show">
+                        <div class="comment-widgets collapse show m-b-0">
+
+                            @foreach( $remarks as $user_remarks )
+                            <!-- Comment Row -->
+                                <div class="d-flex flex-row comment-row p-0">
+                                    <div class="p-2"><span class="round"><img src="{{ asset('img/users/user-icon.png') }}" alt="user" width="50"></span></div>
+                                    <div class="comment-text w-100">
+                                        <div class="comment-footer">
+                                            <span class="label label-danger">25%</span>
+                                            <small class="date">{!! date("M d, Y", strtotime( $user_remarks->created_at )) !!}</small>
+                                        </div>
+                                        <p class="m-b-5 m-t-10">{!! $user_remarks->remarks !!}</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-lg-4">
 

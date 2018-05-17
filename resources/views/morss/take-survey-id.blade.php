@@ -6,6 +6,11 @@
 <link href="{{ asset('assets/node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <!-- bootstrap-datetimepicker -->
 <link href="{{ asset('gentelella/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
+<style>
+    textarea  {
+        background-color: #f8f9fa !important;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -140,7 +145,12 @@
                                 @endforeach
                             </tbody>
                         </table>
-                    </div>    
+                    </div>  
+
+                    <div class="form-group p-15">
+                        <label class="font-bold">Remarks</label>
+                        <blockquote>{!! $remarks->remarks !!}</blockquote>
+                    </div> 
                 </div>
             @else
                 <div class="card-body p-0">
@@ -213,6 +223,13 @@
                                 </tbody>
                             </table>
                         </div>
+
+                        <div class="form-group p-15">
+                            <label class="font-bold">Remarks*</label>
+                            <textarea class="form-control auto-growth" rows="5" name="remarks" required></textarea>
+                            <span class="help-block text-muted"><small>This field is required. Remarks remain anonymous.</small></span>
+                        </div>
+
                         <div class="pull-right p-15">
                             <button type="submit" class="btn btn-success waves-effect waves-light">Submit</button>
                         </div>              
@@ -239,6 +256,8 @@
         $(".stickyside").stick_in_parent({
             offset_top: 100
         });
+
+        autosize($('textarea.auto-growth'));
 
         var flash     = {!! json_encode(session('toastr')) !!};
         if ( flash )

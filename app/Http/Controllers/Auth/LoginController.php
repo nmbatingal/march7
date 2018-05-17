@@ -42,10 +42,10 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function authenticated(Request $request, \App\User $user ) {
+    /*public function authenticated(Request $request, \App\User $user ) {
 
         $logs = new UserLogs();
-        $logs->user_id = Auth::user()->id;
+        $logs->user_id = Auth::user()->u_id;
         $logs->action  = "login";
         $logs->save();
 
@@ -58,7 +58,7 @@ class LoginController extends Controller
             ]);
 
         return redirect()->intended($this->redirectPath());
-    }
+    }*/
 
     /**
      * Show the application's login form.
@@ -78,6 +78,7 @@ class LoginController extends Controller
     public function username()
     {
         return 'username';
+        // return 'u_username';
     }
 
     /**
@@ -89,5 +90,6 @@ class LoginController extends Controller
     protected function credentials(Request $request)
     {
         return array_merge($request->only($this->username(), 'password'), ['_isActive' => 1]);
+        // return array_merge($request->only($this->username(), 'u_password'), ['u_active' => 1]);
     }
 }

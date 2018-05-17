@@ -7,6 +7,7 @@ use App\TableMonth as Month;
 use App\Models\Morss\MorssSemester as Semester;
 use App\Models\Morss\MorssQuestion as Question;
 use App\Models\Morss\MorssSurvey as Survey;
+use App\Models\Morss\MorssSurveyRemarks as Remark;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -65,6 +66,12 @@ class TakeSurveyController extends Controller
             $survey->save();
         }
 
+        $remarks = new Remark;
+        $remarks->semester_id  = $request['semester_id'];
+        $remarks->user_id      = $request['user_id'];
+        $remarks->remarks      = nl2br($request['remarks']);
+        $remarks->save();
+
         return redirect('/morss');
     }
 
@@ -79,7 +86,9 @@ class TakeSurveyController extends Controller
         $semester  = Semester::find($id);
         $surveys   = Survey::userHasSurveyed( Auth::user()->id )->where('semester_id', $id)->get();
         $questions = Question::all();
-        return view('morss.take-survey-id', compact('semester', 'surveys', 'questions'));
+        $remarks   = Remark::where('user_id', Auth::user()->id )->where('semester_id', $id)->first();
+
+        return view('morss.take-survey-id', compact('semester', 'surveys', 'questions', 'remarks'));
     }
 
     /**

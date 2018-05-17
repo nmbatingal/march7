@@ -54,14 +54,14 @@ return [
             'engine' => null,
         ],
 
-        'mysql_trace' => [
-            'driver' => 'mysql',
-            'host' => env('TRACE_DB_HOST', '127.0.0.1'),
-            'port' => env('TRACE_DB_PORT', '3306'),
-            'database' => env('TRACE_DB_DATABASE', 'forge'),
-            'username' => env('TRACE_DB_USERNAME', 'forge'),
-            'password' => env('TRACE_DB_PASSWORD', ''),
-            'unix_socket' => env('TRACE_DB_SOCKET', ''),
+        'mysql2' => [
+            'driver' => env('DB_CONNECTION_TRACE', 'mysql'),
+            'host' => env('DB_HOST_TRACE', '127.0.0.1'),
+            'port' => env('DB_PORT_TRACE', '3306'),
+            'database' => env('DB_DATABASE_TRACE', 'forge'),
+            'username' => env('DB_USERNAME_TRACE', 'forge'),
+            'password' => env('DB_PASSWORD_TRACE', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',

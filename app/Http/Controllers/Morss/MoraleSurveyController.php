@@ -9,6 +9,7 @@ use App\Offices;
 use App\Models\Morss\MorssSemester as Semester;
 use App\Models\Morss\MorssQuestion as Question;
 use App\Models\Morss\MorssSurvey as Survey;
+use App\Models\Morss\MorssSurveyRemarks as Remarks;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -31,45 +32,53 @@ class MoraleSurveyController extends Controller
      */
     public function index()
     {
-        // $userSurvey   = Semester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with('surveys')->get();
-        $semesters = Semester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with([
-            'surveys' => function ($query) {
-                $query->join('users', 'morss_surveys.user_id', '=', 'users.id')
-                      ->where('users._isActive', 1);
+        if ( Auth::user()->hasanyrole(['System Administrator', 'Unit Head']) ) {
+
+            // $userSurvey   = Semester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with('surveys')->get();
+            $semesters = Semester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with([
+                'surveys' => function ($query) {
+                    $query->join('users', 'morss_surveys.user_id', '=', 'users.id')
+                          ->where('users._isActive', 1);
+                }
+            ])->get();
+
+            $overallIndex    = Survey::overallIndex( $semesters->first() );
+            $division_data[] = [ 'name' => 'Overall Index', 'oi_value' => $overallIndex];
+            $divisions       = ['ORD', 'FAS', 'FOD', 'TSS'];
+            $remarks         = Remarks::where('semester_id', $semesters->first()->id )->orderBy('created_at', 'DESC')->get();
+
+            foreach ( $divisions as $division ) {
+
+                $office       = Offices::where('acronym', '=', $division)->first();
+                $division_oi  = Survey::overallIndex( $semesters->first(), $office );
+                $division_data[] = [ 'name' => $division, 'oi_value' => $division_oi ];
+
             }
-        ])->get();
 
-        $overallIndex    = Survey::overallIndex( $semesters->first() );
-        $division_data[] = [ 'name' => 'Overall Index', 'oi_value' => $overallIndex];
-        $divisions       = ['ORD', 'FAS', 'FOD', 'TSS'];
+            $questions     = Survey::questionMoraleIndex( $semesters->first() );
+            $totalSurveyed = Survey::totalUserSurveyed( $semesters->first() );
+            $totalUsers    = User::staffUsers()->count();
 
-        foreach ( $divisions as $division ) {
+            if ( $totalSurveyed->total != 0 && $totalUsers != 0) {
+                $percentSurveyed = ( $totalSurveyed->total / $totalUsers ) * 100;
+            } else {
+                $percentSurveyed = 0;
+            }
 
-            $office       = Offices::where('acronym', '=', $division)->first();
-            $division_oi  = Survey::overallIndex( $semesters->first(), $office );
-            $division_data[] = [ 'name' => $division, 'oi_value' => $division_oi ];
+            return view('morss.index', [
+                        // 'userSurvey' => $userSurvey,
+                        'semesters'           => $semesters,
+                        'division_data'       => $division_data,
+                        'questions'           => $questions,
+                        'totalSurveyed'       => $totalSurveyed,
+                        'totalUsers'          => $totalUsers,
+                        'percentSurveyed'     => $percentSurveyed,
+                        'remarks'             => $remarks,
+                    ]);
 
-        }
-
-        $questions     = Survey::questionMoraleIndex( $semesters->first() );
-        $totalSurveyed = Survey::totalUserSurveyed( $semesters->first() );
-        $totalUsers    = User::staffUsers()->count();
-
-        if ( $totalSurveyed->total != 0 && $totalUsers != 0) {
-            $percentSurveyed = ( $totalSurveyed->total / $totalUsers ) * 100;
         } else {
-            $percentSurveyed = 0;
+            return view('morss.staff.index');
         }
-
-        return view('morss.index', [
-                    // 'userSurvey' => $userSurvey,
-                    'semesters'           => $semesters,
-                    'division_data'       => $division_data,
-                    'questions'           => $questions,
-                    'totalSurveyed'       => $totalSurveyed,
-                    'totalUsers'          => $totalUsers,
-                    'percentSurveyed'     => $percentSurveyed,
-                ]);
     }
 
     /**
