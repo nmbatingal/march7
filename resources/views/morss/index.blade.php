@@ -33,7 +33,6 @@
 <!-- ============================================================== -->
 <br>
 
-@hasanyrole(['System Administrator', 'Unit Head'])
 <div class="row">
     <!-- column -->
     <div class="col-lg-12">
@@ -164,19 +163,6 @@
     </div>
     <!-- column -->
 </div>
-@else
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                This is the <strong>Morale Survey System</strong>!
-                <p> Take the <a href="{{ url('/morss/survey/takesurvey') }}">survey</a> to proceed.</p>
-
-            </div>
-        </div>
-    </div>
-</div>
-@endhasanyrole
 
 @endsection
 
