@@ -64,6 +64,9 @@
                 <h6 class="card-subtitle">List of user accounts</h6>
             </div>
             <div class="card-body">
+                <a href="javascript:void(0)" class="btn btn-primary">Import</a>
+            </div>
+            <div class="card-body">
                 <div class="table-responsive m-t--50">
                     <table id="myTable" class="table table-hover table-striped no-wrap">
                         <colgroup>

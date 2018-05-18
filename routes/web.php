@@ -49,8 +49,6 @@ Route::get('/export/excel', 'PaymentsController@excel')->name('export.excel');
 Route::get('importExport', 'MaatwebsiteController@importExport');
 // Route for export/download tabledata to .csv, .xls or .xlsx
 Route::get('downloadExcel/{type}', 'MaatwebsiteController@downloadExcel');
-// Route for import excel data to database.
-Route::post('importExcel', 'MaatwebsiteController@importExcel');
 
 // Sample Query
 Route::get('/sample', function () {

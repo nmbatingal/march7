@@ -13,44 +13,6 @@ use Illuminate\Http\Request;
 
 class MaatwebsiteController extends Controller
 {
-    public function importExport()
-    {
-        return view('importExport');
-    }
-
-    public function excel()
-    {
-        $payments = User::orderBy('firstname', 'ASC')
-                    ->select(
-                        'id',
-                        DB::raw("concat(firstname, ' ', lastname) as fullname"),
-                        'email',
-                        'created_at')
-                    ->get();
-
-        $paymentsArray = [];
-        $paymentsArray[] = ['id', 'customer','email','created_at'];
-
-        foreach ($payments as $payment) {
-            $paymentsArray[] = $payment->toArray();
-        }
-
-        \Excel::create('payments', function($excel) use ($paymentsArray) {
-
-            // Set the spreadsheet title, creator, and description
-            $excel->setTitle('Payments');
-            $excel->setCreator('Laravel')->setCompany('WJ Gilmore, LLC');
-            $excel->setDescription('payments file');
-
-            // Build the spreadsheet, passing in the payments array
-            $excel->sheet('sheet1', function($sheet) use ($paymentsArray) {
-                $sheet->fromArray($paymentsArray, null, 'A1', false, false);
-            });
-
-        })->download('xlsx');
-
-        return $payments;
-    }
 
     public function downloadExcel($type)
     {
@@ -91,21 +53,13 @@ class MaatwebsiteController extends Controller
 
             $path = $request->file('import_file')->getRealPath();
             $data = Excel::load($path)->get();
+            $role = Role::where('name', 'System Administrator')->firstOrFail();
 
-            if($data->count()) {
+            if ( $data->count() ) {
 
                 foreach ($data as $key => $value) {
 
-                    $user = new User;
-                    $user->username     = $value->username;
-                    $user->lastname     = $value->lastname;
-                    $user->firstname    = $value->firstname;
-                    $user->middlename   = $value->middlename;
-                    $user->birthday     = $value->birthday;
-                    $user->email        = $value->email;
-                    $user->position     = $value->position;
-
-                    $role  = Role::where('name', 'System Administrator')->firstOrFail();
+                    $office  = Offices::where('acronym', $value->office)->firstOrFail();
                     $users = [
                         [
                             'username'   => $value->username,
@@ -113,12 +67,12 @@ class MaatwebsiteController extends Controller
                             'lastname'   => $value->lastname,
                             'firstname'  => $value->firstname,
                             'middlename' => $value->middlename,
-                            'sex'        => 0,
+                            'sex'        => $value->sex == 'male' ? 0 : 1,
                             'birthday'   => date("Y-m-d", strtotime( $value->birthday )),
                             // 'address'    => NULL,
                             'email'      => $value->email,
                             // 'mobile'     => NULL,
-                            // 'office_id'  => $office->id,
+                            'office_id'  => $office->id,
                             'position'   => $value->position,
                             '_isActive'  => 0,
                             '_isAdmin'   => 0,
@@ -132,25 +86,17 @@ class MaatwebsiteController extends Controller
                         $u->roles()->sync($role);
                     }
                 }
+
+                Session::put('success', 'Your file successfully import in database!');
+
+            } else {
+                Session::put('warning', 'File is blank and cannot be imported! Nothing saved in the database.');
             }
 
-            /*Excel::load($request->file('import_file')->getRealPath(), function ($reader) {
-
-                foreach ($reader->toArray() as $key => $row) {
-                    $data['title'] = $row['title'];
-                    $data['description'] = $row['description'];
-
-                    if(!empty($data)) {
-                        DB::table('post')->insert($data);
-                    }
-                }
-            });*/
-
+        } else {
+            Session::put('error', 'No file to be imported!');
         }
 
-        Session::put('success', 'Your file successfully import in database!!!');
-
         return back();
-        // return dd($collection);
     }
 }
