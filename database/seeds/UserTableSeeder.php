@@ -16,7 +16,6 @@ class UserTableSeeder extends Seeder
     {
     	// $office = Offices::where('acronym', '=', 'TSS')->firstOrFail();
         $roles  = Role::where('name', 'System Administrator')->firstOrFail();
-
         $users = [
             [
                 'username'   => 'admin',

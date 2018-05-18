@@ -42,6 +42,16 @@ Route::post('/morss/{morss}/lock', 'Morss\MoraleSurveyController@lockSemester')-
 Route::post('/morss/{morss}/unlock', 'Morss\MoraleSurveyController@unlockSemester')->name('morss.unlockSemester');
 Route::resource('/morss', 'Morss\MoraleSurveyController');
 
+Route::get('/export/excel', 'PaymentsController@excel')->name('export.excel');
+
+
+// Route for view/blade file.
+Route::get('importExport', 'MaatwebsiteController@importExport');
+// Route for export/download tabledata to .csv, .xls or .xlsx
+Route::get('downloadExcel/{type}', 'MaatwebsiteController@downloadExcel');
+// Route for import excel data to database.
+Route::post('importExcel', 'MaatwebsiteController@importExcel');
+
 // Sample Query
 Route::get('/sample', function () {
 
