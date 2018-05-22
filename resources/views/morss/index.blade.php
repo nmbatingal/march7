@@ -112,7 +112,9 @@
                                     <div class="p-2"><span class="round"><img src="{{ asset('img/users/user-icon.png') }}" alt="user" width="50"></span></div>
                                     <div class="comment-text w-100">
                                         <div class="comment-footer">
-                                            <span class="label label-danger">25%</span>
+                                            <span class="label label-danger">
+                                                
+                                            </span>
                                             <small class="date">{!! date("M d, Y", strtotime( $user_remarks->created_at )) !!}</small>
                                         </div>
                                         <p class="m-b-5 m-t-10">{!! $user_remarks->remarks !!}</p>

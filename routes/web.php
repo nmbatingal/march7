@@ -44,6 +44,19 @@ Route::post('/morss/{morss}/lock', 'Morss\MoraleSurveyController@lockSemester')-
 Route::post('/morss/{morss}/unlock', 'Morss\MoraleSurveyController@unlockSemester')->name('morss.unlockSemester');
 Route::resource('/morss', 'Morss\MoraleSurveyController');
 
+Route::get('/user', function() {
+    $semesters = App\Models\Morss\MorssSemester::orderBy('created_at', 'DESC')->surveyAvailable(true)->with([
+        'surveys' => function ($query) {
+            $query->join('users', 'morss_surveys.user_id', '=', 'users.id')
+                  ->where('users._isActive', 1);
+        }
+    ])->get();
+
+    $remarks = App\Models\Morss\MorssSurveyRemarks::where('semester_id', $semesters->first() ? $semesters->first()->id : 0 )->orderBy('created_at', 'DESC')->get();
+
+    return $remarks;
+});
+
 // Sample Query
 Route::get('/sample', function () {
 

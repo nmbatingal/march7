@@ -45,7 +45,7 @@ class MoraleSurveyController extends Controller
             $overallIndex    = Survey::overallIndex( $semesters->first() );
             $division_data[] = [ 'name' => 'Overall Index', 'oi_value' => $overallIndex];
             $divisions       = ['ORD', 'FAS', 'FOD', 'TSS'];
-            $remarks         = Remarks::where('semester_id', $semesters->first()->id )->orderBy('created_at', 'DESC')->get();
+            $remarks         = Remarks::where('semester_id', $semesters->first() ? $semesters->first()->id : 0 )->orderBy('created_at', 'DESC')->get();
 
             foreach ( $divisions as $division ) {
 
