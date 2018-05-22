@@ -27,6 +27,8 @@ Route::post('/accounts/profile/{profile}/reset', 'Accounts\ProfileController@res
 Route::post('/accounts/profile/{profile}/update-password', 'Accounts\ProfileController@updatePassword')->name('profile.updatePassword');
 Route::post('/accounts/profile/{profile}/update-user-roles', 'Accounts\ProfileController@updateUserRoles')->name('profile.updateUserRoles');
 Route::post('/accounts/{account}/restore', 'Accounts\AccountsController@restore')->name('accounts.restore');
+Route::post('/accounts/import/users', 'Accounts\AccountsController@importUserFile');
+Route::get('/accounts/template/download', 'Accounts\AccountsController@downloadTemplateFile');
 Route::resource('/accounts/profile', 'Accounts\ProfileController');
 Route::resource('/accounts', 'Accounts\AccountsController');
 
@@ -41,14 +43,6 @@ Route::resource('/morss/survey', 'Morss\SurveyController');
 Route::post('/morss/{morss}/lock', 'Morss\MoraleSurveyController@lockSemester')->name('morss.lockSemester');
 Route::post('/morss/{morss}/unlock', 'Morss\MoraleSurveyController@unlockSemester')->name('morss.unlockSemester');
 Route::resource('/morss', 'Morss\MoraleSurveyController');
-
-Route::get('/export/excel', 'PaymentsController@excel')->name('export.excel');
-
-
-// Route for view/blade file.
-Route::get('importExport', 'MaatwebsiteController@importExport');
-// Route for export/download tabledata to .csv, .xls or .xlsx
-Route::get('downloadExcel/{type}', 'MaatwebsiteController@downloadExcel');
 
 // Sample Query
 Route::get('/sample', function () {

@@ -51,7 +51,7 @@ class User extends Authenticatable
 
     public function getFullNameLastAttribute()
     {
-        $middlename = !empty($this->attributes['middlename']) ? $this->attributes['middlename'][0].'. ' : '';
+        $middlename = !empty($this->attributes['middlename']) ? $this->attributes['middlename'] : '';
 
         return $this->attributes['lastname'] . ', ' . $this->attributes['firstname'] . ' ' . $middlename;
     }

@@ -44,27 +44,21 @@
                 </ul>
             </div>
         </div>
-
-        <div class="card">
-            <div class="card-body">
-                <ul class="list-style-none">
-                    <li class="box-label"><a href="javascript:void(0)">Legend</a></li>
-                    <li class="divider"></li>
-                    @foreach($offices as $office)
-                        <li><a href="javascript:void(0)">{{ $office->acronym }} <span> {{ $office->staffs->count() }}</span></a></li>
-                    @endforeach
-                </ul>
-            </div>
-        </div>
     </div>
+
     <div class="col-lg-10 col-xlg-10 col-md-8">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">User Accounts</h4>
+                <h4 class="card-title">User Accounts <a href="#code1" class="btn btn-sm btn-primary" data-toggle="collapse">Import</a></h4>
                 <h6 class="card-subtitle">List of user accounts</h6>
-            </div>
-            <div class="card-body">
-                <a href="javascript:void(0)" class="btn btn-primary">Import</a>
+                <div id="code1" class="collapse">
+                    <form style="border: 4px solid #a1a1a1;margin-top: 15px;padding: 10px;" action="{{ url('/accounts/import/users') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <input type="file" name="import_file" accept=".csv,.xlsx,.xls" required />
+                        <button type="submit" class="btn btn-success">Import File</button>
+                        <a href="{{ url('/accounts/template/download') }}" class="btn btn-info">Download Template File</a>
+                    </form>
+                </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive m-t--50">
