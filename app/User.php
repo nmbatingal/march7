@@ -38,6 +38,7 @@ class User extends Authenticatable
         'mobile_number', 
         'office_id', 
         'position', 
+        '_img', 
     ];
 
     /**

@@ -29,6 +29,7 @@ class UserTableSeeder extends Seeder
                 'position'   => 'System Administrator',
                 '_isActive'  => 1,
                 '_isAdmin'   => 1,
+                '_img'       => 'img/users/user-icon.png',
             ],
         ];
 

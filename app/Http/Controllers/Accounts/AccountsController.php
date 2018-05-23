@@ -167,6 +167,7 @@ class AccountsController extends Controller
                             'position'   => $value->position,
                             '_isActive'  => $value->active ?: 0,
                             '_isAdmin'   => 0,
+                            '_img'       => 'img/users/user-icon.png',
                             'created_at' => date("Y-m-d H:i:s"),
                             'updated_at' => date("Y-m-d H:i:s"),
                         ],

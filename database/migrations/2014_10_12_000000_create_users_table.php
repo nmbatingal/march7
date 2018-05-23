@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('mobile_number')->nullable();
             $table->boolean('_isActive')->default(0);
             $table->boolean('_isAdmin')->default(0);
-            $table->boolean('_img')->nullable();
+            $table->text('_img')->nullable()->default('img/users/user-icon.png');
             $table->timestamps();
             $table->softDeletes();
         });

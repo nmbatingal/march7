@@ -203,4 +203,21 @@ class ProfileController extends Controller
     {
         //
     }
+
+    /**
+    * Method upload image file
+    *
+    */
+    public function uploadImage(Request $request, User $profile)
+    {
+        $input = $request->all();
+        $input['croppedImage'] = time().'-account-user-'.$request->user_id.'.'.$request->fileName;
+        $request->croppedImage->move(public_path('upload/images/profile'), $input['croppedImage']);
+
+        $profile->_img = 'upload/images/profile/'.$input['croppedImage'];
+        $profile->save();
+
+        // return response()->json(['success'=>'done']);
+        return $profile;
+    }
 }

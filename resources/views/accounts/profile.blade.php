@@ -44,7 +44,7 @@
         <div class="card stickyside">
             <div class="card-body">
                 <center class="m-t-30"> 
-                    <img src="{{ asset('img/users/user-icon.png') }}" class="img-circle" width="150" />
+                    <img src="{{ !empty($profile->_img) ? asset($profile->_img) : asset('img/users/user-icon.png') }}" class="img-circle" width="150" />
                     <p><a href="#" data-toggle="modal" data-target=".bs-example-modal-lg">Upload image</a></p>
                     <h4 class="card-title m-t-10">{{ $profile->fullNameFirst }}</h4>
                     <h6 class="card-subtitle">{{ $profile->position }}, {{ $profile->office['acronym'] }}</h6>
@@ -59,12 +59,17 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             </div>
                             <div class="modal-body">
+                                <div class="hidden">
+                                    {!! Form::open([ 'id' => 'form_image_upload', 'url' => url( '/accounts/profile/'.$profile->id.'/upload/image' ), 'method' => 'POST', 'files' => true ]) !!}
+                                        <input id="user_id" type="hidden" name="user_id" value="{{ $profile->id }}"/>
+                                    {!! Form::close() !!}
+                                </div>
 
                                 <div class="row">
                                     <!-- .Your image -->
                                     <div class="col-md-12">
                                         <div class="img-container">
-                                            <img id="image" src="{{ asset('img/users/user-icon.png') }}" alt="Picture">
+                                            <img id="image" src="{{ !empty($profile->_img) ? asset($profile->_img) : asset('img/users/user-icon.png') }}" alt="Picture">
                                         </div>
                                     </div>
                                     <!-- /.Your image -->
