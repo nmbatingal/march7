@@ -10,9 +10,8 @@
         display: none;
     }
 
-    .img-container {
-      /* This is important */
-      width: 100%;
+    .img-container img {
+        max-width: 100%;
     }
 </style>
 @endsection
@@ -44,14 +43,15 @@
         <div class="card stickyside">
             <div class="card-body">
                 <center class="m-t-30"> 
-                    <img src="{{ !empty($profile->_img) ? asset($profile->_img) : asset('img/users/user-icon.png') }}" class="img-circle" width="150" />
-                    <p><a href="#" data-toggle="modal" data-target=".bs-example-modal-lg">Upload image</a></p>
+                    <a href="#" data-toggle="modal" data-target=".bs-example-modal-lg">
+                        <img src="{{ !empty($profile->_img) ? asset($profile->_img) : asset('img/users/user-icon.png') }}" class="img-circle" width="150" />
+                    </a>
                     <h4 class="card-title m-t-10">{{ $profile->fullNameFirst }}</h4>
                     <h6 class="card-subtitle">{{ $profile->position }}, {{ $profile->office['acronym'] }}</h6>
                 </center>
 
                 <!-- sample modal content -->
-                <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                <div id="modal_image_upload" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -59,12 +59,14 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             </div>
                             <div class="modal-body">
+                                <!-- FORM UPLOAD IMAGE -->
                                 <div class="hidden">
                                     {!! Form::open([ 'id' => 'form_image_upload', 'url' => url( '/accounts/profile/'.$profile->id.'/upload/image' ), 'method' => 'POST', 'files' => true ]) !!}
                                         <input id="user_id" type="hidden" name="user_id" value="{{ $profile->id }}"/>
                                     {!! Form::close() !!}
                                 </div>
 
+                                <!-- IMAGE PREVIEW -->
                                 <div class="row">
                                     <!-- .Your image -->
                                     <div class="col-md-12">
@@ -75,179 +77,44 @@
                                     <!-- /.Your image -->
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-md-9 docs-buttons">
+                                <!-- BUTTON CONTROLS -->
+                                <div class="row m-t-10">
+                                    <div class="col-md-12 docs-buttons">
+
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-secondary btn-outline" data-method="reset" title="Reset"> <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;reset&quot;)"> <span class="fa fa-refresh"></span> </span>
+                                            <button type="button" class="btn btn-info" data-method="setDragMode" data-option="move" title="Move"> <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;setDragMode&quot;, &quot;move&quot;)"> <span class="fa fa-arrows"></span> </span>
                                             </button>
-                                            <label class="btn btn-secondary btn-outline btn-upload" for="inputImage" title="Upload image file">
-                                                <input type="file" class="sr-only" id="inputImage" name="file" accept="image/*">
-                                                <span class="docs-tooltip" data-toggle="tooltip" title="Import image with Blob URLs"> <span class="fa fa-upload"></span> </span>
-                                            </label>
-                                            <button type="button" class="btn btn-secondary btn-outline" data-method="destroy" title="Destroy"> <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;destroy&quot;)"> <span class="fa fa-power-off"></span> </span>
+                                            <button type="button" class="btn btn-info" data-method="setDragMode" data-option="crop" title="Crop"> <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;setDragMode&quot;, &quot;crop&quot;)"> <span class="fa fa-crop"></span> </span>
                                             </button>
                                         </div>
-                                        <div class="btn-group btn-group-crop">
-                                            <button type="button" class="btn btn-danger" data-method="getCroppedCanvas"> <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getCroppedCanvas&quot;)"> Get Cropped Canvas </span> </button>
-                                            <button type="button" class="btn btn-danger" data-method="getCroppedCanvas" data-option="{ &quot;width&quot;: 160, &quot;height&quot;: 90 }"> <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getCroppedCanvas&quot;, { width: 160, height: 90 })"> 160&times;90 </span> </button>
-                                            <button type="button" class="btn btn-danger" data-method="getCroppedCanvas" data-option="{ &quot;width&quot;: 320, &quot;height&quot;: 180 }"> <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getCroppedCanvas&quot;, { width: 320, height: 180 })"> 320&times;180 </span> </button>
+                                        
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-success" data-method="zoom" data-option="0.1" title="Zoom In"> <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;zoom&quot;, 0.1)"> <span class="fa fa-search-plus"></span> </span>
+                                            </button>
+                                            <button type="button" class="btn btn-success" data-method="zoom" data-option="-0.1" title="Zoom Out"> <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;zoom&quot;, -0.1)"> <span class="fa fa-search-minus"></span> </span>
+                                            </button>
                                         </div>
-                                        <!-- Show the cropped image in modal -->
-                                        <div class="modal docs-cropped" id="getCroppedCanvasModal" aria-hidden="true" aria-labelledby="getCroppedCanvasTitle" role="dialog" tabindex="-1">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                        <h4 class="modal-title" id="getCroppedCanvasTitle">Cropped</h4>
-                                                    </div>
-                                                    <div class="modal-body"></div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                        <a class="btn btn-primary" id="download" href="javascript:void(0);" download="cropped.jpg">Download</a> </div>
-                                                </div>
-                                            </div>
+
+                                        <label class="btn btn-secondary btn-outline btn-upload" for="inputImage" title="Upload image file">
+                                            <input type="file" class="sr-only" id="inputImage" name="file" accept="image/*">
+                                            <span class="docs-tooltip" data-toggle="tooltip" title="Import image"> <span class="fa fa-upload"></span> Upload image</span>
+                                        </label>
+
+                                        <div class="btn-group btn-group-crop pull-right">
+                                            <button type="button" class="btn btn-danger" data-method="getCroppedCanvas"> 
+                                                <span class="docs-tooltip" data-toggle="tooltip" title="Close"> Close </span>
+                                            </button>
                                         </div>
-                                        <!-- /.modal -->
-                                        <button type="button" class="btn btn-secondary btn-outline" data-method="getData" data-option data-target="#putData"> <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getData&quot;)"> Get Data </span> </button>
-                                        <button type="button" class="btn btn-secondary btn-outline" data-method="setData" data-target="#putData"> <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;setData&quot;, data)"> Set Data </span> </button>
-                                        <button type="button" class="btn btn-secondary btn-outline" data-method="getContainerData" data-option data-target="#putData"> <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getContainerData&quot;)"> Get Container Data </span> </button>
-                                        <button type="button" class="btn btn-secondary btn-outline" data-method="getImageData" data-option data-target="#putData"> <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getImageData&quot;)"> Get Image Data </span> </button>
-                                        <button type="button" class="btn btn-secondary btn-outline" data-method="getCanvasData" data-option data-target="#putData"> <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getCanvasData&quot;)"> Get Canvas Data </span> </button>
-                                        <button type="button" class="btn btn-secondary btn-outline" data-method="setCanvasData" data-target="#putData"> <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;setCanvasData&quot;, data)"> Set Canvas Data </span> </button>
-                                        <button type="button" class="btn btn-secondary btn-outline" data-method="getCropBoxData" data-option data-target="#putData"> <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getCropBoxData&quot;)"> Get Crop Box Data </span> </button>
-                                        <button type="button" class="btn btn-secondary btn-outline" data-method="setCropBoxData" data-target="#putData"> <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;setCropBoxData&quot;, data)"> Set Crop Box Data </span> </button>
-                                        <button type="button" class="btn btn-secondary btn-outline" data-method="moveTo" data-option="0"> <span class="docs-tooltip" data-toggle="tooltip" title="cropper.moveTo(0)"> 0,0 </span> </button>
-                                        <button type="button" class="btn btn-secondary btn-outline" data-method="zoomTo" data-option="1"> <span class="docs-tooltip" data-toggle="tooltip" title="cropper.zoomTo(1)"> 100% </span> </button>
-                                        <button type="button" class="btn btn-secondary btn-outline" data-method="rotateTo" data-option="180"> <span class="docs-tooltip" data-toggle="tooltip" title="cropper.rotateTo(180)"> 180° </span> </button>
-                                        <input type="text" class="form-control" id="putData" placeholder="Get data to here or set data with this value">
-                                    </div>
-                                    <!-- /.btn groups -->
-                                    <div class="col-md-3 docs-toggles">
-                                        <!-- .btn groups -->
-                                        <div class="btn-group btn-group-justified" data-toggle="buttons">
-                                            <label class="btn btn-secondary btn-outline active">
-                                                <input type="radio" class="sr-only" id="aspectRatio0" name="aspectRatio" value="1.7777777777777777">
-                                                <span class="docs-tooltip" data-toggle="tooltip" title="aspectRatio: 16 / 9"> 16:9 </span> </label>
-                                            <label class="btn btn-secondary btn-outline">
-                                                <input type="radio" class="sr-only" id="aspectRatio1" name="aspectRatio" value="1.3333333333333333">
-                                                <span class="docs-tooltip" data-toggle="tooltip" title="aspectRatio: 4 / 3"> 4:3 </span> </label>
-                                            <label class="btn btn-secondary btn-outline">
-                                                <input type="radio" class="sr-only" id="aspectRatio2" name="aspectRatio" value="1">
-                                                <span class="docs-tooltip" data-toggle="tooltip" title="aspectRatio: 1 / 1"> 1:1 </span> </label>
-                                            <label class="btn btn-secondary btn-outline">
-                                                <input type="radio" class="sr-only" id="aspectRatio3" name="aspectRatio" value="0.6666666666666666">
-                                                <span class="docs-tooltip" data-toggle="tooltip" title="aspectRatio: 2 / 3"> 2:3 </span> </label>
-                                            <label class="btn btn-secondary btn-outline">
-                                                <input type="radio" class="sr-only" id="aspectRatio4" name="aspectRatio" value="NaN">
-                                                <span class="docs-tooltip" data-toggle="tooltip" title="aspectRatio: NaN"> Free </span> </label>
+
+                                        <div class="btn-group btn-group-crop pull-right">
+                                            <button type="button" class="btn btn-success" data-method="getCroppedCanvas"> 
+                                                <span class="docs-tooltip" data-toggle="tooltip" title="Save image"> Save </span>
+                                            </button>
                                         </div>
-                                        <!-- /.btn groups -->
-                                        <!-- .btn groups -->
-                                        <div class="btn-group btn-group-justified" data-toggle="buttons">
-                                            <label class="btn btn-secondary btn-outline active">
-                                                <input type="radio" class="sr-only" id="viewMode0" name="viewMode" value="0" checked>
-                                                <span class="docs-tooltip" data-toggle="tooltip" title="View Mode 0"> VM0 </span> </label>
-                                            <label class="btn btn-secondary btn-outline">
-                                                <input type="radio" info="sr-only" id="viewMode1" name="viewMode" value="1">
-                                                <span class="docs-tooltip" data-toggle="tooltip" title="View Mode 1"> VM1 </span> </label>
-                                            <label class="btn btn-secondary btn-outline">
-                                                <input type="radio" class="sr-only" id="viewMode2" name="viewMode" value="2">
-                                                <span class="docs-tooltip" data-toggle="tooltip" title="View Mode 2"> VM2 </span> </label>
-                                            <label class="btn btn-secondary  btn-outline">
-                                                <input type="radio" class="sr-only" id="viewMode3" name="viewMode" value="3">
-                                                <span class="docs-tooltip" data-toggle="tooltip" title="View Mode 3"> VM3 </span> </label>
-                                        </div>
-                                        <!-- /.btn groups -->
-                                        <!-- .btn groups -->
-                                        <div class="dropdown dropup docs-options">
-                                            <button type="button" class="btn btn-success btn-block dropdown-toggle" id="toggleOptions" data-toggle="dropdown" aria-expanded="true"> Toggle Options <span class="caret"></span> </button>
-                                            <ul class="dropdown-menu" aria-labelledby="toggleOptions" role="menu">
-                                                <li role="presentation">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" name="responsive" checked> responsive </label>
-                                                </li>
-                                                <li role="presentation">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" name="restore" checked> restore </label>
-                                                </li>
-                                                <li role="presentation">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" name="checkCrossOrigin" checked> checkCrossOrigin </label>
-                                                </li>
-                                                <li role="presentation">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" name="checkOrientation" checked> checkOrientation </label>
-                                                </li>
-                                                <li role="presentation">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" name="modal" checked> modal </label>
-                                                </li>
-                                                <li role="presentation">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" name="guides" checked> guides </label>
-                                                </li>
-                                                <li role="presentation">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" name="center" checked> center </label>
-                                                </li>
-                                                <li role="presentation">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" name="highlight" checked> highlight </label>
-                                                </li>
-                                                <li role="presentation">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" name="background" checked> background </label>
-                                                </li>
-                                                <li role="presentation">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" name="autoCrop" checked> autoCrop </label>
-                                                </li>
-                                                <li role="presentation">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" name="movable" checked> movable </label>
-                                                </li>
-                                                <li role="presentation">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" name="rotatable" checked> rotatable </label>
-                                                </li>
-                                                <li role="presentation">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" name="scalable" checked> scalable </label>
-                                                </li>
-                                                <li role="presentation">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" name="zoomable" checked> zoomable </label>
-                                                </li>
-                                                <li role="presentation">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" name="zoomOnTouch" checked> zoomOnTouch </label>
-                                                </li>
-                                                <li role="presentation">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" name="zoomOnWheel" checked> zoomOnWheel </label>
-                                                </li>
-                                                <li role="presentation">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" name="cropBoxMovable" checked> cropBoxMovable </label>
-                                                </li>
-                                                <li role="presentation">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" name="cropBoxResizable" checked> cropBoxResizable </label>
-                                                </li>
-                                                <li role="presentation">
-                                                    <label class="checkbox-inline">
-                                                        <input type="checkbox" name="toggleDragModeOnDblclick" checked> toggleDragModeOnDblclick </label>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <!-- /.dropdown -->
+
                                     </div>
                                     <!-- /.btn groups -->
                                 </div>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger waves-effect text-left" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                         <!-- /.modal-content -->
