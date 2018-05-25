@@ -1,5 +1,8 @@
 <?php
 
+use App\Notifications\TaskCompleted;
+use App\User;
+use Carbon\Carbon;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,11 +14,36 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function() {
     return view('welcome');
 });
 
+Route::get('/notification', function () {
+
+    // return view('welcome');
+    // $when = Carbon::now()->addSeconds(10);
+
+    $notify_users = User::where('id', '<>', Auth::user()->id )->staffUsers()->get();
+    $action       = User::find(Auth::user()->id);
+
+    $data = [
+        'data'    => 'created a sample notification',
+        'action'  => '/home',
+    ];
+
+    foreach ($notify_users as $user) {
+        $user->notify(new TaskCompleted($action, $data));
+    }
+
+
+    // return view('welcome');
+    return $data;
+});
+
 Auth::routes();
+
+// NOTIFICATION ACTION CONTROLLERS
+Route::get('/notification/read/{id}', 'NotificationController@read')->name('notification.read');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/logs', 'UserLogsController');

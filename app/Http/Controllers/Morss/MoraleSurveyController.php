@@ -10,6 +10,7 @@ use App\Models\Morss\MorssSemester as Semester;
 use App\Models\Morss\MorssQuestion as Question;
 use App\Models\Morss\MorssSurvey as Survey;
 use App\Models\Morss\MorssSurveyRemarks as Remarks;
+use App\Notifications\MoraleSurveyNotification;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -116,6 +117,21 @@ class MoraleSurveyController extends Controller
                     'icon'    => 'success', 
                 ],
             ]);
+
+            /*** FOR NOTIFICATION ***/
+            $notify_users = User::where('id', '<>', Auth::user()->id )->staffUsers()->get();
+            $action_user  = User::find(Auth::user()->id);
+
+            $data = [
+                'data'    => 'has created a '. $semester->semesterRangeFormal .' Morale Survey Form',
+                'action'  => '/morss/survey/takesurvey/'.$semester->id,
+            ];
+
+            foreach ($notify_users as $user) {
+                $user->notify(new MoraleSurveyNotification($action_user, $data));
+            }
+            /*** END FOR NOTIFICATION ***/
+
         } catch (\Illuminate\Database\QueryException $e) {
             // return dd($e);
             $toastr = Session::flash('toastr', [ 
