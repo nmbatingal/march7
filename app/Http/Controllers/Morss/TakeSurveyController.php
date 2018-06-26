@@ -83,12 +83,17 @@ class TakeSurveyController extends Controller
      */
     public function show($id)
     {
-        $semester  = Semester::find($id);
-        $surveys   = Survey::userHasSurveyed( Auth::user()->id )->where('semester_id', $id)->get();
-        $questions = Question::all();
-        $remarks   = Remark::where('user_id', Auth::user()->id )->where('semester_id', $id)->first();
+        try {
+            $semester  = Semester::findOrFail($id);
+            $surveys   = Survey::userHasSurveyed( Auth::user()->id )->where('semester_id', $id)->get();
+            $questions = Question::all();
+            $remarks   = Remark::where('user_id', Auth::user()->id )->where('semester_id', $id)->first();
 
-        return view('morss.take-survey-id', compact('semester', 'surveys', 'questions', 'remarks'));
+            return view('morss.take-survey-id', compact('semester', 'surveys', 'questions', 'remarks'));
+            
+        } catch(ModelNotFoundException $e) {
+            return redirect()->route('morss.index');
+        }
     }
 
     /**

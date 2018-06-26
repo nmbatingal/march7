@@ -13,8 +13,11 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\Event' => [
-            'App\Listeners\EventListener',
+        'App\Events\MorssCreated' => [
+            'App\Listeners\SendMorssCreatedNotification',
+        ],
+        'App\Events\UserEvent' => [
+            'App\Listeners\UserEventListener',
         ],
     ];
 

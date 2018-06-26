@@ -93,7 +93,7 @@
         <!-- Notification -->
         <!-- ============================================================== -->
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a id="notifications" class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="ti-bell" data-toggle="tooltip" title="Notifications"></i>
 
                 @if ( auth()->user()->unreadNotifications->count() > 0 )

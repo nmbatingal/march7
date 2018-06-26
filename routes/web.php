@@ -18,31 +18,10 @@ Route::get('/', function() {
     return view('welcome');
 });
 
-Route::get('/notification', function () {
-
-    // return view('welcome');
-    // $when = Carbon::now()->addSeconds(10);
-
-    $notify_users = User::where('id', '<>', Auth::user()->id )->staffUsers()->get();
-    $action       = User::find(Auth::user()->id);
-
-    $data = [
-        'data'    => 'created a sample notification',
-        'action'  => '/home',
-    ];
-
-    foreach ($notify_users as $user) {
-        $user->notify(new TaskCompleted($action, $data));
-    }
-
-
-    // return view('welcome');
-    return $data;
-});
-
 Auth::routes();
 
 // NOTIFICATION ACTION CONTROLLERS
+Route::get('/notifications', 'NotificationController@notifications')->name('notification.notifications');
 Route::get('/notification/read/{id}', 'NotificationController@read')->name('notification.read');
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -18,6 +18,16 @@ class NotificationController extends Controller
     }
 
     /**
+    * load notifications
+    *
+    *
+    */
+    public function notifications()
+    {
+        return auth()->user()->notifications()->take(10)->get()->toArray();
+    }
+
+    /**
     * read a specific notification
     *
     * @param $id
